@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { brief, validateScenes, buildTimeline, scriptFor } from '../lib/domain.mjs';
+import { assDocument } from '../lib/render.mjs';
+import { sample } from '../lib/sample.mjs';
+const fixture = (scenes, duration = 20) => { const characters = Array.from(scriptFor(scenes)); return { characters, character_start_times_seconds: characters.map((_, i) => i * duration / characters.length), character_end_times_seconds: characters.map((_, i) => (i + 1) * duration / characters.length) }; };
+test('brief enforces supported output languages', () => { assert.throws(() => brief({ topic: 'How RAM works', language: 'English' })); assert.equal(brief({ topic: 'How RAM works', language: 'Hinglish' }).language, 'Hinglish'); });
+test('scene schema rejects empty narration and overlong scripts', () => { assert.throws(() => validateScenes([{ title: 'A', narration: '' }])); const scenes = Array.from({ length: 8 }, () => ({ title: 'Scene', narration: 'a'.repeat(1200), labels: ['one', 'two'] })); assert.throws(() => validateScenes(scenes)); });
+test('alignment uses actual timing and covers the last spoken segment', () => { const scenes = validateScenes(sample.scenes), timed = buildTimeline(scenes, fixture(scenes), 20); assert.equal(timed[0].start, 0); assert.equal(timed.at(-1).end, 20); assert.equal(timed[0].end, timed[1].start); assert.ok(timed.at(-1).captions.at(-1).end <= 20); });
+test('missing and mismatched timestamps cannot become synchronized output', () => { const s = validateScenes(sample.scenes); assert.throws(() => buildTimeline(s, null, 20)); const alignment = fixture(s); alignment.characters[0] = 'X'; assert.throws(() => buildTimeline(s, alignment, 20)); });
+test('non-monotonic or out-of-range alignment is rejected', () => { const s = validateScenes(sample.scenes), a = fixture(s); a.character_start_times_seconds[10] = -5; assert.throws(() => buildTimeline(s, a, 20)); });
+test('Unicode code points do not corrupt caption offsets', () => { const s = validateScenes(sample.scenes); s[0].narration += ' समझो 🧠 example.'; const timed = buildTimeline(s, fixture(s), 20); assert.ok(timed[0].captions.some(c => c.text.includes('🧠'))); assert.ok(timed[1].start > timed[0].start); });
+test('ASS output escapes control syntax from user labels', () => { const s = validateScenes(sample.scenes); s[0].title = '{\\p1} malicious'; const doc = assDocument(buildTimeline(s, fixture(s), 20)); assert.ok(!doc.includes('{\\p1} malicious')); assert.ok(doc.includes('PlayResX: 1080')); });
