@@ -1,10 +1,16 @@
 # Newbert AI Video
 
-Current stage: **F3 — identity and private workspace backend**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F3 scope and verification](docs/milestones/F3-IDENTITY-WORKSPACE.md) · [Database setup](packages/database/README.md).
+Current stage: **F5/F6 — saved projects, immutable versions and local durable processing**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
 
-With local PostgreSQL running: `npm run db:migrate`, `npm run auth:setup`, then `npm run dev:f3`. Auth mail is local-only until SMTP is configured; no real email is sent in development mode. Production registration/session/recovery and own-workspace endpoints are available for integration, while their browser forms are the next F4 milestone. `npm run test:f3` verifies auth against real PostgreSQL.
+Start the local database with `npm run db:local` only if it is not already running. Apply setup with `npm run db:migrate`, `npm run auth:setup` and `npm run worker:setup`. In `apps/api/.env`, set `AUTH_BASE_URL` and `APP_ORIGIN` to `http://127.0.0.1:3001`. Keep all credentials in ignored local files. Run `npm run dev:api`, `npm run dev:worker` and `npm run dev:web` in separate terminals. Open **http://127.0.0.1:3001**. API: port 3100. Production-style local web startup: `npm run build:web`, then `npm run start:web`.
 
-F2 commands: run `npm run db:local` in one terminal, then `npm run db:migrate` and `npm run dev:f2` in another. The TypeScript/Fastify API runs on port 3100. `npm run check:f2`, `npm run build:api`, and `npm run test:f2` verify this milestone. Next.js/React and Better Auth are selected for the coming UI/auth features, not implemented yet.
+Development email is local-only. After registration: `npm run auth:mail -- your@email.example --open`. After requesting password recovery: add `--reset`. This opens the latest matching local link without printing its token. Omit `--open` to locate its private JSON file. SMTP is required for real external delivery.
+
+Verify with `npm run check:web`, `npm run build:web`, `npm run test:f4` and, with the local servers running, `npm run test:f4:browser`. Browser checks create a unique local test account; no provider calls or external email. On Windows, installed Edge is used. Else install Playwright Chromium or set `PLAYWRIGHT_EXECUTABLE_PATH`.
+
+Project creation, search, archive/restore, drafts, version snapshots and queue controls are connected. Planning requests currently pause until the F7 scripting handler is built; no production video or provider request is made. `npm run processing -- status/pause/resume` controls local admission/workers. `npm run media:audit` inspects aged orphan objects without deleting anything by default.
+
+F5/F6 checks: `npm run test:f5`, `npm run test:f6` and, with the three servers running, `npm run test:f5:browser`. The older feasibility prototype and its commands below remain separate.
 
 Run the new, separate foundation with `npm run dev:f1` (port 3100); `npm run check:f1` checks its syntax. It currently exposes health endpoints only. The instructions below refer to the earlier feasibility prototype, whose startup remains unchanged. Production features will be implemented one milestone at a time.
 

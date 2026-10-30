@@ -12,10 +12,10 @@ function problem(reply: FastifyReply, request: FastifyRequest, status: number, c
   return reply.code(status).type('application/problem+json').send({ type: 'about:blank', title: code.replaceAll('_',' '), status, code, detail, requestId: request.id });
 }
 function csrf(secret: string, sessionId: string) { return createHmac('sha256',secret).update('newbert:csrf:'+sessionId).digest('hex'); }
-function csrfMatches(expected: string, supplied: unknown) {
+export function csrfMatches(expected: string, supplied: unknown) {
   return typeof supplied==='string' && /^[0-9a-f]{64}$/.test(supplied) && timingSafeEqual(Buffer.from(expected),Buffer.from(supplied));
 }
-async function current(request: FastifyRequest, reply: FastifyReply, identity: IdentityRuntime, allowDisabled = false) {
+export async function current(request: FastifyRequest, reply: FastifyReply, identity: IdentityRuntime, allowDisabled = false) {
   const session = await identity.service.api.getSession({ headers: fromNodeHeaders(request.headers), query: { disableCookieCache: true } });
   if (!session) { problem(reply,request,401,'AUTHENTICATION_REQUIRED','Sign in to your workspace.');return; }
   if (!session.user.emailVerified) { problem(reply,request,403,'EMAIL_NOT_VERIFIED','Verify your email before using your workspace.');return; }

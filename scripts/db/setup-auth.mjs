@@ -16,7 +16,7 @@ try {
   await client.query('GRANT newbert_identity TO newbert_auth');
   const url=new URL(connectionUrl(config));url.username='newbert_auth';url.password=config.authPassword;
   const path='apps/api/.env';let env='';try{env=await readFile(path,'utf8');}catch(error){if(error.code!=='ENOENT')throw error;}
-  const values={AUTH_DATABASE_URL:url.href,BETTER_AUTH_SECRET:randomBytes(32).toString('hex'),AUTH_BASE_URL:'http://127.0.0.1:3100',APP_ORIGIN:'http://127.0.0.1:3100',AUTH_MAIL_MODE:'local'};
+  const values={AUTH_DATABASE_URL:url.href,BETTER_AUTH_SECRET:randomBytes(32).toString('hex'),AUTH_BASE_URL:'http://127.0.0.1:3001',APP_ORIGIN:'http://127.0.0.1:3001',AUTH_MAIL_MODE:'local'};
   for(const[name,value]of Object.entries(values)){
     if(new RegExp('^'+name+'=.+$','m').test(env))continue;
     env=env.replace(new RegExp('^'+name+'=.*(?:\\r?\\n|$)','m'),'');env+='\n'+name+'='+value+'\n';

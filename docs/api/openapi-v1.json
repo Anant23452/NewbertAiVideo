@@ -3,7 +3,7 @@
   "info": {
     "title": "Newbert AI Video — V1 proposed API",
     "version": "1.0.0-draft",
-    "description": "DESIGN CONTRACT ONLY. No production endpoints are implemented by this specification. Read ../API-DB-DESIGN-V1.md for transaction/state/security invariants. Auth adapter routes and operator-only APIs are intentionally separate."
+    "description": "V1 design contract with an implemented F3–F6 subset. See IDENTITY-F3.md and PROJECTS-PROCESSING-F5-F6.md for the exact working endpoints and unavailable later stages. Auth adapter and operator-only APIs remain separate."
   },
   "servers": [
     {
@@ -550,6 +550,15 @@
                 "active",
                 "archived"
               ]
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Case-insensitive literal title substring.",
+            "schema": {
+              "type": "string",
+              "maxLength": 160
             }
           }
         ],
@@ -1914,11 +1923,10 @@
     },
     "/jobs": {
       "get": {
-        "operationId": "listJobs",
-        "summary": "Read job history",
         "tags": [
-          "Generation"
+          "Jobs"
         ],
+        "summary": "List own workspace jobs, optionally filtered by project",
         "parameters": [
           {
             "$ref": "#/components/parameters/Limit"
@@ -1933,62 +1941,11 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "state",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "queued",
-                "running",
-                "paused",
-                "succeeded",
-                "failed",
-                "cancelled"
-              ]
-            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Read job history",
-            "headers": {
-              "ETag": {
-                "description": "Strong revision tag for subsequent If-Match.",
-                "schema": {
-                  "type": "string",
-                  "maxLength": 200
-                }
-              },
-              "Location": {
-                "description": "Relative URL of the durable created/accepted resource.",
-                "schema": {
-                  "type": "string",
-                  "maxLength": 1000
-                }
-              },
-              "X-Request-Id": {
-                "description": "Correlation ID.",
-                "schema": {
-                  "type": "string",
-                  "format": "uuid"
-                }
-              },
-              "Idempotency-Replayed": {
-                "description": "True when returning a committed replay.",
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "Cache-Control": {
-                "description": "Private user data and signed media URLs use no-store.",
-                "schema": {
-                  "type": "string",
-                  "maxLength": 100
-                }
-              }
-            },
+            "description": "Own workspace job page",
             "content": {
               "application/json": {
                 "schema": {
@@ -1997,35 +1954,8 @@
               }
             }
           },
-          "400": {
-            "$ref": "#/components/responses/Error400"
-          },
           "401": {
             "$ref": "#/components/responses/Error401"
-          },
-          "403": {
-            "$ref": "#/components/responses/Error403"
-          },
-          "404": {
-            "$ref": "#/components/responses/Error404"
-          },
-          "409": {
-            "$ref": "#/components/responses/Error409"
-          },
-          "412": {
-            "$ref": "#/components/responses/Error412"
-          },
-          "422": {
-            "$ref": "#/components/responses/Error422"
-          },
-          "428": {
-            "$ref": "#/components/responses/Error428"
-          },
-          "429": {
-            "$ref": "#/components/responses/Error429"
-          },
-          "503": {
-            "$ref": "#/components/responses/Error503"
           }
         }
       }

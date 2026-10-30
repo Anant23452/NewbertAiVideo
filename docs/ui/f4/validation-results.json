@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-30T10:07:00.414Z",
+  "environment": "Local real Fastify/PostgreSQL and Next.js; headless browser",
+  "checks": [
+    "Direct verification visits do not claim verified status",
+    "Homepage renders with actual example video",
+    "Homepage fits 1440, 768, 390 and 360px",
+    "Anonymous workspace access redirects to sign-in",
+    "Registration uses live API",
+    "Verification follows local email through same-origin proxy",
+    "Verified sign-in opens private workspace",
+    "Session cookie is HttpOnly; no localStorage credentials",
+    "Timezone persists through database and reload",
+    "All six workspace screens fit desktop and mobile widths",
+    "Sign-out invalidates browser session",
+    "Password reset consumes emailed link and clears token URL",
+    "Password change uses the authenticated CSRF-protected endpoint",
+    "All six account screens fit desktop and mobile widths"
+  ],
+  "externalEmail": false,
+  "paidProviderCalls": false
+}

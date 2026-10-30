@@ -3,7 +3,7 @@
   "engine": "Native PostgreSQL 17 on loopback; temporary test database",
   "scope": "F2 foundation, migrations and tenant-role baseline; not feature, load or deployment verification",
   "results": [
-    "PostgreSQL 17.10: 4 migrations, replay zero, 28 domain tables",
+    "PostgreSQL 17.10: 7 migrations, replay zero, 28 domain tables plus F6 policy/worker health",
     "Restricted runtime cannot create tables, read identity mappings or read global budget rows",
     "Two workspaces isolated; missing context and post-commit/rollback queries reveal no tenant rows",
     "Cross-workspace draft rejected and submitted version UPDATE/DELETE rejected",

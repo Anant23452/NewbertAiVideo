@@ -1,7 +1,7 @@
-# Worker boundary
+# F6 durable local worker
 
-Durable worker implementation starts in F6. Claim jobs from PostgreSQL with leases/fencing, perform work outside web requests, and checkpoint immutable private artifacts. Keep provider calls separate from database transactions.
+After `npm run db:migrate` and `npm run worker:setup`, run `npm run dev:worker` from the root in a separate terminal. It uses the ignored `WORKER_DATABASE_URL` with a restricted worker role, not API/auth/owner credentials. Compiled startup: `npm run build:api`, then `npm run start:worker`.
 
-F2 selected Node.js/strict TypeScript and the shared `pg` database boundary for this process. PostgreSQL tables are present; this does not mean a queue consumer has been implemented.
+The consumer claims fairly across workspaces, acknowledges the PostgreSQL outbox, fences leases, recovers crashes and pauses unknown provider outcomes. Current stage handlers are deliberately absent: a queued plan becomes paused, with no fake success, paid provider call or video output. Graceful shutdown pauses claimed work instead of cancelling the user's request.
 
-F1 contains no running worker, fake queue or idle polling process. Existing `lib/jobs.mjs` is prototype evidence, not the production worker. Reuse its feasibility learnings after reviewing against the approved design.
+See [F6 scope and controls](../../docs/milestones/F6-PROCESSING.md) and [ADR 003](../../docs/decisions/ADR-003-DURABLE-PROCESSING.md). Do not import the old prototype job runner into this worker. F7–F10 must add stage-specific reservations, durable attempt checkpoints and validated outputs through the fenced artifact service.

@@ -1,6 +1,6 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 30 October 2026. Current milestone: **F3 — identity and private workspace complete for review**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 30 October 2026. Current milestone: **F5/F6 — projects and local durable processing complete for review**. Product stage: feature-by-feature development. Production release: not deployed.
 
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
@@ -22,7 +22,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Product requirements | Working baseline | [PRD V1](PRD-V1.md); refine only through recorded scope decisions |
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
-| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), 40 operations; not implemented production endpoints |
+| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), 41 proposed operations; implemented subset in the F3 and F5/F6 handoffs |
 | Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 28 domain tables on local PostgreSQL, no hosted DB |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
@@ -31,7 +31,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Production implementation | F1/F2/F3 backend foundations complete for review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; no production UI, external email delivery, media storage or Instagram integration |
+| Production implementation | F1–F6 foundations, projects and processing infrastructure complete for review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; no provider stage handlers, external email delivery or Instagram integration |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
@@ -48,9 +48,9 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 | F1 | Project tracker, separate app/module scaffold, startup/liveness | Approved design | Complete for review | Syntax and loopback HTTP smoke checks passed; readiness correctly reports dependencies missing |
 | F2 | Select implementation stack and establish local DB/migration workflow | F1 | Complete for review | Stack ADR, typed API build, local PostgreSQL, two migrations and six real-server tests; 23 existing tests pass |
 | F3 | Registration, sessions, verification/recovery, private workspace bootstrap | F2 | Complete for review | Better Auth + isolated auth schema/role; transactional workspace bootstrap; 15 real-server auth cases and SMTP configuration regression passed; SMTP external delivery remains release configuration |
-| F4 | Approved homepage and shared responsive app shell/auth UI | F2,F3 | Not started | Real components, navigation, forms, keyboard/focus, Devanagari fonts, loading/errors and narrow-width checks |
-| F5 | Projects, library, draft editing and immutable submitted versions | F3,F4 | Not started | Own-project CRUD/archive; optimistic concurrency; stable versions/history; no cross-user access |
-| F6 | Durable jobs, usage admission, private media and operational controls | F2,F3,F5 | Not started | Atomic reserve/job/outbox; leases/fencing; fairness; cancellation; private objects/access URLs; platform spending gates |
+| F4 | Approved homepage and shared responsive app shell/auth UI | F2,F3 | Complete for review | Next.js/React components, real identity and timezone/password forms, 13 live-browser checks and return-path security test; 1440/768/390/360px geometry; see F4 record |
+| F5 | Projects, library, draft editing and immutable submitted versions | F3,F4 | Complete for review | 7 real-DB cases and connected browser workflow; owner-scoped create/search/archive/restore, conflict-aware drafts and immutable snapshots |
+| F6 | Durable jobs, usage admission, private media and operational controls | F2,F3,F5 | Complete for review — local foundation | 14 real-DB cases; atomic admission, restricted worker, fairness/leases/fencing, bounded recovery, cancellation/retry, quotas, signed private media and operator controls; stage handlers remain F7–F10 |
 | F7 | Topic discussion, evidence retrieval, Gemini scripting | F5,F6 | Not started | Guided/automatic brief; stored source/claim support; no invented citations; quota/provider errors and structured input validation |
 | F8 | Storyboard review, controlled visuals, voice/style selection and approval | F7 | Not started | Supported scene schema; exact-draft approval; automatic mode preserves checks without requiring manual review |
 | F9 | Generated narration, pronunciation mapping and validated alignment | F6,F8 | Not started | Eligible voice/allowance; saved audio and provider identity; Hindi/Hinglish evaluation; actual timing; no blind repeat after uncertain chargeable request |
@@ -74,7 +74,7 @@ F9 can initially use operator-configured narration; optional personal keys arriv
 | Research adapter and evidence policy | F7 | Verify source retrieval/cost; unsupported material claims block or require revision |
 | Narration voice/model/plan rights | F9 | Evaluate Hindi/Hinglish, terms, actual account quota; no silent paid substitution |
 | Renderer, fonts, license suitability and CPU budget | F10 | Benchmark controlled compositions; prototype FFmpeg is proof, not final selection |
-| Daily counts, narration/render/storage units, caps, retention | F6 and before pilot | Derive from measurements; design example figures aren't production promises |
+| Daily counts, narration/render/storage units, caps, retention | F6 local defaults / before pilot | Local conservative counts and byte limits in ADR 003; paid providers disabled; measured narration/render budgets and complete retention remain stage/release work |
 | Official Meta login flow, scopes, eligible account and app approval | F13 | Verify current official requirements using an integration test account |
 | Hosting/cloud (including Azure evaluation), region and budget | F15 | Choose using measured workloads before provisioning |
 
@@ -83,9 +83,9 @@ F9 can initially use operator-configured narration; optional personal keys arriv
 ### Foundation and data
 
 - [x] Choose and record implementation stack and auth approach; implementation of auth remains F3.
-- [ ] Apply reviewed migrations, roles/grants and tenant RLS to real test PostgreSQL.
+- [x] Apply reviewed migrations, roles/grants and tenant RLS to real local/test PostgreSQL; hosted deployment remains F15.
 - [ ] Confirm tenant isolation at all feature boundaries; F3 auth/own-workspace and DB cases pass, future project/worker features still require their own checks.
-- [ ] Implement conditional draft updates and immutable generation inputs.
+- [x] Implement conditional draft updates and immutable submitted inputs (F5/F6).
 - [ ] Configure secrets, private object access, retention holds, backup and restore ownership.
 
 ### Content and generation
@@ -123,7 +123,7 @@ F9 can initially use operator-configured narration; optional personal keys arriv
 | Location | Role |
 |---|---|
 | Root `server.mjs`, `lib/`, `public/`, `tests/` | Existing feasibility prototype; current root `npm run dev` behavior preserved |
-| `apps/api/`, `apps/web/`, `apps/worker/` | Typed F2 API alongside retained F1 entry; future web and worker boundaries |
+| `apps/api/`, `apps/web/`, `apps/worker/` | Typed API alongside retained F1 entry; Next.js web UI; separate restricted durable worker |
 | `packages/contracts/` | Shared contract boundary; canonical design contract remains `docs/api/openapi-v1.json` |
 | `packages/database/`, `scripts/db/` | Versioned SQL, typed pg helper, local PostgreSQL lifecycle and migration CLI |
 | `docs/` | Decisions, specs, milestone records and status |
@@ -141,4 +141,7 @@ F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 
 - F1 implementation/verification: complete for review; syntax, invalid-port validation and five HTTP smoke cases passed; see [F1 record](milestones/F1-FOUNDATION.md).
 - 30 October 2026: F2 completed for review. [Stack decision](decisions/ADR-001-IMPLEMENTATION-STACK.md), [F2 record](milestones/F2-STACK-DATABASE.md), and [local database guide](../packages/database/README.md) added. Local migrations applied twice (second run: zero work); no cloud or paid API calls.
 - 30 October 2026: F3 backend complete for review. [Milestone record](milestones/F3-IDENTITY-WORKSPACE.md), [identity ADR](decisions/ADR-002-IDENTITY-WORKSPACE.md), and [API handoff](api/IDENTITY-F3.md) added. No external emails, paid provider requests, cloud resources or UI implementation.
-- Next after F3 review: F4 approved homepage, shared application shell and connected auth forms. Generation and publishing features remain later milestones.
+- 30 October 2026: F4 complete for review. [Milestone record](milestones/F4-WEB-AUTH.md), [browser results](ui/f4/validation-results.json), responsive screenshots and repeatable tests added. Web on 127.0.0.1:3001; API on 3100; private local PostgreSQL. No cloud deployment, paid generation or external email.
+- 30 October 2026: F5 and F6 delivered together at user request. [F5 projects](milestones/F5-PROJECTS.md), [F6 processing](milestones/F6-PROCESSING.md), [ADR 003](decisions/ADR-003-DURABLE-PROCESSING.md), [API handoff](api/PROJECTS-PROCESSING-F5-F6.md). Seven migrations, 30 newbert tables plus private auth tables; no cloud or paid calls.
+- Validation: 68 automated tests across existing and F2–F6 suites, plus 24 live-browser checks (13 account + 11 project/processing). Production builds and type checks pass; dependency audit reports zero known runtime vulnerabilities. See [combined record](db/f5-f6-validation-results.json). F4 independent QA observations remain recorded separately; this is not a complete accessibility/public-release sign-off.
+- Next after review: F7 topic discussion, evidence retrieval and Gemini scripting, using the new queue. Current planning jobs pause honestly until those stage handlers exist. Voice/video generation and Instagram remain later milestones.

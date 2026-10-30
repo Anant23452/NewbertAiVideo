@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-30T09:59:13.030Z",
+  "environment": "Local Next.js/Fastify/PostgreSQL with separate F6 worker; headless Edge",
+  "checks": [
+    "New account can sign in to connected studio",
+    "Create project persists brief and opens responsive editor",
+    "Project survives browser reload",
+    "Conflict keeps second-tab edits and never overwrites the saved winner",
+    "Submission freezes version and worker safely pauses unavailable pipeline",
+    "New draft edits leave submitted version unchanged",
+    "Cancellation releases reserved allowance in live UI",
+    "Archive/restore updates real library and prevents archived draft edits",
+    "Searchable project library works at desktop/tablet/mobile widths",
+    "Direct private project URL requires a valid session",
+    "No uncaught browser errors during the workflow"
+  ],
+  "paidProviderCalls": false,
+  "externalEmail": false
+}

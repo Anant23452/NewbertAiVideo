@@ -1,5 +1,5 @@
-# Web application boundary
+# Newbert web application — F5/F6
 
-F2 selected Next.js App Router, React and TypeScript; the actual web package and screens begin in F4 after F3 identity integration. See `docs/decisions/ADR-001-IMPLEMENTATION-STACK.md`. Use the approved homepage and eleven product designs in `docs/ui/`; implement real reusable components rather than treating exported Stitch HTML as finished application code.
+Next.js App Router, React and strict TypeScript. Start from the repository root with `npm run dev:web`, or build with `npm run build:web` and serve with `npm run start:web`. Port: **3001**. API must be running on **3100** and PostgreSQL on **54329**. Root scripts retain the existing feasibility prototype separately.
 
-F1 does not start another UI prototype. Planned routes cover public homepage, identity entry/recovery, dashboard, projects, creation, storyboard, progress, preview, publishing and settings. Connect only implemented API contracts and retain honest loading, empty, paused, validation and access-error states.
+See the [F4 identity record](../../docs/milestones/F4-WEB-AUTH.md), [F5 projects](../../docs/milestones/F5-PROJECTS.md) and [F6 processing](../../docs/milestones/F6-PROCESSING.md). Identity, settings, projects, drafts, version history, queue submission and cancellation are connected. A separate worker is required. Scripting/voice/video stage handlers and publishing remain unavailable. Both public auth origins in the API environment must match the web origin. Never put database or provider secrets in client environment variables.

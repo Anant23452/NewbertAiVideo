@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-30T09:38:45.575Z",
+  "scope": "F5/F6 local implementation",
+  "automated": {
+    "F1AndPrototype": 23,
+    "F2": 7,
+    "F3": 16,
+    "F4": 1,
+    "F5": 7,
+    "F6": 14,
+    "total": 68
+  },
+  "liveBrowser": {
+    "F4": 13,
+    "F5F6": 11,
+    "total": 24
+  },
+  "checks": {
+    "frontendTypecheck": "passed",
+    "backendTypecheck": "passed",
+    "frontendProductionBuild": "passed",
+    "backendBuild": "passed",
+    "runtimeDependencyAudit": "zero known vulnerabilities",
+    "apiReadiness": "200 with database, identity, private local media and worker heartbeat connected",
+    "privateMediaAudit": "dry run; zero aged orphans; no deletion"
+  },
+  "limits": {
+    "workspaceDailyJobs": 3,
+    "platformDailyJobs": 20,
+    "workspaceConcurrency": 1,
+    "globalConcurrency": 2,
+    "workspacePrivateBytes": 10485760,
+    "platformPrivateBytes": 104857600,
+    "paidProvidersEnabled": false
+  },
+  "qualification": "Local development defaults, not public pilot promises. No F7–F10 stage handlers; planning pauses safely. Browser checks use local test accounts; existing F4 QA findings remain separate.",
+  "paidProviderCalls": false,
+  "externalEmail": false,
+  "cloudDeployment": false
+}
