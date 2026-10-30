@@ -1,5 +1,9 @@
 # API foundation
 
+F3 adds Better Auth and session-derived workspace access. Run `npm run db:migrate`, `npm run auth:setup`, then `npm run dev:f3` while local PostgreSQL is running. The setup creates a separate restricted identity login and stores the generated secret in ignored local configuration. It does not register a user or send a real email. See [F3 record](../../docs/milestones/F3-IDENTITY-WORKSPACE.md) and [identity HTTP handoff](../../docs/api/IDENTITY-F3.md).
+
+Development verification/reset mail is written to ignored `.local/auth-mailbox/`; links/tokens are never exposed by a public endpoint. Production requires HTTPS and configured SMTP. Auth endpoints and own-workspace API are implemented; browser forms arrive in F4. Build/start commands remain the same shared TypeScript entry.
+
 F2 implementation uses strict TypeScript and Fastify: `npm run dev:f2` for development, `npm run build:api` then `npm run start:api` for compiled execution. See [PostgreSQL setup](../../packages/database/README.md). Configure `API_HOST`, `API_PORT`, and restricted `RUNTIME_DATABASE_URL` in this folder's ignored `.env`. The API never uses the migration/owner URL.
 
 F2 `/health/ready` measures actual database connectivity/role/schema status. Overall readiness stays 503 until media storage is implemented. `/api/v1` business features and authentication are not implemented yet. The `.mjs` entry below is retained as the separate F1 reference; `.ts` is the selected implementation path going forward.

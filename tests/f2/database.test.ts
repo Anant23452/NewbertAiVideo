@@ -20,6 +20,7 @@ let databaseName: string;
 const results: string[] = [];
 const u1=randomUUID(),u2=randomUUID(),w1=randomUUID(),w2=randomUUID(),p1=randomUUID(),p2=randomUUID(),v1=randomUUID();
 const hash='a'.repeat(64);
+const expectedMigrations=(await readdir(migrationDirectory)).filter((name:string)=>name.endsWith('.sql')).length;
 before(async()=>{
   local=await startCluster({directory:resolve('test-results/f2-postgres'),port:await freePort()});
   databaseName='newbert_f2_'+randomUUID().replaceAll('-','');
@@ -39,13 +40,13 @@ after(async()=>{
 test('real PostgreSQL applies ordered migrations and replay performs no work',async()=>{
   const version=await owner.query('SHOW server_version');
   assert.match(version.rows[0].server_version,/^17\./);
-  const applied=await migrate(owner);assert.equal(applied.length,2);
+  const applied=await migrate(owner);assert.equal(applied.length,expectedMigrations);
   assert.equal((await migrate(owner)).length,0);
-  const history=await owner.query('SELECT name FROM public.pgmigrations ORDER BY id');assert.equal(history.rowCount,2);
+  const history=await owner.query('SELECT name FROM public.pgmigrations ORDER BY id');assert.equal(history.rowCount,expectedMigrations);
   const tables=await owner.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='newbert'");assert.equal(tables.rows[0].n,28);
   await owner.query('GRANT newbert_runtime TO newbert_app');
   runtime=createRuntimePool(connectionUrl(local.config,databaseName,true));
-  results.push(`PostgreSQL ${version.rows[0].server_version}: two migrations, replay zero, 28 domain tables`);
+  results.push(`PostgreSQL ${version.rows[0].server_version}: ${expectedMigrations} migrations, replay zero, 28 domain tables`);
 });
 
 test('runtime has no owner privileges and database readiness rejects privileged connections',async()=>{
@@ -89,12 +90,12 @@ test('immutable versions and same-workspace foreign keys hold on the real server
 });
 
 test('failed migration rolls back partial DDL and leaves applied history unchanged',async()=>{
-  const dir=resolve('test-results/f2-bad-migrations');await mkdir(dir,{recursive:true});
+  const dir=resolve('test-results/f2-bad-migrations',randomUUID());await mkdir(dir,{recursive:true});
   for(const name of await readdir(migrationDirectory))await writeFile(join(dir,name),await readFile(join(migrationDirectory,name)));
-  await writeFile(join(dir,'1793318400002_failure.sql'),'-- Up Migration\nCREATE TABLE public.f2_partial_probe(id int);\nSELECT * FROM public.f2_deliberately_missing_relation;\n');
-  await assert.rejects(migrate(owner,dir));
+  await writeFile(join(dir,'1793318400999_failure.sql'),'-- Up Migration\nCREATE TABLE public.f2_partial_probe(id int);\nSELECT * FROM public.f2_deliberately_missing_relation;\n');
+  await assert.rejects(migrate(owner,dir),/f2_deliberately_missing_relation/);
   assert.equal((await owner.query("SELECT to_regclass('public.f2_partial_probe') AS result")).rows[0].result,null);
-  assert.equal((await owner.query('SELECT count(*)::int AS n FROM public.pgmigrations')).rows[0].n,2);
+  assert.equal((await owner.query('SELECT count(*)::int AS n FROM public.pgmigrations')).rows[0].n,expectedMigrations);
   assert.equal((await migrate(owner)).length,0);
   results.push('Invalid migration leaves no partial table or history row; clean re-run is safe');
 });

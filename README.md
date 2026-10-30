@@ -1,6 +1,8 @@
 # Newbert AI Video
 
-Current stage: **F2 — implementation stack and PostgreSQL foundation**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F2 scope and verification](docs/milestones/F2-STACK-DATABASE.md) · [Database setup](packages/database/README.md).
+Current stage: **F3 — identity and private workspace backend**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F3 scope and verification](docs/milestones/F3-IDENTITY-WORKSPACE.md) · [Database setup](packages/database/README.md).
+
+With local PostgreSQL running: `npm run db:migrate`, `npm run auth:setup`, then `npm run dev:f3`. Auth mail is local-only until SMTP is configured; no real email is sent in development mode. Production registration/session/recovery and own-workspace endpoints are available for integration, while their browser forms are the next F4 milestone. `npm run test:f3` verifies auth against real PostgreSQL.
 
 F2 commands: run `npm run db:local` in one terminal, then `npm run db:migrate` and `npm run dev:f2` in another. The TypeScript/Fastify API runs on port 3100. `npm run check:f2`, `npm run build:api`, and `npm run test:f2` verify this milestone. Next.js/React and Better Auth are selected for the coming UI/auth features, not implemented yet.
 

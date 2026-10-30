@@ -1,6 +1,6 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 30 October 2026. Current milestone: **F2 — stack and PostgreSQL foundation complete for review**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 30 October 2026. Current milestone: **F3 — identity and private workspace complete for review**. Product stage: feature-by-feature development. Production release: not deployed.
 
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
@@ -31,7 +31,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Production implementation | F1/F2 foundations complete for review | TypeScript/Fastify API and actual local PostgreSQL; no product routes, deployed identity/storage or Instagram integration |
+| Production implementation | F1/F2/F3 backend foundations complete for review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; no production UI, external email delivery, media storage or Instagram integration |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
@@ -47,7 +47,7 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 |---|---|---|---|---|
 | F1 | Project tracker, separate app/module scaffold, startup/liveness | Approved design | Complete for review | Syntax and loopback HTTP smoke checks passed; readiness correctly reports dependencies missing |
 | F2 | Select implementation stack and establish local DB/migration workflow | F1 | Complete for review | Stack ADR, typed API build, local PostgreSQL, two migrations and six real-server tests; 23 existing tests pass |
-| F3 | Registration, sessions, verification/recovery, private workspace bootstrap | F2 | Not started | Established auth adapter; one workspace/identity; revoke/logout; CSRF and ownership tests |
+| F3 | Registration, sessions, verification/recovery, private workspace bootstrap | F2 | Complete for review | Better Auth + isolated auth schema/role; transactional workspace bootstrap; 15 real-server auth cases and SMTP configuration regression passed; SMTP external delivery remains release configuration |
 | F4 | Approved homepage and shared responsive app shell/auth UI | F2,F3 | Not started | Real components, navigation, forms, keyboard/focus, Devanagari fonts, loading/errors and narrow-width checks |
 | F5 | Projects, library, draft editing and immutable submitted versions | F3,F4 | Not started | Own-project CRUD/archive; optimistic concurrency; stable versions/history; no cross-user access |
 | F6 | Durable jobs, usage admission, private media and operational controls | F2,F3,F5 | Not started | Atomic reserve/job/outbox; leases/fencing; fairness; cancellation; private objects/access URLs; platform spending gates |
@@ -68,7 +68,7 @@ F9 can initially use operator-configured narration; optional personal keys arriv
 | Decision | Needed by | Approach |
 |---|---|---|
 | Frontend/backend language and framework, package layout | F2 — selected | [ADR 001](decisions/ADR-001-IMPLEMENTATION-STACK.md): strict TypeScript, Next.js/React, Fastify, npm/root lockfile; actual frontend implementation F4 |
-| Supported auth adapter and transactional identity bootstrap | F2 selection / F3 implementation | Better Auth + PostgreSQL selected; auth schema, transport and atomic workspace integration remain F3 |
+| Supported auth adapter and transactional identity bootstrap | F3 backend complete | [ADR 002](decisions/ADR-002-IDENTITY-WORKSPACE.md): Better Auth, private auth tables, atomic bootstrap, local mail + configurable SMTP; real external mail/production settings remain release tasks |
 | PostgreSQL deployment/version and migration tooling | F2 local complete / hosting later | Native PostgreSQL 17 locally; pg + node-pg-migrate; actual migration replay/rollback and role tests pass |
 | Object storage, secret encryption/vault and email transport | F3/F6/F12 | Local adapters first; hosting selection later; no plaintext personal secrets in DB/browser |
 | Research adapter and evidence policy | F7 | Verify source retrieval/cost; unsupported material claims block or require revision |
@@ -84,7 +84,7 @@ F9 can initially use operator-configured narration; optional personal keys arriv
 
 - [x] Choose and record implementation stack and auth approach; implementation of auth remains F3.
 - [ ] Apply reviewed migrations, roles/grants and tenant RLS to real test PostgreSQL.
-- [ ] Confirm tenant isolation at API, DB and worker boundaries.
+- [ ] Confirm tenant isolation at all feature boundaries; F3 auth/own-workspace and DB cases pass, future project/worker features still require their own checks.
 - [ ] Implement conditional draft updates and immutable generation inputs.
 - [ ] Configure secrets, private object access, retention holds, backup and restore ownership.
 
@@ -133,9 +133,12 @@ Verification already available: 15 isolated API/DB design checks, local video en
 
 F2: six real-PostgreSQL integration tests plus all 23 existing F1/prototype tests passed; backend typecheck/build pass. See [results](db/f2-validation-results.json). Runtime DB role has tenant read access only; auth/feature-specific writes and production grants remain future work.
 
+F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 tests (including request-error QA), and 23 F1/prototype regressions passed; 46 total. [Results](db/f3-validation-results.json). Tenant runtime now has limited timezone/revision writes; the separate identity service has only its auth-table and resolver access. Production grants and future project/worker writes are still not implemented.
+
 ## 8. Change log and next action
 
 - 30 October 2026: user approved all UI pages and requested project tracking plus a simple F1 scaffold before further features.
 - F1 implementation/verification: complete for review; syntax, invalid-port validation and five HTTP smoke cases passed; see [F1 record](milestones/F1-FOUNDATION.md).
 - 30 October 2026: F2 completed for review. [Stack decision](decisions/ADR-001-IMPLEMENTATION-STACK.md), [F2 record](milestones/F2-STACK-DATABASE.md), and [local database guide](../packages/database/README.md) added. Local migrations applied twice (second run: zero work); no cloud or paid API calls.
-- Next after F2 review: F3 authentication and atomic private-workspace bootstrap. Do not start later product UI, live generation or publishing as part of F2.
+- 30 October 2026: F3 backend complete for review. [Milestone record](milestones/F3-IDENTITY-WORKSPACE.md), [identity ADR](decisions/ADR-002-IDENTITY-WORKSPACE.md), and [API handoff](api/IDENTITY-F3.md) added. No external emails, paid provider requests, cloud resources or UI implementation.
+- Next after F3 review: F4 approved homepage, shared application shell and connected auth forms. Generation and publishing features remain later milestones.

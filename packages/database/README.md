@@ -1,6 +1,8 @@
 # PostgreSQL and migrations
 
-F2 uses PostgreSQL 17-compatible SQL, the `pg` client and `node-pg-migrate`. Domain schema lives in `newbert`; migration history is `public.pgmigrations`. Better Auth will own a separate `auth` schema in F3. Migrations create no application users, sample projects, API keys or remote services.
+F3 adds migrations `1793318400002_auth-schema` and `1793318400003_identity-bootstrap`: five Better Auth tables plus one private binding table in `auth`, atomic private-workspace/session-status triggers, a narrow identity resolver and separate `newbert_identity` service role. Run `npm run auth:setup` after migrations to provision the local identity login without granting it tenant-project access. [Identity design](../../docs/decisions/ADR-002-IDENTITY-WORKSPACE.md).
+
+F2 uses PostgreSQL 17-compatible SQL, the `pg` client and `node-pg-migrate`. Domain schema lives in `newbert`; migration history is `public.pgmigrations`. Better Auth owns the separate `auth` schema introduced in F3. Migrations create no application users, sample projects, API keys or remote services.
 
 ## Start locally
 

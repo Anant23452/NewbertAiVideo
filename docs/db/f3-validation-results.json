@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-30",
+  "engine": "Native PostgreSQL and Fastify/Better Auth HTTP integration",
+  "delivery": "In-memory test mail and local-file sink only; no external email sent",
+  "results": [
+    "Verified sign-in, HttpOnly/Lax cookie, sanitized responses and atomic one-user/one-workspace binding",
+    "Duplicate and concurrent registration retain exactly one identity/workspace",
+    "Injected credential failure leaves no orphan auth user or workspace",
+    "Session-derived tenant, isolated roles, CSRF/Origin, IANA validation and stale-edit rejection",
+    "Logout/revoke-all validate CSRF and reject revoked cookies without cookie caching",
+    "Recovery responses do not reveal account presence; reset tokens are single use and old sessions revoked",
+    "Read-only GET sessions and explicit CSRF-protected POST refresh verified",
+    "Disabled identities, expired sessions and invalid verification tokens are blocked",
+    "Current-password validation and mandatory other-session revocation on password changes",
+    "Expired reset tokens and tampered verification links cannot change credentials or verification",
+    "Foreign origins/redirects rejected; malformed requests sanitized and unsupported account operations unavailable",
+    "Database-backed auth throttling returns 429 and Retry-After",
+    "Independent QA: cross-session CSRF replay and workspace ownership/revision injection rejected",
+    "Independent QA: hostile Host/proxy headers cannot poison mail links or rotate the rate-limit identity",
+    "HTTPS cookies, fail-closed production configuration, isolated auth credentials and local-only development delivery"
+  ]
+}
