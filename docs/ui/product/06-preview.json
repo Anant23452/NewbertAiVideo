@@ -1,0 +1,17 @@
+{
+  "slug": "06-preview",
+  "title": "Video Preview and Version History",
+  "name": "projects/2520368196713015322/screens/2f6af0b2ac0440978b2df15b4196cfea",
+  "width": "2560",
+  "height": "2048",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/04695c3668d94e2fb83f56b05b0edfba:download",
+    "name": "projects/2520368196713015322/files/04695c3668d94e2fb83f56b05b0edfba"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/cd4902328e8e43a396585565766af29c:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/cd4902328e8e43a396585565766af29c"
+  },
+  "refined": true
+}

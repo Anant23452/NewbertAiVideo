@@ -7,6 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "dev:f1": "node --env-file-if-exists=apps/api/.env apps/api/src/main.mjs",
+    "check:f1": "node --check apps/api/src/config.mjs && node --check apps/api/src/app.mjs && node --check apps/api/src/main.mjs",
     "prototype": "node --env-file=.env scripts/prototype.mjs",
     "dev": "node --env-file-if-exists=.env server.mjs",
     "start": "node --env-file-if-exists=.env server.mjs",

@@ -1,6 +1,8 @@
 # Newbert AI Video
 
-Implementation status: provider integration and a local video prototype are underway following review of [the proposed system design](docs/SYSTEM-DESIGN-V1.md).
+Current stage: **F1 — foundation scaffold**, following user approval of the homepage and all product designs. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F1 scope and verification](docs/milestones/F1-FOUNDATION.md).
+
+Run the new, separate foundation with `npm run dev:f1` (port 3100); `npm run check:f1` checks its syntax. It currently exposes health endpoints only. The instructions below refer to the earlier feasibility prototype, whose startup remains unchanged. Production features will be implemented one milestone at a time.
 
 A working local development foundation for a Hindi/Hinglish educational motion graphic video studio.
 

@@ -1,0 +1,31 @@
+{
+  "slug": "08-settings",
+  "title": "Settings — Connections and Allowance",
+  "name": "projects/2520368196713015322/screens/4d65a9d5a5e44f4f841ff9fefec10fa8",
+  "width": "2560",
+  "height": "3090",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/fae11eb9c1d7489ba99e6748ef6177e0:download",
+    "name": "projects/2520368196713015322/files/fae11eb9c1d7489ba99e6748ef6177e0"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/93700a6c50de4275b9cbd031559d2111:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/93700a6c50de4275b9cbd031559d2111"
+  },
+  "output": [
+    {
+      "text": "The **Newbert AI Video - Settings** screen (Newbert AI Video - Settings) has been crafted following the approved product shell and visual system.\n\n### Key Architectural & Design Highlights:\n1. **Unified Navigation & Shell Continuity:**\n   - **Persistent 224px Left Sidebar:** Wordmark `Newbert AI Video`, precise navigation order (*Dashboard*, *Projects*, *Create a video*, *Publishing* [Planned], and *Settings* active), personal workspace footer with single-seat pilot indicator, Aarav S. owner profile, and Help & Feedback.\n   - **Top Bar:** Breadcrumb trail (`Workspace / Settings`), prominent `Design preview · Sample data` tag, search input, notifications, and profile pill.\n\n2. **Connections Management (Main Column):**\n   - **Personal Speech Key Card (ElevenLabs):** Features masked credentials (`••••••••••••••••••••••••`), sample active permissions (`Voices: Read`, `Text to Speech`), and an explicit `Disconnect` action with the replacement guidance: *\"To replace your key, disconnect this connection first.\"* Includes a notice warning explaining voice catalog permissions, plus the shared engine status note: *\"Script generation: Available (powered by workspace engine — no personal script API key needed).\"*\n   - **Instagram Publishing Card:** Explicitly marked with the `Planned · design preview` badge, showing the single connected account (`@newbert_explains`) alongside `Reconnect account` and `Disconnect` controls, with the safety confirmation note that pending scheduled deliveries pause upon disconnection.\n   - **Workspace Defaults:** Clean configuration controls for default narration language (**Hindi** / **Hinglish**), workspace timezone (`Asia/Kolkata (IST)`), pedagogical pacing (`0.95x academic pace`), and a prominent `Save preferences` primary button.\n\n3. **Illustrative Pilot Allowance Rail (Right Column):**\n   - Incorporates the concentric focal ring diagram motif echoing the Spotlight Effect video prototype.\n   - Grounded in honest product truths with clear `Illustrative limits` tagging: **2 of 3 daily creations used** (max 60s per prototype), reset scheduled for **05:30 IST**, **2 rendered · 1 in queue**, and **3 of 6 project slots used**.\n   - Explicit pilot declaration confirming no paid plans, credit purchases, or upgrades.\n\n4. **Visual Craft & Ergonomics:**\n   - Adheres to the true black palette (`#000000` base, `#08080B` shell, `#111116` containers, `#23222D` hairline borders) with accessible `#A7A1B5` secondary text, `#7DE5E0` mint status accents, and `#A18BFF` violet interactive elements. Fully responsive structure that gracefully collapses for tablet and mobile viewports."
+    },
+    {
+      "suggestion": "View the Usage & limits tab variation"
+    },
+    {
+      "suggestion": "Adjust the ElevenLabs key disconnected/empty state"
+    },
+    {
+      "suggestion": "Review mobile responsive layout for Settings"
+    }
+  ],
+  "refined": true
+}

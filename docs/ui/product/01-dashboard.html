@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ffb4ab",
+            "background": "#131316",
+            "on-primary-container": "#36188e",
+            "error-container": "#93000a",
+            "surface-bright": "#39393c",
+            "inverse-surface": "#e5e1e6",
+            "primary-fixed-dim": "#cbbeff",
+            "secondary": "#6fd7d2",
+            "primary-fixed": "#e6deff",
+            "on-secondary-fixed": "#00201f",
+            "secondary-fixed": "#8cf4ef",
+            "primary-container": "#a18bff",
+            "secondary-fixed-dim": "#6fd7d2",
+            "on-tertiary": "#302f3b",
+            "tertiary-fixed-dim": "#c8c4d3",
+            "surface": "#131316",
+            "on-error": "#690005",
+            "on-tertiary-fixed-variant": "#474552",
+            "on-secondary": "#003735",
+            "on-primary-fixed": "#1d0061",
+            "on-surface-variant": "#cac4d4",
+            "on-secondary-fixed-variant": "#00504d",
+            "on-tertiary-fixed": "#1b1a25",
+            "tertiary-fixed": "#e4e0f0",
+            "inverse-primary": "#624bbb",
+            "tertiary-container": "#9d9aa8",
+            "surface-tint": "#cbbeff",
+            "tertiary": "#c8c4d3",
+            "surface-container-low": "#1b1b1f",
+            "on-primary-fixed-variant": "#4a31a2",
+            "surface-container-highest": "#353438",
+            "on-background": "#e5e1e6",
+            "primary": "#cbbeff",
+            "on-secondary-container": "#00302e",
+            "outline-variant": "#484552",
+            "on-error-container": "#ffdad6",
+            "on-primary": "#33128b",
+            "inverse-on-surface": "#303034",
+            "surface-variant": "#353438",
+            "surface-container-high": "#2a292d",
+            "surface-container": "#201f23",
+            "outline": "#938e9e",
+            "surface-dim": "#131316",
+            "surface-container-lowest": "#0e0e11",
+            "secondary-container": "#2ea09c",
+            "on-surface": "#e5e1e6",
+            "on-tertiary-container": "#34323e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem"
+          },
+          "fontFamily": {
+            "label-sm": ["Plus Jakarta Sans"],
+            "display-xl-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "display-xl": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "mono-metric": ["Space Mono"],
+            "devanagari": ["Noto Sans Devanagari", "Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "600" }],
+            "mono-metric": ["12px", { "lineHeight": "16px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    body {
+      background-color: #000000;
+      color: #e5e1e6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#000000] text-on-surface antialiased flex h-screen overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- ================= SIDEBAR (224px fixed) ================= -->
+<aside class="w-[224px] flex-shrink-0 bg-[#08080B] border-r border-[#23222D] flex flex-col justify-between h-full z-20">
+<div class="flex flex-col">
+<!-- Brand Wordmark -->
+<div class="h-16 px-5 flex items-center gap-2.5 border-b border-[#23222D]">
+<div class="relative flex items-center justify-center w-7 h-7 rounded-lg bg-surface-container-high border border-[#23222D]">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_8px_rgba(161,139,255,0.8)]"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight text-[17px]">
+          Newbert AI Video
+        </span>
+</div>
+<!-- Navigation Links -->
+<nav class="p-3 space-y-1">
+<!-- 1. Dashboard (Active) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#181820] text-primary border border-[#2E2C3D] font-label-md text-label-md transition-colors shadow-[0_0_12px_rgba(161,139,255,0.1)]" href="#dashboard">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. Projects -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] font-label-md text-label-md transition-colors" href="#projects">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+<span>Projects</span>
+</a>
+<!-- 3. Create a video -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] font-label-md text-label-md transition-colors" href="#create">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Create a video</span>
+</a>
+<!-- 4. Publishing -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] font-label-md text-label-md transition-colors group" href="#publishing">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Publishing</span>
+</div>
+<span class="font-label-sm text-[9px] px-1.5 py-0.5 rounded bg-surface-container-high border border-[#23222D] text-outline text-opacity-80 leading-none">
+            Planned
+          </span>
+</a>
+<!-- 5. Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] font-label-md text-label-md transition-colors" href="#settings">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Sidebar Section -->
+<div class="p-3 border-t border-[#23222D] space-y-3">
+<!-- Workspace Status Tag -->
+<div class="px-3 py-1.5 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_6px_rgba(111,215,210,0.8)]"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Personal workspace</span>
+</div>
+<span class="font-mono-metric text-[10px] text-outline">1 Seat</span>
+</div>
+<!-- User Profile -->
+<div class="flex items-center justify-between px-2 py-1">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border border-[#23222D] flex items-center justify-center font-label-md text-label-md text-primary font-semibold">
+            AS
+          </div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface leading-tight">Aarav S.</span>
+<span class="font-label-sm text-[10px] text-outline">Owner</span>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface transition-colors p-1" title="Account settings">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<!-- Help & Feedback Link -->
+<a class="flex items-center gap-2 px-2 py-1 text-outline hover:text-on-surface font-label-sm text-label-sm transition-colors" href="#help">
+<span class="material-symbols-outlined text-[15px]">help_outline</span>
+<span>Help &amp; Feedback</span>
+</a>
+</div>
+</aside>
+<!-- ================= MAIN CONTAINER ================= -->
+<div class="flex-1 flex flex-col min-w-0 bg-[#000000] overflow-hidden">
+<!-- TOP BAR -->
+<header class="h-16 flex-shrink-0 bg-[#08080B] border-b border-[#23222D] px-6 lg:px-8 flex items-center justify-between z-10">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 font-body-sm text-body-sm text-outline">
+<span class="hover:text-on-surface transition-colors cursor-pointer">Workspace</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-label-md text-label-md">Dashboard</span>
+</div>
+<!-- Center & Right Clusters -->
+<div class="flex items-center gap-3">
+<!-- Sample Data Pill Badge -->
+<div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#111116] border border-[#23222D] text-outline font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary opacity-60"></span>
+<span>Design preview · Sample data</span>
+</div>
+<div class="h-4 w-[1px] bg-[#23222D] mx-1"></div>
+<!-- Quick Action / Search -->
+<button class="w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all" title="Search drafts">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+<!-- Account / Notifications Menu -->
+<button class="w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all" title="Notifications">
+<span class="material-symbols-outlined text-[18px]">notifications</span>
+</button>
+</div>
+</header>
+<!-- CONTENT BODY (Split Canvas + Supporting Rail) -->
+<div class="flex-1 flex overflow-hidden">
+<!-- MAIN CANVAS (Scrollable Left Area) -->
+<main class="flex-1 overflow-y-auto px-6 lg:px-8 py-7 space-y-6">
+<!-- 1. Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-[#23222D]/60">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-[#F5F2FA] font-bold tracking-tight">
+              Your next explanation starts here.
+            </h1>
+<p class="font-body-md text-body-md text-[#A7A1B5] mt-1">
+              Turn educational topics into clear, narrated motion graphics in Hindi and Hinglish.
+            </p>
+</div>
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold hover:opacity-95 active:scale-[0.98] transition-all shadow-[0_0_16px_rgba(161,139,255,0.35)] shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">add</span>
+<span>Create a video</span>
+</button>
+</div>
+<!-- 2. Compact Topic Quick-Start Input -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] p-5 shadow-sm space-y-3.5">
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-3">
+<!-- Text Input Container -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline text-[18px]">psychology</span>
+<input class="w-full bg-[#181820] border border-[#23222D] rounded-lg pl-10 pr-4 py-2.5 text-on-surface placeholder-[#938e9e] font-body-md text-body-md focus:border-primary-container focus:ring-1 focus:ring-primary-container focus:outline-none transition-all" placeholder="What would you like to explain? (e.g., Why do we feel everyone is watching us?)" type="text"/>
+</div>
+<!-- Language Pill Toggle -->
+<div class="flex items-center self-start lg:self-auto bg-[#181820] border border-[#23222D] rounded-lg p-0.5">
+<button class="px-3 py-1.5 rounded-md font-label-sm text-label-sm bg-[#23222D] text-secondary font-semibold flex items-center gap-1.5 transition-all">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Hindi</span>
+</button>
+<button class="px-3 py-1.5 rounded-md font-label-sm text-label-sm text-outline hover:text-on-surface transition-all">
+<span>Hinglish</span>
+</button>
+</div>
+<!-- Action Button -->
+<button class="px-4 py-2.5 rounded-lg bg-surface-container-high border border-[#2E2C3D] hover:border-primary-container text-on-surface font-label-md text-label-md font-medium hover:text-primary transition-all flex items-center justify-center gap-2 whitespace-nowrap active:scale-[0.98]">
+<span>Generate script &amp; visuals</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Quick Suggestions Row -->
+<div class="flex items-center gap-2 pt-1 flex-wrap">
+<span class="font-label-sm text-label-sm text-outline">Suggestions:</span>
+<button class="px-2.5 py-1 rounded-md bg-[#181820] border border-[#23222D] text-on-surface-variant font-label-sm text-label-sm hover:border-primary/40 hover:text-on-surface transition-colors">
+              The spotlight effect
+            </button>
+<button class="px-2.5 py-1 rounded-md bg-[#181820] border border-[#23222D] text-on-surface-variant font-label-sm text-label-sm hover:border-primary/40 hover:text-on-surface transition-colors">
+              How binary works
+            </button>
+<button class="px-2.5 py-1 rounded-md bg-[#181820] border border-[#23222D] text-on-surface-variant font-label-sm text-label-sm hover:border-primary/40 hover:text-on-surface transition-colors">
+              Confirmation bias
+            </button>
+</div>
+</div>
+<!-- 3. In-Progress Activity Alert (Compact card) -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative overflow-hidden">
+<!-- Subtle Glow Bar on Left -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-secondary"></div>
+<div class="flex items-center gap-3.5 pl-2">
+<!-- Pulsing Render Activity Icon -->
+<div class="w-9 h-9 rounded-lg bg-[#181820] border border-[#23222D] flex items-center justify-center text-primary relative shrink-0">
+<span class="material-symbols-outlined text-[20px] animate-spin" style="animation-duration: 4s;">autorenew</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">New version rendering · The Spotlight Effect</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono-metric bg-primary-container/10 border border-primary-container/30 text-primary">Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-[#A7A1B5] mt-0.5">
+                Narration paced in Hindi • Audio &amp; visual timing lock
+              </p>
+</div>
+</div>
+<div class="flex items-center gap-3 self-end sm:self-auto">
+<a class="px-3 py-1.5 rounded-lg bg-[#181820] border border-[#23222D] text-on-surface hover:border-primary font-label-sm text-label-sm transition-all flex items-center gap-1" href="#render-inspect">
+<span>View progress</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- 4. Recent Projects Section (Grid of 3 realistic cards) -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-[#F5F2FA] font-semibold">
+              Recent Projects
+            </h2>
+<a class="font-label-md text-label-md text-primary hover:underline flex items-center gap-1" href="#projects">
+<span>View all projects</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+<!-- CARD 1: The Spotlight Effect -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] overflow-hidden flex flex-col group hover:border-[#2E2C3D] transition-all">
+<!-- Visual Diagram Thumbnail -->
+<div class="h-44 bg-[#08080B] relative flex items-center justify-center p-4 border-b border-[#23222D] overflow-hidden">
+<!-- Concentric Cognitive Rings Motif -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+<div class="w-36 h-36 rounded-full border border-dashed border-[#484552]"></div>
+<div class="absolute w-24 h-24 rounded-full border border-primary/40 shadow-[0_0_16px_rgba(161,139,255,0.2)]"></div>
+<div class="absolute w-12 h-12 rounded-full bg-primary/20 border border-primary flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+</div>
+<!-- Diagram Content Annotations -->
+<div class="relative z-10 text-center space-y-1">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider block">Cognitive Vector Scope</span>
+<div class="font-devanagari text-xs text-on-surface bg-[#111116]/80 px-2.5 py-1 rounded border border-[#23222D] shadow-sm">
+                    "लोग उतना ध्यान नहीं दे रहे..."
+                  </div>
+<span class="font-mono-metric text-[9px] text-secondary block mt-1">Perception vs Reality Gap</span>
+</div>
+<!-- Top Right Badges -->
+<div class="absolute top-2.5 right-2.5 flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-metric bg-[#111116] border border-secondary text-secondary font-medium flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-secondary"></span>
+                    Ready
+                  </span>
+</div>
+</div>
+<!-- Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center gap-2 mb-1.5 flex-wrap">
+<span class="px-1.5 py-0.5 rounded bg-[#181820] text-[#cac4d4] font-label-sm text-[10px] border border-[#23222D]">Hindi</span>
+<span class="px-1.5 py-0.5 rounded bg-[#181820] text-[#cac4d4] font-mono-metric text-[10px] border border-[#23222D]">39s</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-[#F5F2FA] font-semibold group-hover:text-primary transition-colors">
+                    The Spotlight Effect
+                  </h3>
+<p class="font-body-sm text-body-sm text-[#A7A1B5] mt-1 line-clamp-2">
+                    Why we can feel more noticed than we really are.
+                  </p>
+</div>
+<!-- Actions -->
+<div class="pt-2 border-t border-[#23222D] flex items-center justify-between">
+<button class="font-label-sm text-label-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Watch preview</span>
+</button>
+<button class="font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">edit</span>
+<span>Edit script</span>
+</button>
+</div>
+</div>
+</div>
+<!-- CARD 2: How Binary Works -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] overflow-hidden flex flex-col group hover:border-[#2E2C3D] transition-all">
+<!-- Visual Logic Decomposition Diagram Thumbnail -->
+<div class="h-44 bg-[#08080B] relative flex items-center justify-center p-4 border-b border-[#23222D] overflow-hidden">
+<!-- Mathematical Logic Decomposition Layout -->
+<div class="relative z-10 w-full px-2 flex flex-col items-center space-y-2">
+<div class="font-mono-metric text-[11px] text-outline">
+                    5 = 4 + 0 + 1
+                  </div>
+<div class="flex items-center gap-2">
+<div class="flex flex-col items-center">
+<span class="font-mono-metric text-[9px] text-[#938e9e]">2²</span>
+<div class="w-8 h-8 rounded bg-[#181820] border border-secondary text-secondary flex items-center justify-center font-mono-metric text-xs font-bold shadow-[0_0_8px_rgba(111,215,210,0.25)]">
+                        1
+                      </div>
+</div>
+<span class="text-outline text-xs">+</span>
+<div class="flex flex-col items-center">
+<span class="font-mono-metric text-[9px] text-[#938e9e]">2¹</span>
+<div class="w-8 h-8 rounded bg-[#181820] border border-[#23222D] text-outline flex items-center justify-center font-mono-metric text-xs font-bold">
+                        0
+                      </div>
+</div>
+<span class="text-outline text-xs">+</span>
+<div class="flex flex-col items-center">
+<span class="font-mono-metric text-[9px] text-[#938e9e]">2⁰</span>
+<div class="w-8 h-8 rounded bg-[#181820] border border-secondary text-secondary flex items-center justify-center font-mono-metric text-xs font-bold shadow-[0_0_8px_rgba(111,215,210,0.25)]">
+                        1
+                      </div>
+</div>
+</div>
+<div class="font-mono-metric text-[11px] text-on-surface bg-[#181820] px-3 py-0.5 rounded border border-[#23222D]">
+                    RESULT: <span class="text-primary font-bold">101</span>
+</div>
+</div>
+<!-- Top Right Badges -->
+<div class="absolute top-2.5 right-2.5 flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-metric bg-[#111116] border border-secondary text-secondary font-medium flex items-center gap-1">
+<span class="w-1 h-1 rounded-full bg-secondary"></span>
+                    Ready
+                  </span>
+</div>
+</div>
+<!-- Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center gap-2 mb-1.5 flex-wrap">
+<span class="px-1.5 py-0.5 rounded bg-[#181820] text-[#cac4d4] font-label-sm text-[10px] border border-[#23222D]">Hinglish</span>
+<span class="px-1.5 py-0.5 rounded bg-[#181820] text-[#cac4d4] font-mono-metric text-[10px] border border-[#23222D]">21s</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-[#F5F2FA] font-semibold group-hover:text-primary transition-colors">
+                    How Binary Works
+                  </h3>
+<p class="font-body-sm text-body-sm text-[#A7A1B5] mt-1 line-clamp-2">
+                    See how 4 + 1 becomes 101 in binary.
+                  </p>
+</div>
+<!-- Actions -->
+<div class="pt-2 border-t border-[#23222D] flex items-center justify-between">
+<button class="font-label-sm text-label-sm text-on-surface hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+<span>Watch preview</span>
+</button>
+<button class="font-label-sm text-label-sm text-outline hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">edit</span>
+<span>Edit script</span>
+</button>
+</div>
+</div>
+</div>
+<!-- CARD 3: Confirmation Bias -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] overflow-hidden flex flex-col group hover:border-[#2E2C3D] transition-all">
+<!-- Minimal Abstract Outline Wireframe Thumbnail -->
+<div class="h-44 bg-[#08080B] relative flex items-center justify-center p-4 border-b border-[#23222D] overflow-hidden">
+<div class="relative z-10 flex flex-col items-center space-y-2 opacity-75">
+<div class="w-20 h-10 border border-dashed border-[#484552] rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-[18px]">filter_alt</span>
+</div>
+<div class="w-28 h-1 bg-[#181820] rounded-full"></div>
+<span class="font-label-sm text-[10px] text-outline font-mono-metric">Wireframe node schema</span>
+</div>
+<!-- Top Right Badges -->
+<div class="absolute top-2.5 right-2.5 flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-metric bg-[#111116] border border-primary-container text-primary font-medium">
+                    Draft
+                  </span>
+</div>
+</div>
+<!-- Content Body -->
+<div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center gap-2 mb-1.5 flex-wrap">
+<span class="px-1.5 py-0.5 rounded bg-[#181820] text-[#cac4d4] font-label-sm text-[10px] border border-[#23222D]">Hinglish</span>
+</div>
+<h3 class="font-headline-sm text-[17px] text-[#F5F2FA] font-semibold group-hover:text-primary transition-colors">
+                    Confirmation Bias
+                  </h3>
+<p class="font-body-sm text-body-sm text-[#A7A1B5] mt-1 line-clamp-2">
+                    How our minds seek evidence that confirms existing beliefs.
+                  </p>
+</div>
+<!-- Actions -->
+<div class="pt-2 border-t border-[#23222D] flex items-center justify-between">
+<button class="font-label-sm text-label-sm text-primary hover:text-on-surface transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">edit_note</span>
+<span>Continue editing</span>
+</button>
+<span class="font-label-sm text-[11px] text-outline">Unrendered</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- ================= SUPPORTING SIDE RAIL (Right Column, 320px) ================= -->
+<aside class="w-[320px] flex-shrink-0 bg-[#08080B] border-l border-[#23222D] p-5 space-y-5 overflow-y-auto hidden xl:block">
+<!-- 1. Pilot Allowance Card -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] p-4 space-y-3">
+<div class="flex items-center justify-between">
+<span class="font-mono-metric text-[10px] uppercase tracking-wider text-outline font-semibold">
+              PILOT ALLOWANCE
+            </span>
+<span class="font-label-sm text-[10px] px-1.5 py-0.5 rounded bg-[#181820] text-outline border border-[#23222D]">
+              Illustrative limits
+            </span>
+</div>
+<div>
+<div class="flex justify-between items-baseline mb-1.5">
+<span class="font-headline-sm text-[15px] font-semibold text-on-surface">2 of 3 creations</span>
+<span class="font-label-sm text-label-sm text-secondary font-mono-metric">remaining</span>
+</div>
+<!-- Progress Bar Gauge -->
+<div class="w-full h-1.5 bg-[#181820] rounded-full overflow-hidden">
+<div class="w-1/3 h-full bg-secondary rounded-full"></div>
+</div>
+</div>
+<div class="pt-2 border-t border-[#23222D] space-y-1.5">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-[#A7A1B5]">Resets at 05:30 IST</span>
+<span class="material-symbols-outlined text-outline text-[14px] cursor-help" title="00:00 UTC policy">info</span>
+</div>
+<p class="font-label-sm text-[11px] text-outline leading-tight">
+              Pacing and duration are tied to script length. Maximum 60s per prototype.
+            </p>
+</div>
+</div>
+<!-- 2. Upcoming Publishing Card -->
+<div class="rounded-xl bg-[#111116] border border-[#23222D] p-4 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">video_library</span>
+<h4 class="font-label-md text-label-md text-on-surface font-semibold">Instagram Publishing</h4>
+</div>
+<span class="font-label-sm text-[9px] px-1.5 py-0.5 rounded bg-[#181820] text-outline border border-[#23222D]">
+              Planned
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-[#A7A1B5] leading-relaxed">
+            Direct export and scheduling for 9:16 educational reels is in design exploration. Single connected account per workspace.
+          </p>
+<button class="w-full py-2 px-3 rounded-lg bg-[#181820] border border-[#23222D] hover:border-primary/50 text-on-surface font-label-sm text-label-sm transition-all flex items-center justify-center gap-1.5">
+<span>Explore scheduling preview</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</button>
+</div>
+<!-- 3. Workspace Info & Empty State Annotation -->
+<div class="space-y-4 pt-1">
+<!-- Private workspace status box -->
+<div class="px-3.5 py-3 rounded-xl bg-[#111116] border border-[#23222D] flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#181820] border border-[#23222D] flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Private workspace</span>
+<span class="font-label-sm text-[11px] text-outline block">1 creator connected</span>
+</div>
+</div>
+<!-- Small Design Annotation Footnote -->
+<div class="p-3 rounded-lg bg-surface-container-lowest/50 border border-dashed border-[#23222D] space-y-1">
+<div class="flex items-center gap-1 text-outline font-mono-metric text-[10px] uppercase">
+<span class="material-symbols-outlined text-[12px]">lightbulb</span>
+<span>UX Behavior Note</span>
+</div>
+<p class="font-label-sm text-[11px] text-outline leading-normal">
+              Design pattern note: If projects list is empty, the quick-start input expands into a step-by-step topic guidance prompt.
+            </p>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

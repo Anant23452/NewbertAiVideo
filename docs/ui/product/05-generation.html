@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Generating Video</title>
+<!-- Google Fonts: Plus Jakarta Sans & Space Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Space+Mono:ital,wght@0,400;0,700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim matching Design System tokens -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline": "#938e9e",
+            "surface-container-highest": "#353438",
+            "secondary": "#6fd7d2",
+            "on-surface-variant": "#cac4d4",
+            "on-tertiary-fixed-variant": "#474552",
+            "surface-dim": "#131316",
+            "surface-tint": "#cbbeff",
+            "on-tertiary-container": "#34323e",
+            "tertiary-fixed-dim": "#c8c4d3",
+            "surface-container-low": "#1b1b1f",
+            "secondary-container": "#2ea09c",
+            "outline-variant": "#484552",
+            "on-primary": "#33128b",
+            "surface-container-high": "#2a292d",
+            "error-container": "#93000a",
+            "tertiary-fixed": "#e4e0f0",
+            "background": "#131316",
+            "secondary-fixed": "#8cf4ef",
+            "surface-container": "#201f23",
+            "surface-variant": "#353438",
+            "primary-container": "#a18bff",
+            "secondary-fixed-dim": "#6fd7d2",
+            "primary-fixed": "#e6deff",
+            "on-secondary": "#003735",
+            "on-primary-fixed": "#1d0061",
+            "on-tertiary": "#302f3b",
+            "on-secondary-fixed-variant": "#00504d",
+            "primary": "#cbbeff",
+            "on-error-container": "#ffdad6",
+            "surface-container-lowest": "#0e0e11",
+            "tertiary-container": "#9d9aa8",
+            "surface-bright": "#39393c",
+            "inverse-on-surface": "#303034",
+            "error": "#ffb4ab",
+            "on-error": "#690005",
+            "on-primary-fixed-variant": "#4a31a2",
+            "on-secondary-container": "#00302e",
+            "on-primary-container": "#36188e",
+            "tertiary": "#c8c4d3",
+            "on-tertiary-fixed": "#1b1a25",
+            "on-secondary-fixed": "#00201f",
+            "primary-fixed-dim": "#cbbeff",
+            "inverse-surface": "#e5e1e6",
+            "on-surface": "#e5e1e6",
+            "surface": "#131316",
+            "on-background": "#e5e1e6",
+            "inverse-primary": "#624bbb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "gutter": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "mono-metric": ["Space Mono"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "display-xl": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "display-xl-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "mono-metric": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom glow utilities per Design System specifications */
+    .glow-violet-pulse {
+      box-shadow: 0 0 16px rgba(161, 139, 255, 0.35);
+      animation: pulseGlow 2.4s ease-in-out infinite alternate;
+    }
+    .glow-mint {
+      box-shadow: 0 0 12px rgba(111, 215, 210, 0.3);
+    }
+    @keyframes pulseGlow {
+      0% { opacity: 0.7; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1.05); }
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
+<!-- Top Global Header (Anchor Component) -->
+<header class="bg-surface-container-lowest/80 backdrop-blur-md border-b border-outline-variant/30 docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-6 lg:px-12 py-3.5 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<!-- Mobile Drawer Toggle -->
+<button aria-label="Toggle navigation" class="md:hidden text-on-surface-variant hover:text-on-surface p-1 rounded transition-colors focus:outline-none" id="mobile-menu-btn">
+<span class="material-symbols-outlined text-xl">menu</span>
+</button>
+<!-- Product Brand Anchor -->
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container glow-violet-pulse"></span>
+<span class="text-headline-sm font-headline-sm tracking-tight text-on-surface font-semibold">Newbert AI Video</span>
+</div>
+</div>
+<!-- Center navigation links from JSON -->
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-3.5"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="text-label-sm font-label-sm text-on-surface-variant font-mono-metric">Workspace active</span></div></div>
+</div>
+</header>
+<!-- Main Shell with Left Sidebar & Fluid Workspace Content -->
+<div class="flex-1 flex max-w-7xl w-full mx-auto relative">
+<!-- LEFT SIDEBAR (224px desktop fixed rail, collapsible on tablet/mobile) -->
+<aside class="w-56 shrink-0 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col justify-between py-6 px-4 absolute md:relative z-40 h-[calc(100vh-61px)] -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out" id="sidebar-drawer">
+<div class="space-y-6">
+<!-- Sidebar Workspace Indicator -->
+<!-- Navigation items list -->
+<nav aria-label="Sidebar main" class="space-y-1.5">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#dashboard">
+<span class="material-symbols-outlined text-lg text-outline">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. Projects (ACTIVE / SELECTED state) -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-body-md font-body-md bg-surface-container-high text-primary font-semibold border-l-2 border-primary transition-all" href="#projects">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-primary">folder_open</span>
+<span>Projects</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+</a>
+<!-- 3. Create a video -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#create">
+<span class="material-symbols-outlined text-lg text-outline">movie_edit</span>
+<span>Create a video</span>
+</a>
+<!-- 4. Publishing (with pill badge) -->
+<a class="flex flex-col gap-1 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#publishing">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg text-outline">publish</span>
+<span>Publishing</span>
+</div>
+<span class="ml-7 self-start text-[10px] leading-tight px-1.5 py-0.5 rounded bg-surface-container-highest text-tertiary border border-outline-variant/30 font-mono-metric">
+              Planned · preview
+            </span>
+</a>
+<!-- 5. Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" href="#settings">
+<span class="material-symbols-outlined text-lg text-outline">tune</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Workspace & User Area -->
+<div class="pt-4 border-t border-outline-variant/20 space-y-3">
+<!-- Personal Workspace Badge -->
+<div class="px-2 py-1.5 rounded-md bg-surface-container text-on-surface-variant flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm text-outline">person</span>
+<span class="truncate">Personal workspace</span>
+</div>
+<span class="text-[10px] text-outline font-mono-metric">1 seat</span>
+</div>
+<!-- User profile plate -->
+<div class="flex items-center gap-2.5 px-2 py-1">
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/50 flex items-center justify-center text-label-sm font-label-sm text-primary font-semibold shrink-0">
+            AS
+          </div>
+<div class="min-w-0 flex-1">
+<p class="text-body-sm font-body-sm font-semibold text-on-surface truncate leading-tight">Aarav S.</p>
+<p class="text-label-sm font-label-sm text-outline truncate leading-tight">Owner</p>
+</div>
+</div>
+<!-- Help & Feedback Link -->
+<a class="flex items-center gap-2 text-body-sm font-body-sm text-outline hover:text-on-surface px-2 py-1 transition-colors" href="#feedback">
+<span class="material-symbols-outlined text-sm">help_outline</span>
+<span>Help &amp; Feedback</span>
+</a>
+</div>
+</aside>
+<!-- RIGHT/CENTER MAIN CONTENT AREA -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface-container-lowest">
+<!-- Top Secondary Utility Sub-Bar -->
+<div class="px-6 lg:px-10 py-3 border-b border-outline-variant/20 flex flex-wrap items-center justify-between gap-4 bg-surface-container-low/40 min-w-0 w-full">
+<!-- Breadcrumbs & Status Tag -->
+<div class="flex items-center flex-wrap gap-2 text-body-sm font-body-sm min-w-0">
+<span class="text-outline hidden md:inline">Projects</span>
+<span class="text-outline-variant hidden md:inline">/</span>
+<span class="text-on-surface-variant font-medium hidden sm:inline">The Spotlight Effect</span>
+<span class="text-outline-variant hidden sm:inline">/</span>
+<span class="text-primary font-medium truncate">Version 3</span>
+<span class="ml-1 sm:ml-2 text-[10px] px-2 py-0.5 rounded bg-surface-container-high text-secondary border border-secondary/30 font-mono-metric truncate">
+            Design preview · Sample data
+          </span>
+</div>
+<!-- Quick Jump and Utility Icons -->
+<div class="flex items-center gap-3 shrink-0">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1 text-body-sm font-body-sm text-on-surface placeholder:text-outline w-44 focus:outline-none cursor-pointer" placeholder="Quick jump... (⌘K)" readonly="" type="text"/>
+</div>
+<button aria-label="Notifications" class="w-8 h-8 rounded-lg bg-surface-container border border-outline-variant/30 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-base">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high border border-primary/30 flex items-center justify-center text-label-sm font-label-sm text-primary font-semibold">
+            AS
+          </div>
+</div>
+</div>
+<!-- Page Hero Header Bar -->
+<div class="px-6 lg:px-10 py-8 border-b border-outline-variant/20 flex flex-col lg:flex-row lg:items-center justify-between gap-6 w-full min-w-0">
+<div class="space-y-1.5 max-w-2xl min-w-0">
+<div class="flex items-center gap-2.5">
+<span class="inline-flex w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse shrink-0"></span>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight truncate sm:whitespace-normal">
+              Bringing your explanation to life
+            </h1>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+            Synthesizing narration and kinetic diagram schematics in Hindi. Your video keeps processing if you close this page.
+          </p>
+</div>
+<!-- Action Button Group -->
+<div class="flex flex-wrap items-center gap-3 shrink-0 w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial px-4 py-2 rounded-lg border border-outline-variant/40 text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all text-body-md font-body-md text-center">
+            Cancel generation
+          </button>
+<button class="flex-1 sm:flex-initial px-5 py-2 rounded-lg bg-primary-container text-on-primary-container font-semibold hover:opacity-95 transition-all text-body-md font-body-md flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-base">visibility</span>
+<span>View project</span>
+</button>
+</div>
+</div>
+<!-- WORKBENCH TWO-COLUMN GRID CANVAS -->
+<div class="p-6 lg:p-10 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full min-w-0">
+<!-- MAIN COLUMN: Pipeline Progress & Project Focus (Span 8 on desktop) -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Scientific Hero Card / Status Diagnostic Schema -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-6 relative overflow-hidden">
+<!-- Background subtle geometric caliper grid lines -->
+<div class="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#cac4d4_1px,transparent_1px)] [background-size:16px_16px]"></div>
+<!-- Meta attributes strip -->
+<div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-outline-variant/20 relative z-10">
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2.5 py-1 rounded bg-surface-container-high text-primary font-semibold text-label-md font-label-md border border-primary/20">
+                  The Spotlight Effect
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary text-label-sm font-label-sm border border-secondary/20">
+                  Hindi (हिंदी)
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary text-label-sm font-label-sm border border-outline-variant/30">
+                  Black glow
+                </span>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-label-sm font-label-sm">
+                  Draft Version 3
+                </span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary text-body-sm font-body-sm font-mono-metric">
+<span class="material-symbols-outlined text-sm">graphic_eq</span>
+<span>39 seconds of narration saved</span>
+</div>
+</div>
+<!-- Concentric Cognitive Diagram Vector Visualization -->
+<div class="py-8 flex flex-col md:flex-row items-center justify-around gap-6 relative z-10">
+<!-- Custom Precision Schematic SVG Motif -->
+<div class="relative w-56 h-56 flex items-center justify-center shrink-0">
+<!-- Outer Concentric Ring -->
+<div class="absolute inset-0 rounded-full border border-dashed border-outline-variant/40"></div>
+<!-- Middle Ring: "How it feels" -->
+<div class="absolute inset-4 rounded-full border border-primary-container/40 glow-violet-pulse"></div>
+<!-- Inner Ring: "What others notice" -->
+<div class="absolute inset-12 rounded-full border border-secondary/50 glow-mint"></div>
+<!-- Central Node "You" -->
+<div class="w-14 h-14 rounded-full bg-surface-container-high border-2 border-primary-container flex flex-col items-center justify-center text-center z-10 shadow-lg">
+<span class="text-[11px] font-bold text-on-surface">You</span>
+<span class="text-[8px] font-mono-metric text-secondary">focal</span>
+</div>
+<!-- Callout Badges -->
+<span class="absolute top-2 right-2 text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/30">How it feels</span>
+<span class="absolute bottom-2 left-2 text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-surface-container-high text-secondary border border-secondary/30">What others may notice</span>
+</div>
+<!-- Schematic Annotation Text -->
+<div class="space-y-3 max-w-sm"><div class="flex items-center gap-2"><span class="text-label-sm font-label-sm uppercase tracking-wider text-secondary font-mono-metric">Scene preview</span></div><h2 class="text-headline-sm font-headline-sm text-on-surface">Illustrative diagram</h2><p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">Visualizing the spotlight effect: contrast between what one feels versus what others actually notice during discussion.</p><div class="pt-2 flex items-center gap-4 text-label-sm font-label-sm text-outline font-mono-metric"><span>SCENE: Key conceptual moment</span></div></div>
+</div>
+</div>
+<!-- VERTICAL STAGE PROGRESSION PIPELINE -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-6 space-y-6">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/20">
+<h3 class="text-label-md font-label-md font-semibold text-on-surface tracking-wide uppercase">
+                Composition Pipeline Progression
+              </h3>
+<span class="text-label-sm font-label-sm font-mono-metric text-secondary flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                Honest state tracking
+              </span>
+</div>
+<ol class="relative border-l border-outline-variant/40 ml-4 space-y-6">
+<!-- Stage 1: Research -->
+<li class="ml-6 relative group">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</span>
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">1. Research</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Academic grounding &amp; concept deconstruction</p>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono-metric bg-surface-container px-2 py-0.5 rounded border border-secondary/20">
+                    Complete ✓
+                  </span>
+</div>
+</li>
+<!-- Stage 2: Script -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</span>
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">2. Script</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Spoken explanation structured in conversational Hindi</p>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono-metric bg-surface-container px-2 py-0.5 rounded border border-secondary/20">
+                    Complete ✓
+                  </span>
+</div>
+</li>
+<!-- Stage 3: Scene plan -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</span>
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">3. Scene plan</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">4 cognitive visual scenes mapped</p>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono-metric bg-surface-container px-2 py-0.5 rounded border border-secondary/20">
+                    Complete ✓
+                  </span>
+</div>
+</li>
+<!-- Stage 4: Voice -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</span>
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">4. Voice</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">39s synthetic voice synthesis locked</p>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono-metric bg-surface-container px-2 py-0.5 rounded border border-secondary/20">
+                    Complete ✓
+                  </span>
+</div>
+</li>
+<!-- Stage 5: Timing -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-highest border border-secondary flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check</span>
+</span>
+<div class="flex items-start justify-between gap-4">
+<div>
+<h4 class="text-body-md font-body-md font-semibold text-on-surface">5. Timing</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Narration pacing synchronized to diagram cues</p>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-mono-metric bg-surface-container px-2 py-0.5 rounded border border-secondary/20">
+                    Complete ✓
+                  </span>
+</div>
+</li>
+<!-- Stage 6: Rendering (ACTIVE / PULSING) -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container-high border-2 border-primary-container flex items-center justify-center text-primary-container glow-violet-pulse">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</span>
+<div class="flex items-start justify-between gap-4 bg-surface-container/60 p-3 rounded-lg border border-primary/30">
+<div>
+<div class="flex items-center gap-2">
+<h4 class="text-body-md font-body-md font-bold text-primary">6. Rendering</h4>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface">Generating vector schematic frames (1080×1920)</p>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-mono-metric bg-primary-container/20 px-2 py-0.5 rounded border border-primary/40">
+                    In progress
+                  </span>
+</div>
+</li>
+<!-- Stage 7: Final checks (WAITING) -->
+<li class="ml-6 relative">
+<span class="absolute -left-[35px] top-1 w-6 h-6 rounded-full bg-surface-container border border-outline-variant/40 flex items-center justify-center text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+</span>
+<div class="flex items-start justify-between gap-4 opacity-60">
+<div>
+<h4 class="text-body-md font-body-md font-medium text-outline">7. Final checks</h4>
+<p class="text-body-sm font-body-sm text-outline">Audio-visual alignment &amp; export package ready</p>
+</div>
+<span class="text-label-sm font-label-sm text-outline font-mono-metric px-2 py-0.5 rounded bg-surface-container">
+                    Waiting
+                  </span>
+</div>
+</li>
+</ol>
+<!-- Honest Helper Banner Beneath Stages -->
+<div class="mt-4 p-4 rounded-lg bg-surface-container border border-outline-variant/30 flex items-center gap-3 text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl shrink-0">cloud_sync</span>
+<p>
+                Your video keeps processing if you close this page. You can safely return to your workspace.
+              </p>
+</div>
+</div>
+</div>
+<!-- RIGHT SUPPORTING RAIL (Span 4 on desktop) -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Panel 1: Last Ready Version -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-label-md font-label-md font-semibold text-on-surface">Last ready version</h3>
+<span class="text-[10px] font-mono-metric px-2 py-0.5 rounded bg-secondary/15 text-secondary border border-secondary/30">
+                Ready
+              </span>
+</div>
+<div>
+<p class="text-body-md font-body-md font-bold text-on-surface">Version 2 · 39s</p>
+<p class="text-label-sm font-label-sm text-outline">Hindi narration (हिंदी)</p>
+</div>
+<!-- Static Preview Thumbnail (16:9 box with schematic motif) -->
+<div class="relative w-full aspect-video rounded-lg bg-surface-container-high border border-outline-variant/40 overflow-hidden flex items-center justify-center group">
+<!-- Abstract vector lines representing spotlight -->
+<div class="absolute inset-0 flex items-center justify-center opacity-30">
+<div class="w-32 h-32 rounded-full border border-secondary"></div>
+<div class="w-20 h-20 rounded-full border border-primary absolute"></div>
+</div>
+<!-- Centered Play Icon -->
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest/80 border border-outline-variant flex items-center justify-center text-on-surface shadow-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<span class="absolute bottom-2 right-2 text-[10px] font-mono-metric bg-surface-container-lowest/90 px-1.5 py-0.5 rounded text-on-surface">
+                00:39
+              </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">The existing Version 2 remains available in your workspace. New Version 3 is currently rendering and will be ready once all checks pass.</p>
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container border border-outline-variant/40 hover:border-primary text-body-sm font-body-sm text-on-surface flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-sm">visibility</span>
+<span>Preview Version 2</span>
+</button>
+</div>
+<!-- Panel 2: System & Processing Safety Notice -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-5 space-y-4">
+<div class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-secondary text-lg">shield</span>
+<h3 class="text-label-md font-label-md font-semibold">Processing safety</h3>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant leading-relaxed">
+              If generation needs attention, completed narration is kept. Re-render will resume without re-recording.
+            </p>
+<!-- Disabled contextual action for needs-attention recovery -->
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container-low border border-outline-variant/20 text-body-sm font-body-sm text-outline/60 cursor-not-allowed flex items-center justify-center gap-2" disabled="">
+<span class="material-symbols-outlined text-sm">troubleshoot</span>
+<span>Check provider activity</span>
+</button>
+<!-- Small engineering annotation -->
+<p class="text-[11px] font-mono-metric text-outline/80 leading-normal border-t border-outline-variant/20 pt-3">Needs attention state variant: Check provider activity · No blind retries.</p>
+</div>
+<!-- Panel 3: Workspace Quota Note -->
+</div>
+</div>
+</main>
+</div>
+<!-- Global Footer Component (Shared Anchor) -->
+<!-- Light Vanilla Script for Responsive Drawer Toggle -->
+<script>
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebarDrawer = document.getElementById('sidebar-drawer');
+
+    if (mobileMenuBtn && sidebarDrawer) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = sidebarDrawer.classList.contains('-translate-x-full');
+        if (isHidden) {
+          sidebarDrawer.classList.remove('-translate-x-full');
+          sidebarDrawer.classList.add('translate-x-0');
+        } else {
+          sidebarDrawer.classList.add('-translate-x-full');
+          sidebarDrawer.classList.remove('translate-x-0');
+        }
+      });
+    }
+  </script>
+</body></html>

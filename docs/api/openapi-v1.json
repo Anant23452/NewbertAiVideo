@@ -1,0 +1,6703 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Newbert AI Video — V1 proposed API",
+    "version": "1.0.0-draft",
+    "description": "DESIGN CONTRACT ONLY. No production endpoints are implemented by this specification. Read ../API-DB-DESIGN-V1.md for transaction/state/security invariants. Auth adapter routes and operator-only APIs are intentionally separate."
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "security": [
+    {
+      "SessionCookie": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Identity"
+    },
+    {
+      "name": "Catalog"
+    },
+    {
+      "name": "Ideation"
+    },
+    {
+      "name": "Creation"
+    },
+    {
+      "name": "Generation"
+    },
+    {
+      "name": "Media"
+    },
+    {
+      "name": "Usage"
+    },
+    {
+      "name": "Connections"
+    },
+    {
+      "name": "Publishing"
+    }
+  ],
+  "paths": {
+    "/me": {
+      "get": {
+        "operationId": "getMe",
+        "summary": "Read identity, private workspace and CSRF token",
+        "tags": [
+          "Identity"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Read identity, private workspace and CSRF token",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Me"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/workspace": {
+      "get": {
+        "operationId": "getWorkspace",
+        "summary": "Read current workspace",
+        "tags": [
+          "Identity"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Read current workspace",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workspace"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateWorkspace",
+        "summary": "Update display timezone",
+        "tags": [
+          "Identity"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update display timezone",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Workspace"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WorkspacePatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/capabilities": {
+      "get": {
+        "operationId": "getCapabilities",
+        "summary": "Read supported options and configured pilot limits",
+        "tags": [
+          "Catalog"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Read supported options and configured pilot limits",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Capabilities"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/voices": {
+      "get": {
+        "operationId": "listVoices",
+        "summary": "List eligible catalog voices",
+        "tags": [
+          "Catalog"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "name": "providerConnectionId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Hindi",
+                "Hinglish"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List eligible catalog voices",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoicePage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Without providerConnectionId use the platform voice provider. Do not silently fall back if a personal connection is unavailable."
+      }
+    },
+    "/projects": {
+      "get": {
+        "operationId": "listProjects",
+        "summary": "List private projects",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "active",
+                "archived"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List private projects",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createProject",
+        "summary": "Create project and initial draft",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Create project and initial draft",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "get": {
+        "operationId": "getProject",
+        "summary": "Read project metadata",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read project metadata",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateProject",
+        "summary": "Rename or archive project",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rename or archive project",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Project"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Archive does not silently cancel jobs or schedules. Retention/deletion is a separate workflow.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/draft": {
+      "get": {
+        "operationId": "getDraft",
+        "summary": "Read editable draft and ETag",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read editable draft and ETag",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Draft"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateDraft",
+        "summary": "Replace validated draft content atomically",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Replace validated draft content atomically",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Draft"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DraftPatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/draft/apply-result": {
+      "post": {
+        "operationId": "applyPlan",
+        "summary": "Import a validated planning artifact into the current draft",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Import a validated planning artifact into the current draft",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Draft"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Artifact must be a completed, validated storyboard for this project. Import changes the draft revision; it does not mutate its source version. Preserve sources and stable claim references in the next version.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplyResult"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/messages": {
+      "get": {
+        "operationId": "listMessages",
+        "summary": "Read idea discussion",
+        "tags": [
+          "Ideation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read idea discussion",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagePage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "post": {
+        "operationId": "discussIdea",
+        "summary": "Save message and queue an ideation response",
+        "tags": [
+          "Ideation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Save message and queue an ideation response",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdeationAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Atomically save user message, freeze matching draft and bounded conversation context, reserve planning allowance, create ideation job and outbox. Accepted Location points to the job. Worker appends assistant response; it never edits the draft silently.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/versions": {
+      "get": {
+        "operationId": "listVersions",
+        "summary": "Read immutable version history",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read immutable version history",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/versions/{versionId}": {
+      "get": {
+        "operationId": "getVersion",
+        "summary": "Read submitted input and immutable artifact references",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read submitted input and immutable artifact references",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Version"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/versions/{versionId}/evidence": {
+      "get": {
+        "operationId": "getEvidence",
+        "summary": "Read claim support and review flags",
+        "tags": [
+          "Creation"
+        ],
+        "parameters": [
+          {
+            "name": "versionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read claim support and review flags",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evidence"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/jobs": {
+      "post": {
+        "operationId": "createJob",
+        "summary": "Freeze matching draft, reserve allowance and queue generation",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Freeze matching draft, reserve allowance and queue generation",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "operationId": "listJobs",
+        "summary": "Read job history",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "queued",
+                "running",
+                "paused",
+                "succeeded",
+                "failed",
+                "cancelled"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read job history",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}": {
+      "get": {
+        "operationId": "getJob",
+        "summary": "Read progress, outcome and job ETag",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read progress, outcome and job ETag",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/cancel": {
+      "post": {
+        "operationId": "cancelJob",
+        "summary": "Request cooperative cancellation",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request cooperative cancellation",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/resume": {
+      "post": {
+        "operationId": "resumeJob",
+        "summary": "Resume an eligible paused job without changing input",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Resume an eligible paused job without changing input",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/jobs/{jobId}/retry": {
+      "post": {
+        "operationId": "retryJob",
+        "summary": "Create a retry job on the original immutable version",
+        "tags": [
+          "Generation"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Create a retry job on the original immutable version",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Only terminal failed jobs. Unknown prior chargeable outcomes block retry even if allowNewProviderRequest=true. Reuse validated matching artifacts and reserve only remaining work.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetryJob"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/artifacts/{artifactId}": {
+      "get": {
+        "operationId": "getArtifact",
+        "summary": "Read private media metadata",
+        "tags": [
+          "Media"
+        ],
+        "parameters": [
+          {
+            "name": "artifactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read private media metadata",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Artifact"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/artifacts/{artifactId}/access": {
+      "post": {
+        "operationId": "accessArtifact",
+        "summary": "Issue a short-lived authorized preview/download URL",
+        "tags": [
+          "Media"
+        ],
+        "parameters": [
+          {
+            "name": "artifactId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issue a short-lived authorized preview/download URL",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaAccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Only available validated media is downloadable. No storage key or arbitrary object path is accepted. URL expires; a replay may yield an expired URL, so obtain a new key for a deliberate refresh. Cache-Control: no-store.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage": {
+      "get": {
+        "operationId": "getUsage",
+        "summary": "Read platform allowance and reservation totals",
+        "tags": [
+          "Usage"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Read platform allowance and reservation totals",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/usage/entries": {
+      "get": {
+        "operationId": "listUsageEntries",
+        "summary": "Read incurred usage and adjustments",
+        "tags": [
+          "Usage"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read incurred usage and adjustments",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsageEntryPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/provider-connections": {
+      "get": {
+        "operationId": "listProviderConnections",
+        "summary": "Read masked personal-provider connection metadata",
+        "tags": [
+          "Connections"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read masked personal-provider connection metadata",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderConnectionPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createProviderConnection",
+        "summary": "Store a personal secret and queue validation",
+        "tags": [
+          "Connections"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Store a personal secret and queue validation",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProviderConnection"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Never echo apiKey. Starts pending_validation. Reject a second current connection; revoke old one explicitly. Idempotency stores keyed request digest only, never body/key. Secret material is handled by secret-store adapter.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProviderCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/provider-connections/{connectionId}": {
+      "delete": {
+        "operationId": "revokeProviderConnection",
+        "summary": "Revoke personal-provider access",
+        "tags": [
+          "Connections"
+        ],
+        "parameters": [
+          {
+            "name": "connectionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Revoke personal-provider access",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Revocation is idempotent for the same owned connection. Pause dependent pending work; do not silently substitute an operator key or different voice."
+      }
+    },
+    "/instagram/connection": {
+      "get": {
+        "operationId": "getInstagramConnection",
+        "summary": "Read current Instagram connection",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Read current Instagram connection",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstagramConnectionResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "disconnectInstagram",
+        "summary": "Disconnect current grant and pause pending deliveries",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Disconnect current grant and pause pending deliveries",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/instagram/authorization": {
+      "post": {
+        "operationId": "authorizeInstagram",
+        "summary": "Create a short-lived session-bound OAuth authorization",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Create a short-lived session-bound OAuth authorization",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Authorization"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Return path is allowlisted. State is random, single use and stored hashed. Existing active destination must be explicitly disconnected before replacement.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/instagram/callback": {
+      "get": {
+        "operationId": "instagramCallback",
+        "summary": "Consume official OAuth callback",
+        "tags": [
+          "Publishing"
+        ],
+        "description": "Adapter-specific redirect endpoint. Requires initiating session, single-use state and exact configured callback URI. No Idempotency-Key/CSRF header. Store token through secret adapter, reject remote-account ownership conflicts, redirect only to stored allowlisted path; never put tokens/errors in redirect query.",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 512
+            }
+          },
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 4096
+            }
+          },
+          {
+            "name": "error",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "maxLength": 200
+            }
+          }
+        ],
+        "responses": {
+          "303": {
+            "description": "Redirect to saved local connection-settings route",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/publish-intents": {
+      "get": {
+        "operationId": "listPublishIntents",
+        "summary": "Read delivery history and schedules",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Cursor"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read delivery history and schedules",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntentPage"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPublishIntent",
+        "summary": "Freeze explicit publication authorization and queue delivery",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Freeze explicit publication authorization and queue delivery",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishCreate"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publish-intents/{intentId}": {
+      "get": {
+        "operationId": "getPublishIntent",
+        "summary": "Read exact payload, schedule, remote outcome and ETag",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Read exact payload, schedule, remote outcome and ETag",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/publish-intents/{intentId}/schedule": {
+      "patch": {
+        "operationId": "rescheduleIntent",
+        "summary": "Change only delivery time before dispatch",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Change only delivery time before dispatch",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchedulePatch"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/publish-intents/{intentId}/cancel": {
+      "post": {
+        "operationId": "cancelPublishIntent",
+        "summary": "Request cancellation subject to remote submission race",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request cancellation subject to remote submission race",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        }
+      }
+    },
+    "/publish-intents/{intentId}/retry": {
+      "post": {
+        "operationId": "retryPublishIntent",
+        "summary": "Retry a confirmed-safe failure with unchanged authorization",
+        "tags": [
+          "Publishing"
+        ],
+        "parameters": [
+          {
+            "name": "intentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Retry a confirmed-safe failure with unchanged authorization",
+            "headers": {
+              "ETag": {
+                "description": "Strong revision tag for subsequent If-Match.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "Location": {
+                "description": "Relative URL of the durable created/accepted resource.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 1000
+                }
+              },
+              "X-Request-Id": {
+                "description": "Correlation ID.",
+                "schema": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "Idempotency-Replayed": {
+                "description": "True when returning a committed replay.",
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "Cache-Control": {
+                "description": "Private user data and signed media URLs use no-store.",
+                "schema": {
+                  "type": "string",
+                  "maxLength": 100
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishIntent"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Error404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Error422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Error428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Error429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Error503"
+          }
+        },
+        "description": "Only confirmed nonpublication, still-valid grant and frozen payload. Reconciliation_required returns 409; reconnect requires a new explicit authorization/intent.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishRetry"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "SessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "newbert_session",
+        "description": "Proposed production adapter session; HttpOnly/Secure/SameSite=Lax. Cookie name is finalized with the auth adapter."
+      }
+    },
+    "responses": {
+      "Error400": {
+        "description": "Malformed input/cursor",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error401": {
+        "description": "Authentication required",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error403": {
+        "description": "CSRF failure or disabled account",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error404": {
+        "description": "Missing or inaccessible resource",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error409": {
+        "description": "Conflicting state, operation key, active job or uncertain provider outcome",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error412": {
+        "description": "Stale If-Match revision",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error422": {
+        "description": "Invalid domain input or provider/voice eligibility",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error428": {
+        "description": "If-Match required",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error429": {
+        "description": "Allowance exhausted or rate-limited",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      },
+      "Error503": {
+        "description": "Platform capacity gate",
+        "headers": {
+          "X-Request-Id": {
+            "description": "Correlation ID.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "Retry-After": {
+            "description": "Seconds before retry for throttling or temporary capacity errors.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Problem"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "IdempotencyKey": {
+        "name": "Idempotency-Key",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "maxLength": 128
+        },
+        "description": "Replay-safe command identifier. Reuse the same key, body and original precondition when retrying the same operation."
+      },
+      "IfMatch": {
+        "name": "If-Match",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "description": "Strong ETag of the target resource. For create-job/message/apply-result this is the project draft ETag."
+      },
+      "CsrfToken": {
+        "name": "X-CSRF-Token",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "description": "Session-bound CSRF token from /me; server also validates Origin."
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "Cursor": {
+        "name": "cursor",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "maxLength": 2048
+        }
+      }
+    },
+    "schemas": {
+      "Problem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "status": {
+            "type": "integer",
+            "minimum": 400,
+            "maximum": 599
+          },
+          "code": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "detail": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fieldErrors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "code": {
+                  "type": "string",
+                  "maxLength": 80
+                }
+              },
+              "required": [
+                "field",
+                "code"
+              ]
+            },
+            "maxItems": 100
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "code",
+          "detail",
+          "requestId"
+        ]
+      },
+      "Workspace": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "timezone",
+          "createdAt"
+        ]
+      },
+      "Me": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "active",
+                  "disabled",
+                  "deletion_pending"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "status"
+            ]
+          },
+          "workspace": {
+            "$ref": "#/components/schemas/Workspace"
+          },
+          "csrfToken": {
+            "type": "string",
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "user",
+          "workspace",
+          "csrfToken"
+        ]
+      },
+      "WorkspacePatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "maxLength": 80
+          }
+        },
+        "required": [
+          "timezone"
+        ]
+      },
+      "Brief": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "topic": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 5
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "Hindi",
+              "Hinglish"
+            ]
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "school",
+              "college",
+              "curious"
+            ]
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "guided",
+              "automatic"
+            ]
+          },
+          "targetSeconds": {
+            "type": "integer",
+            "minimum": 5,
+            "maximum": 600
+          }
+        },
+        "required": [
+          "topic",
+          "language",
+          "audience",
+          "mode"
+        ]
+      },
+      "VoiceSelection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "catalogVoiceId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "providerConnectionId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "catalogVoiceId",
+          "providerConnectionId"
+        ]
+      },
+      "Voice": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "catalogVoiceId": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "provider": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "maxItems": 30
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "commercialUse": {
+            "type": "string",
+            "enum": [
+              "permitted",
+              "not_permitted",
+              "unknown"
+            ]
+          },
+          "attributionRequired": {
+            "type": "boolean"
+          },
+          "termsUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "catalogVoiceId",
+          "name",
+          "provider",
+          "languages",
+          "available",
+          "commercialUse",
+          "attributionRequired",
+          "termsUrl"
+        ]
+      },
+      "Capabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "Hindi",
+                "Hinglish"
+              ]
+            },
+            "maxItems": 2
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 60
+            },
+            "maxItems": 20
+          },
+          "maxAudioSeconds": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "generationEnabled": {
+            "type": "boolean"
+          },
+          "publishingEnabled": {
+            "type": "boolean"
+          },
+          "allowanceTimezone": {
+            "const": "UTC"
+          },
+          "rendererSchemaVersion": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "languages",
+          "components",
+          "maxAudioSeconds",
+          "generationEnabled",
+          "publishingEnabled",
+          "allowanceTimezone",
+          "rendererSchemaVersion"
+        ]
+      },
+      "Span": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ]
+      },
+      "TextMapping": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "displaySpan": {
+            "$ref": "#/components/schemas/Span"
+          },
+          "spokenSpan": {
+            "$ref": "#/components/schemas/Span"
+          }
+        },
+        "required": [
+          "displaySpan",
+          "spokenSpan"
+        ]
+      },
+      "SceneObject": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "shape",
+              "icon",
+              "node",
+              "edge",
+              "data_series"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Schema-versioned validated metadata; arbitrary executable code is prohibited."
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "parameters"
+        ]
+      },
+      "SceneCue": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "objectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "spokenSpan": {
+            "$ref": "#/components/schemas/Span"
+          },
+          "event": {
+            "type": "string",
+            "enum": [
+              "enter",
+              "highlight",
+              "connect",
+              "exit"
+            ]
+          },
+          "leadMs": {
+            "type": "integer",
+            "minimum": -1000,
+            "maximum": 1000
+          }
+        },
+        "required": [
+          "id",
+          "objectId",
+          "spokenSpan",
+          "event",
+          "leadMs"
+        ]
+      },
+      "Scene": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "purpose": {
+            "type": "string",
+            "maxLength": 300
+          },
+          "component": {
+            "type": "string",
+            "enum": [
+              "typography",
+              "diagram",
+              "flow",
+              "timeline",
+              "comparison",
+              "relationship",
+              "chart",
+              "steps"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "displayNarration": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "spokenNarration": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "textMappings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextMapping"
+            },
+            "maxItems": 500
+          },
+          "objects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SceneObject"
+            },
+            "maxItems": 40
+          },
+          "cues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SceneCue"
+            },
+            "maxItems": 80
+          },
+          "claimIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "maxItems": 50
+          },
+          "illustrative": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "purpose",
+          "component",
+          "title",
+          "displayNarration",
+          "spokenNarration",
+          "textMappings",
+          "objects",
+          "cues",
+          "claimIds"
+        ]
+      },
+      "Style": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "preset": {
+            "type": "string",
+            "enum": [
+              "standard",
+              "black_glow"
+            ]
+          },
+          "accentColor": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$"
+          }
+        },
+        "required": [
+          "preset"
+        ]
+      },
+      "DraftContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "const": 1
+          },
+          "brief": {
+            "$ref": "#/components/schemas/Brief"
+          },
+          "voice": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VoiceSelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "style": {
+            "$ref": "#/components/schemas/Style"
+          },
+          "scenes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Scene"
+            },
+            "maxItems": 12
+          },
+          "pronunciationOverrides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "displayText": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "spokenText": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "displayText",
+                "spokenText"
+              ]
+            },
+            "maxItems": 100
+          },
+          "captionOverrides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "sceneId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "spokenSpan": {
+                  "$ref": "#/components/schemas/Span"
+                },
+                "displayText": {
+                  "type": "string",
+                  "maxLength": 200
+                }
+              },
+              "required": [
+                "sceneId",
+                "spokenSpan",
+                "displayText"
+              ]
+            },
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "brief",
+          "voice",
+          "style",
+          "scenes",
+          "pronunciationOverrides",
+          "captionOverrides"
+        ]
+      },
+      "Draft": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "content": {
+            "$ref": "#/components/schemas/DraftContent"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "projectId",
+          "revision",
+          "content",
+          "updatedAt"
+        ]
+      },
+      "DraftPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/DraftContent"
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "ProjectCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1
+          },
+          "brief": {
+            "$ref": "#/components/schemas/Brief"
+          },
+          "voice": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VoiceSelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "style": {
+            "$ref": "#/components/schemas/Style"
+          }
+        },
+        "required": [
+          "title",
+          "brief"
+        ]
+      },
+      "ProjectPatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 160,
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived"
+            ]
+          }
+        },
+        "required": [],
+        "minProperties": 1
+      },
+      "Project": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "archived"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "latestOutputArtifactId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "revision",
+          "latestOutputArtifactId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "Version": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sourceDraftRevision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "inputHash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "content": {
+            "$ref": "#/components/schemas/DraftContent"
+          },
+          "approvedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "artifactIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "number",
+          "sourceDraftRevision",
+          "inputHash",
+          "content",
+          "approvedAt",
+          "createdAt",
+          "artifactIds"
+        ]
+      },
+      "Message": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "user",
+              "assistant"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "maxLength": 12000
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "role",
+          "content",
+          "createdAt"
+        ]
+      },
+      "MessageCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "IdeationAccepted": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/Message"
+          },
+          "job": {
+            "$ref": "#/components/schemas/Job"
+          }
+        },
+        "required": [
+          "message",
+          "job"
+        ]
+      },
+      "JobCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "plan",
+              "produce"
+            ]
+          },
+          "scriptApproved": {
+            "type": "boolean"
+          },
+          "acknowledgedUsageTerms": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "kind",
+          "acknowledgedUsageTerms"
+        ],
+        "description": "Freezes the draft matched by If-Match. Guided produce requires scriptApproved=true, valid scenes/evidence and a selected eligible voice. Automatic produce does not require script approval. Consent binds the returned version and selected provider terms; it is not permission for unbounded paid usage."
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "ideation",
+              "plan",
+              "produce"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "queued",
+              "running",
+              "paused",
+              "succeeded",
+              "failed",
+              "cancelled"
+            ]
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ideating",
+                  "researching",
+                  "scripting",
+                  "planning_scenes",
+                  "generating_voice",
+                  "aligning",
+                  "composing",
+                  "rendering",
+                  "checking"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "queueStatus": {
+            "type": "string",
+            "enum": [
+              "waiting",
+              "processing",
+              "attention",
+              "complete"
+            ]
+          },
+          "pauseReason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "detail": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "retryable": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "code",
+                  "detail",
+                  "retryable"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outputArtifactId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancelRequestedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pollAfterSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 60
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "projectId",
+          "versionId",
+          "kind",
+          "state",
+          "stage",
+          "queueStatus",
+          "pauseReason",
+          "error",
+          "outputArtifactId",
+          "cancelRequestedAt",
+          "pollAfterSeconds",
+          "createdAt"
+        ]
+      },
+      "RetryJob": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allowNewProviderRequest": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "allowNewProviderRequest"
+        ]
+      },
+      "ApplyResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "artifactId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "artifactId"
+        ]
+      },
+      "Artifact": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "jobId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "research",
+              "storyboard",
+              "audio",
+              "alignment",
+              "composition",
+              "captions",
+              "video",
+              "validation",
+              "visual_asset"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "durationMs": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "validationStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "passed",
+              "failed"
+            ]
+          },
+          "storageStatus": {
+            "type": "string",
+            "enum": [
+              "available",
+              "deleting",
+              "deleted"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "versionId",
+          "jobId",
+          "kind",
+          "sha256",
+          "mimeType",
+          "bytes",
+          "durationMs",
+          "validationStatus",
+          "storageStatus",
+          "createdAt"
+        ]
+      },
+      "AccessRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "purpose": {
+            "type": "string",
+            "enum": [
+              "preview",
+              "download"
+            ]
+          }
+        },
+        "required": [
+          "purpose"
+        ]
+      },
+      "MediaAccess": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 120
+          }
+        },
+        "required": [
+          "url",
+          "expiresAt",
+          "mimeType"
+        ]
+      },
+      "Evidence": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "versionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string",
+                  "maxLength": 1000
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "retrievedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "url",
+                "retrievedAt"
+              ]
+            },
+            "maxItems": 100
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "sceneId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "text": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "classification": {
+                  "type": "string",
+                  "enum": [
+                    "factual",
+                    "interpretation",
+                    "illustrative"
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "supported",
+                    "needs_review",
+                    "unsupported"
+                  ]
+                },
+                "blocking": {
+                  "type": "boolean"
+                },
+                "sourceIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "maxItems": 30
+                }
+              },
+              "required": [
+                "id",
+                "sceneId",
+                "text",
+                "classification",
+                "status",
+                "blocking",
+                "sourceIds"
+              ]
+            },
+            "maxItems": 200
+          }
+        },
+        "required": [
+          "versionId",
+          "sources",
+          "claims"
+        ]
+      },
+      "UsageResource": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "resource": {
+            "type": "string",
+            "enum": [
+              "generation_count",
+              "narration_ms",
+              "render_ms",
+              "storage_bytes",
+              "provider_credits"
+            ]
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "used": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reserved": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "remaining": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "periodStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "resetsAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "resource",
+          "limit",
+          "used",
+          "reserved",
+          "remaining",
+          "periodStart",
+          "resetsAt"
+        ]
+      },
+      "Usage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "allowanceTimezone": {
+            "const": "UTC"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsageResource"
+            },
+            "maxItems": 20
+          },
+          "platformCapacity": {
+            "type": "string",
+            "enum": [
+              "available",
+              "queued",
+              "paused"
+            ]
+          }
+        },
+        "required": [
+          "allowanceTimezone",
+          "resources",
+          "platformCapacity"
+        ]
+      },
+      "UsageEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "jobId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "resource": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "unitsDelta": {
+            "type": "integer"
+          },
+          "providerUnits": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "providerUnit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reasonCode": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "jobId",
+          "resource",
+          "unitsDelta",
+          "providerUnits",
+          "providerUnit",
+          "reasonCode",
+          "createdAt"
+        ]
+      },
+      "ProviderCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "provider": {
+            "const": "elevenlabs"
+          },
+          "apiKey": {
+            "type": "string",
+            "maxLength": 512,
+            "minLength": 10,
+            "writeOnly": true
+          }
+        },
+        "required": [
+          "provider",
+          "apiKey"
+        ]
+      },
+      "ProviderConnection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "provider": {
+            "const": "elevenlabs"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending_validation",
+              "active",
+              "invalid",
+              "revoked"
+            ]
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lastCheckedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "errorCode": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 80
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "provider",
+          "status",
+          "revision",
+          "lastCheckedAt",
+          "errorCode",
+          "createdAt"
+        ]
+      },
+      "InstagramConnection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "reauth_required",
+              "disconnected"
+            ]
+          },
+          "grantedScopes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "maxItems": 30
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "displayName",
+          "status",
+          "grantedScopes",
+          "expiresAt"
+        ]
+      },
+      "InstagramConnectionResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "connection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/InstagramConnection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "connection"
+        ]
+      },
+      "AuthorizationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "returnPath": {
+            "type": "string",
+            "enum": [
+              "/settings/connections"
+            ]
+          }
+        },
+        "required": [
+          "returnPath"
+        ]
+      },
+      "Authorization": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "authorizationUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "authorizationUrl",
+          "expiresAt"
+        ]
+      },
+      "Delivery": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "const": "immediate"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "const": "when_ready"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "const": "scheduled"
+              },
+              "scheduledAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "timezone": {
+                "type": "string",
+                "maxLength": 80
+              },
+              "lateToleranceSeconds": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 86400
+              }
+            },
+            "required": [
+              "mode",
+              "scheduledAt",
+              "timezone",
+              "lateToleranceSeconds"
+            ]
+          }
+        ]
+      },
+      "PublishSource": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "artifactId": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "artifactId"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "productionJobId": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "required": [
+              "productionJobId"
+            ]
+          }
+        ]
+      },
+      "PublishCreate": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "connectionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PublishSource"
+          },
+          "caption": {
+            "type": "string",
+            "maxLength": 2200
+          },
+          "delivery": {
+            "$ref": "#/components/schemas/Delivery"
+          },
+          "authorizePublishing": {
+            "const": true
+          }
+        },
+        "required": [
+          "connectionId",
+          "source",
+          "caption",
+          "delivery",
+          "authorizePublishing"
+        ],
+        "description": "Authorizes only this exact asset/job and current connection grant. Immediate needs a ready video; when_ready needs an automatic produce job. Scheduled can reference either, subject to its bounded lateness policy. Another deliberate submission can create another post; HTTP retries must reuse their idempotency key."
+      },
+      "SchedulePatch": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "lateToleranceSeconds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 86400
+          }
+        },
+        "required": [
+          "scheduledAt",
+          "timezone",
+          "lateToleranceSeconds"
+        ]
+      },
+      "Schedule": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "lateToleranceSeconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "scheduled",
+              "claimed",
+              "completed",
+              "paused",
+              "cancelled"
+            ]
+          }
+        },
+        "required": [
+          "scheduledAt",
+          "timezone",
+          "lateToleranceSeconds",
+          "state"
+        ]
+      },
+      "PublishIntent": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "connectionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "videoArtifactId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "productionJobId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "maxLength": 2200
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "awaiting_output",
+              "scheduled",
+              "queued",
+              "publishing",
+              "paused",
+              "published",
+              "failed",
+              "cancelled",
+              "reconciliation_required"
+            ]
+          },
+          "authorizedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "schedule": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Schedule"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "remoteMediaId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "permalink": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uri"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pauseReason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cancelRequestedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "revision",
+          "projectId",
+          "versionId",
+          "connectionId",
+          "videoArtifactId",
+          "productionJobId",
+          "caption",
+          "state",
+          "authorizedAt",
+          "schedule",
+          "remoteMediaId",
+          "permalink",
+          "pauseReason",
+          "cancelRequestedAt",
+          "createdAt"
+        ]
+      },
+      "PublishRetry": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "confirmSamePayload": {
+            "const": true
+          }
+        },
+        "required": [
+          "confirmSamePayload"
+        ]
+      },
+      "ProjectPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "VersionPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Version"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "MessagePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "JobPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "VoicePage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Voice"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "UsageEntryPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsageEntry"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "ProviderConnectionPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProviderConnection"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "PublishIntentPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublishIntent"
+            },
+            "maxItems": 100
+          },
+          "nextCursor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      }
+    }
+  }
+}

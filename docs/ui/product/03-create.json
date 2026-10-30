@@ -1,0 +1,31 @@
+{
+  "slug": "03-create",
+  "title": "Create a Video — Idea and Brief",
+  "name": "projects/2520368196713015322/screens/b420d669a3fe4d56993044ac7b517553",
+  "width": "2560",
+  "height": "2048",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/58828468ec734332885dd693b7c36a62:download",
+    "name": "projects/2520368196713015322/files/58828468ec734332885dd693b7c36a62"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/62c7afcea85841f3b3008997c2adfceb:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/62c7afcea85841f3b3008997c2adfceb"
+  },
+  "output": [
+    {
+      "text": "I have designed the **\"Create a video\"** desktop product screen for **Newbert AI Video**, maintaining full visual and architectural continuity with the approved refined homepage, projects view, and dashboard.\n\n### What Was Designed:\n\n1. **Persistent Workspace Shell & Navigation:**\n   - **Sidebar (224px):** Featuring the `Newbert AI Video` brand mark with active glowing indicator, navigation links in the exact required order (`Dashboard`, `Projects`, `Create a video` [Active state with violet pill indicator], `Publishing` with `Planned · design preview` badge, and `Settings`).\n   - **Footer Rail:** Displays `Personal workspace` (`1 creator`), sample user avatar `Aarav S. / Owner`, and `Help & Feedback`.\n   - **Top Navigation Bar:** Includes `Workspace > New video` breadcrumbs, an unobtrusive `Design preview · Sample data` tag, fast search trigger, notifications bell, and user profile.\n\n2. **Main Topic Composer & Dialogue Refinement (Left Column):**\n   - **Header:** Eyebrow `STEP 1 · CONCEPT & OUTLINE` with the headline *\"What would you like to explain?\"* and realistic pedagogical subtext.\n   - **Topic Field:** Pre-filled with *\"Why do we feel everyone is watching us?\"* accompanied by quick-start prompts (*The spotlight effect*, *Confirmation bias*, *How binary works*).\n   - **Conversational Concept Refinement:**\n     - User turn: *\"For college students, with a classroom example.\"*\n     - Assistant response: *\"We can explain the spotlight effect using a small mistake in class, then show how imagined attention differs from what others may notice.\"* featuring a sample Devanagari Hindi snippet (*\"सच यह है कि लोग उतना ध्यान नहीं दे रहे होते जितना हम सोचते हैं...\"*) and an illustrative perceptual ring thumbnail tying back to the psychology prototype.\n   - **Suggested Learning Objective Card:** Highlights key teaching angles (*Relatable classroom scenario*, *Egocentric scrutiny bias*, *Concentric perception vs. reality diagram*) with an explicit **\"Use this direction\"** action.\n   - **Refinement Input Bar:** Bottom prompt input allowing creators to either refine or proceed.\n\n3. **Structured Video Brief & Configuration Rail (Right Panel):**\n   - **Language Selection:** Toggle between `Hindi` (active) and `Hinglish`.\n   - **Target Audience:** Segmented chips selecting `College students` (with `School students` and `Curious learners`).\n   - **Narration-Driven Duration:** Set to `About 40 seconds` with the essential grounding helper: *\"Final length follows narration timing (Pilot max 60s)\"*.\n   - **Synthetic Voice Model:** `Roger · Hindi conversational` with a `Sample preview` audio trigger.\n   - **Motion Rendering Style:** Selectable visual mode chips for `Black glow` (selected) and `Standard schematic`.\n   - **Workflow Generation Modes:**\n     - **Guided** (Selected): *\"Review the script before narration\"* with a *\"Recommended for concepts\"* highlight tag.\n     - **Automatic**: *\"Create the full video after checks\"*.\n   - **Primary CTA:** High-contrast electric violet button labeled **\"Generate storyboard →\"** (which switches to \"Create video\" under Automatic mode).\n   - **Grounded Footnote Disclaimers:** Explicitly states that no Instagram account is needed to create or download, and clarifies pilot allowance boundaries.\n\n4. **Responsive Architecture:**\n   - Engineered for responsive fluid scaling down to tablet and mobile viewports with single-column vertical stacking, preserving accessible 44px tap targets and high contrast text ratios throughout."
+    },
+    {
+      "suggestion": "Show the next step: Script review and storyboard preview"
+    },
+    {
+      "suggestion": "Explore the Automatic generation mode variant"
+    },
+    {
+      "suggestion": "Inspect the mobile responsive layout of this creation flow"
+    }
+  ],
+  "refined": true
+}

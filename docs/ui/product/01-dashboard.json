@@ -1,0 +1,30 @@
+{
+  "slug": "01-dashboard",
+  "title": "Creator Dashboard",
+  "name": "projects/2520368196713015322/screens/f35b14412b86413f86dbbb1328b41d1e",
+  "width": "2560",
+  "height": "2048",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/32a99fcc9a5f41cdbdc773c731d4cdba:download",
+    "name": "projects/2520368196713015322/files/32a99fcc9a5f41cdbdc773c731d4cdba"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/53179823c5984d50ab30dd90e71923aa:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/53179823c5984d50ab30dd90e71923aa"
+  },
+  "output": [
+    {
+      "text": "I have designed the authenticated desktop **Dashboard** screen for **Newbert AI Video**, directly continuing the aesthetic and factual principles established in the approved homepage.\n\n### Key Design & UX Implementations:\n\n1. **Dedicated Application Shell & Navigation:**\n   - **Left Sidebar (224px fixed reference):** Features the \"Newbert AI Video\" brand mark, followed by the exact navigation sequence: **Dashboard** (active state), **Projects**, **Create a video**, **Publishing** (flagged with a *\"Planned\"* status pill), and **Settings**.\n   - **Account & Workspace Footer:** Grounded in single-creator simplicity with a \"Personal workspace\" indicator, owner account profile (\"Aarav S.\"), and direct Help & Feedback access.\n   - **Top Navigation Bar:** Includes breadcrumbs (`Workspace / Dashboard`), an accessible search/menu cluster, and an explicit **\"Design preview · Sample data\"** label.\n\n2. **Calm, Focused Topic Quick-Start:**\n   - Prominent heading: *\"Your next explanation starts here.\"* with primary electric violet CTA (*\"Create a video\"*).\n   - Topic composer input featuring quick Hindi/Hinglish selection toggles, sample prompt ideas (*The spotlight effect*, *How binary works*, *Confirmation bias*), and immediate action button.\n\n3. **Authentic Prototype Projects & Real Diagrams:**\n   - **Active Rendering Banner:** Shows *\"New version rendering · The Spotlight Effect\"* noting Hindi pacing and audio/visual timing lock, avoiding synthetic percentage counters.\n   - **The Spotlight Effect (39s, Hindi, Ready):** Embedded vector diagram displaying the concentric cognitive radius motif with Devanagari voiceover caption snippet.\n   - **How Binary Works (21s, Hinglish, Ready):** Clean `5 = 4 + 0 + 1` decomposition diagram showcasing the 3-bit binary calculation resulting in `101`.\n   - **Confirmation Bias (Hinglish, Draft):** Wireframe schematic thumbnail ready for continuation.\n\n4. **Transparent Pilot Quota & Roadmap Side Rail:**\n   - **Pilot Allowance Card:** Clearly marked with an **\"Illustrative limits\"** label, tracking *\"2 of 3 creations remaining\"*, with reset scheduled at 05:30 IST (00:00 UTC policy) and truthful duration explanations.\n   - **Instagram Publishing Card:** Transparently badged as **\"Planned\"** exploring upcoming 9:16 export workflows without claiming shipped functionality.\n   - **Design Annotation Note:** Notes the empty-state pattern where an empty project list smoothly transitions the quick-start input into an expanded topic guidance prompt."
+    },
+    {
+      "suggestion": "Design the 'Create a video' step-by-step topic to script flow"
+    },
+    {
+      "suggestion": "Explore the 'The Spotlight Effect' video preview dialog"
+    },
+    {
+      "suggestion": "Design the Publishing scheduling preview drawer"
+    }
+  ]
+}

@@ -1,0 +1,847 @@
+{
+  "date": "2026-10-29",
+  "environment": "Headless Microsoft Edge; local Stitch exports with external Tailwind/fonts",
+  "scope": "Geometry/overflow only; not full accessibility, interaction or device validation",
+  "results": [
+    {
+      "slug": "01-dashboard",
+      "title": "Creator Dashboard",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-2 font-body-sm text-body-sm text-outline",
+              "text": "Workspace\n/\nDashboard"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-label-md text-label-md",
+              "text": "Dashboard"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Design preview · Sample data\n\n\n\n\nsearch\n\n\n\nnotifications"
+            },
+            {
+              "tag": "DIV",
+              "classes": "h-4 w-[1px] bg-[#23222D] mx-1",
+              "text": ""
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all",
+              "text": "search"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-[18px]",
+              "text": "search"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all",
+              "text": "notifications"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-[18px]",
+              "text": "notifications"
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-2 font-body-sm text-body-sm text-outline",
+              "text": "Workspace\n/\nDashboard"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-label-md text-label-md",
+              "text": "Dashboard"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Design preview · Sample data\n\n\n\n\nsearch\n\n\n\nnotifications"
+            },
+            {
+              "tag": "DIV",
+              "classes": "h-4 w-[1px] bg-[#23222D] mx-1",
+              "text": ""
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all",
+              "text": "search"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-[18px]",
+              "text": "search"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-all",
+              "text": "notifications"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-[18px]",
+              "text": "notifications"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "03-create",
+      "title": "Create a Video — Idea and Brief",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "SPAN",
+              "classes": "text-[10px] font-mono-metric text-secondary bg-secondary/10 px-1.5 py-0.5 rounded",
+              "text": "Illustrative diagram"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\nchevron_right\nNew video\n\n\n            Design preview · Sample data"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-[11px] font-mono-metric text-secondary-fixed-dim bg-[#111116] border border-[#23222D] px-2.5 py-0.5 rounded-full",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\n\n⌘K\n\n\n\nnotifications\n\n\n\n            A"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+              "text": "notifications"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined",
+              "text": "notifications"
+            },
+            {
+              "tag": "DIV",
+              "classes": "w-8 h-8 rounded-full bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary text-xs font-semibold cursor-pointer",
+              "text": "A"
+            },
+            {
+              "tag": "DIV",
+              "classes": "max-w-[90%] bg-[#111116] border border-[#23222D] rounded-2xl rounded-tl-sm p-4 space-y-3 shadow-md",
+              "text": "We can explain the spotlight effect using a small mistake in class, then show how imagined attention"
+            },
+            {
+              "tag": "P",
+              "classes": "text-on-surface text-body-sm font-devanagari italic leading-normal text-[#cac4d4]",
+              "text": "\"सच यह है कि लोग उतना ध्यान नहीं दे रहे होते जितना हम सोचते हैं...\""
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\nchevron_right\nNew video\n\n\n            Design preview · Sample data"
+            },
+            {
+              "tag": "NAV",
+              "classes": "flex items-center gap-2 font-label-md text-label-md text-outline",
+              "text": "Workspace\nchevron_right\nNew video"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-semibold",
+              "text": "New video"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-[11px] font-mono-metric text-secondary-fixed-dim bg-[#111116] border border-[#23222D] px-2.5 py-0.5 rounded-full",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\n\n⌘K\n\n\n\nnotifications\n\n\n\n            A"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+              "text": "notifications"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined",
+              "text": "notifications"
+            },
+            {
+              "tag": "DIV",
+              "classes": "w-8 h-8 rounded-full bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary text-xs font-semibold cursor-pointer",
+              "text": "A"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "04-storyboard",
+      "title": "Storyboard Review",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\n/\nProjects\n/\nSpotlight Effect / Draft\n\n\n          Design preview · Sample data"
+            },
+            {
+              "tag": "NAV",
+              "classes": "flex items-center text-label-sm font-label-sm text-outline gap-1.5",
+              "text": "Workspace\n/\nProjects\n/\nSpotlight Effect / Draft"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-semibold",
+              "text": "Spotlight Effect / Draft"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-[10px] px-2 py-0.5 rounded-full bg-[#181820] text-outline border border-[#23222D] font-mono-metric",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\nSearch or jump\n⌘K\n\n\n\nnotifications\n\n\n\n\n          AS"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-2 px-2.5 py-1 rounded bg-[#111116] border border-[#23222D] text-outline text-label-sm font-label-sm cursor-pointer hover:border-outline transition-colors",
+              "text": "search\nSearch or jump\n⌘K"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-sm",
+              "text": "search"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Search or jump"
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\n/\nProjects\n/\nSpotlight Effect / Draft\n\n\n          Design preview · Sample data"
+            },
+            {
+              "tag": "NAV",
+              "classes": "flex items-center text-label-sm font-label-sm text-outline gap-1.5",
+              "text": "Workspace\n/\nProjects\n/\nSpotlight Effect / Draft"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Projects"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-outline-variant",
+              "text": "/"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-semibold",
+              "text": "Spotlight Effect / Draft"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-[10px] px-2 py-0.5 rounded-full bg-[#181820] text-outline border border-[#23222D] font-mono-metric",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\nSearch or jump\n⌘K\n\n\n\nnotifications\n\n\n\n\n          AS"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-2 px-2.5 py-1 rounded bg-[#111116] border border-[#23222D] text-outline text-label-sm font-label-sm cursor-pointer hover:border-outline transition-colors",
+              "text": "search\nSearch or jump\n⌘K"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "08-settings",
+      "title": "Settings — Connections and Allowance",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\n\n\n\nnotifications\n\n\n          AS"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "w-8 h-8 rounded-lg bg-surface-container-low border border-outline-variant/30 flex items-center justify-center text-outline hover:text-on-surface transition-colors",
+              "text": "notifications"
+            },
+            {
+              "tag": "DIV",
+              "classes": "w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant/50 flex items-center justify-center text-primary text-label-sm font-label-sm font-bold",
+              "text": "AS"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-2",
+              "text": "Reconnect account\n                  \n\n                    Disconnect"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "px-3 py-1.5 rounded-lg border border-outline-variant/40 text-outline hover:text-error hover:border-error/30 transition-colors text-label-md font-label-md",
+              "text": "Disconnect"
+            }
+          ]
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\n/\nSettings\n\n\n\nDesign preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/30 text-label-sm font-label-sm text-secondary",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "w-1.5 h-1.5 rounded-full bg-secondary",
+              "text": ""
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\n\n\n\nnotifications\n\n\n          AS"
+            },
+            {
+              "tag": "DIV",
+              "classes": "relative w-64",
+              "text": "search"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined absolute left-2.5 top-2.5 text-outline pointer-events-none text-sm",
+              "text": "search"
+            },
+            {
+              "tag": "INPUT",
+              "classes": "w-full bg-surface-container-low border border-outline-variant/30 rounded-lg pl-8 pr-3 py-1.5 text-body-sm font-body-sm text-on-surface placeholder:text-outline/70 focus:outline-non",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "Workspace\n/\nSettings\n\n\n\nDesign preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-1.5 text-body-sm font-body-sm",
+              "text": "Workspace\n/\nSettings"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "text-on-surface font-medium",
+              "text": "Settings"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-high/60 border border-outline-variant/30 text-label-sm font-label-sm text-secondary",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "w-1.5 h-1.5 rounded-full bg-secondary",
+              "text": ""
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Design preview · Sample data"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "search\n\n\n\nnotifications\n\n\n          AS"
+            },
+            {
+              "tag": "DIV",
+              "classes": "relative w-64",
+              "text": "search"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "09-sign-in",
+      "title": "Sign In and Account Entry",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "02-projects",
+      "title": "Projects Library",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "SPAN",
+              "classes": "font-mono-metric text-[10px] text-secondary bg-surface-container px-2 py-0.5 rounded border border-outline-variant/30",
+              "text": "Logic breakdown"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-[14px] text-secondary shrink-0 ml-1",
+              "text": "Logic breakdown"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "font-mono-metric text-[11px] text-error shrink-0",
+              "text": "Voice allowance reached"
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 362,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "BUTTON",
+              "classes": "px-3 py-1.5 rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors shrink-0",
+              "text": "Needs attention (1)"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center self-start sm:self-end lg:self-auto shrink-0",
+              "text": "Sort by:\nLast updated\nexpand_more"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant/30 font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hov",
+              "text": "Sort by:\nLast updated\nexpand_more"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "font-mono-metric text-[10px] text-outline bg-surface-container px-2 py-0.5 rounded border border-outline-variant/30",
+              "text": "16:9 SCHEMATIC"
+            },
+            {
+              "tag": "BUTTON",
+              "classes": "flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm border border-outline-varian",
+              "text": "play_arrow\nWatch preview"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Watch preview"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "font-mono-metric text-[10px] text-secondary bg-surface-container px-2 py-0.5 rounded border border-outline-variant/30",
+              "text": "Logic breakdown"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "1\n\n2² (4)\n\n+\n\n\n\n0\n\n2¹ (0)\n\n+\n\n\n\n1\n\n2⁰ (1)"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "05-generation",
+      "title": "Generation Progress",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "ASIDE",
+              "classes": "w-56 shrink-0 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col justify-between py-6 px-4 absolute md:relative z-40 h-[calc(100vh-61px)] -translate-x-ful",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "DIV",
+              "classes": "space-y-6",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "NAV",
+              "classes": "space-y-1.5",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "A",
+              "classes": "flex items-center gap-3 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all",
+              "text": "dashboard\nDashboard"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-lg text-outline",
+              "text": "dashboard"
+            },
+            {
+              "tag": "A",
+              "classes": "flex items-center justify-between px-3 py-2 rounded-lg text-body-md font-body-md bg-surface-container-high text-primary font-semibold border-l-2 border-primary transition-all",
+              "text": "folder_open\nProjects"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "folder_open\nProjects"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-lg text-primary",
+              "text": "folder_open"
+            }
+          ]
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": [
+            {
+              "tag": "ASIDE",
+              "classes": "w-56 shrink-0 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col justify-between py-6 px-4 absolute md:relative z-40 h-[calc(100vh-61px)] -translate-x-ful",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "DIV",
+              "classes": "space-y-6",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "NAV",
+              "classes": "space-y-1.5",
+              "text": "dashboard\nDashboard\n\n\n\n\nfolder_open\nProjects\n\n\n\n\n\nmovie_edit\nCreate a video\n\n\n\n\npublish\nPublishing\n\n"
+            },
+            {
+              "tag": "A",
+              "classes": "flex items-center gap-3 px-3 py-2 rounded-lg text-body-md font-body-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all",
+              "text": "dashboard\nDashboard"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "material-symbols-outlined text-lg text-outline",
+              "text": "dashboard"
+            },
+            {
+              "tag": "SPAN",
+              "classes": "",
+              "text": "Dashboard"
+            },
+            {
+              "tag": "A",
+              "classes": "flex items-center justify-between px-3 py-2 rounded-lg text-body-md font-body-md bg-surface-container-high text-primary font-semibold border-l-2 border-primary transition-all",
+              "text": "folder_open\nProjects"
+            },
+            {
+              "tag": "DIV",
+              "classes": "flex items-center gap-3",
+              "text": "folder_open\nProjects"
+            }
+          ]
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "06-preview",
+      "title": "Video Preview and Version History",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "10-create-account",
+      "title": "Create an Account",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "11-password-recovery",
+      "title": "Password Recovery",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "slug": "07-publishing",
+      "title": "Publishing Calendar",
+      "checks": [
+        {
+          "width": 1440,
+          "pageWidth": 1440,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 768,
+          "pageWidth": 768,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 390,
+          "pageWidth": 390,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        },
+        {
+          "width": 360,
+          "pageWidth": 360,
+          "horizontalOverflow": false,
+          "offscreenElements": []
+        }
+      ],
+      "pageErrors": []
+    }
+  ]
+}

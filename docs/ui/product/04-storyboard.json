@@ -1,0 +1,31 @@
+{
+  "slug": "04-storyboard",
+  "title": "Storyboard Review",
+  "name": "projects/2520368196713015322/screens/0686ba1a07904733bcfc4f18025430be",
+  "width": "2560",
+  "height": "2048",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/3196dfb5d6bf4aeeb3cdb261ba1585d5:download",
+    "name": "projects/2520368196713015322/files/3196dfb5d6bf4aeeb3cdb261ba1585d5"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/a42a2aca2e5a4a9f9bc4f3e4785ca469:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/a42a2aca2e5a4a9f9bc4f3e4785ca469"
+  },
+  "output": [
+    {
+      "text": "I have created the desktop product screen for **Newbert AI Video — Storyboard Review** (Newbert AI Video - Storyboard Review), continuing the exact approved visual aesthetic, tone, and constraints established in the refined homepage.\n\n### Key Design & UX Implementations:\n\n1. **Required Shell & Workspace Context:**\n   - **Shell Architecture:** Standard 1440px desktop reference with `#000000` deep canvas, `#08080B` left sidebar (224px), `#111116` panels, and `#23222D` borders.\n   - **Navigation Hierarchy:** Exact sequence implemented (`Dashboard`, `Projects` [Active/Selected state], `Create a video`, `Publishing` labeled with `\"Planned · design preview\"`, and `Settings`).\n   - **Single-User Workspace:** Grounded in a personal workspace model (`1 creator`), Aarav S. account avatar, Help & Feedback, and top-bar breadcrumb `Workspace > Projects > Spotlight Effect / Draft` alongside the `\"Design preview · Sample data\"` indicator.\n\n2. **Step Progression & Clear Topic Header:**\n   - **Step Flow:** `Idea` → `Storyboard` (Active highlighted pill with mint status indicator) → `Generate` → `Preview`, avoiding fake completion percentages.\n   - **Header & Version Tracking:** Displays the editable title *\"The Spotlight Effect\"*, language pill *\"Hindi\"*, autosave confirmation (*\"Saved just now\"*), and version distinction noting this draft is a future `v3` while preserving the existing rendered `v2 Ready`.\n\n3. **Four Ordered Storyboard Scenes (No Complex Timeline):**\n   - **Scene 01 (Setup & Relatable Scenario):** Classroom mistake scenario with spoken Devanagari Hindi text and initial focal ring preview.\n   - **Scene 02 (Concept Definition - Expanded State):** Active card highlighting the core psychology concept. Features the diagram component selector (*\"Comparison\"*), editable spoken Devanagari narration, and the controlled concentric schematic labeled with *\"How it feels\"* and *\"What others may notice\"*, explicitly flagged as an *\"Illustrative diagram\"*, with zero fabricated statistical metrics.\n   - **Scene 03 (Perspective Shift):** Narrative deconstruction zooming out to surrounding peers with network node preview.\n   - **Scene 04 (Check the Evidence):** Reflective takeaway grounding the concept.\n\n4. **Academic Grounding & Generation Rail:**\n   - **Verified Research Grounding:** Verbatim citation of *Gilovich, Medvec & Savitsky (2000)* with valid PubMed reference link (`10707330`) and a *\"Definition supported by source\"* indicator.\n   - **Voice & Motion Controls:** Configured to *Roger · Hindi conversational* and *Black glow schematic* styling.\n   - **Truthful Duration Handling:** Clear guidance that final duration is estimated and strictly dictated by natural spoken narration timing, with note: *\"Editing spoken text generates a new voice track; visual layout edits may reuse it.\"*\n   - **Approval & Primary Action:** Guided confirmation checkbox (*\"I've reviewed this script and want to generate narration\"*) followed by the high-contrast Electric Violet `#A18BFF` **Generate video** primary CTA."
+    },
+    {
+      "suggestion": "Create the subsequent video generation progress/rendering modal state"
+    },
+    {
+      "suggestion": "Design the final video preview screen with synchronized captions and MP4 download"
+    },
+    {
+      "suggestion": "Show the expanded view when editing a diagram component layout"
+    }
+  ],
+  "refined": true
+}

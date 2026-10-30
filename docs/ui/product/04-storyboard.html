@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Storyboard Review</title>
+<!-- Google Fonts: Plus Jakarta Sans, Space Mono, and Noto Sans Devanagari -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-fixed": "#8cf4ef",
+            "on-tertiary-fixed-variant": "#474552",
+            "on-tertiary": "#302f3b",
+            "tertiary-container": "#9d9aa8",
+            "surface-tint": "#cbbeff",
+            "on-tertiary-fixed": "#1b1a25",
+            "on-primary-fixed": "#1d0061",
+            "on-secondary": "#003735",
+            "inverse-primary": "#624bbb",
+            "error": "#ffb4ab",
+            "secondary": "#6fd7d2",
+            "primary-container": "#a18bff",
+            "surface-container-highest": "#353438",
+            "inverse-surface": "#e5e1e6",
+            "inverse-on-surface": "#303034",
+            "on-error-container": "#ffdad6",
+            "on-secondary-fixed": "#00201f",
+            "on-surface": "#e5e1e6",
+            "surface-variant": "#353438",
+            "primary-fixed-dim": "#cbbeff",
+            "on-surface-variant": "#cac4d4",
+            "tertiary": "#c8c4d3",
+            "on-background": "#e5e1e6",
+            "error-container": "#93000a",
+            "secondary-fixed-dim": "#6fd7d2",
+            "surface-container-high": "#2a292d",
+            "tertiary-fixed": "#e4e0f0",
+            "tertiary-fixed-dim": "#c8c4d3",
+            "on-secondary-container": "#00302e",
+            "background": "#131316",
+            "primary-fixed": "#e6deff",
+            "surface-dim": "#131316",
+            "surface-container-lowest": "#0e0e11",
+            "surface-container-low": "#1b1b1f",
+            "surface-container": "#201f23",
+            "on-primary": "#33128b",
+            "outline-variant": "#484552",
+            "secondary-container": "#2ea09c",
+            "primary": "#cbbeff",
+            "on-primary-fixed-variant": "#4a31a2",
+            "surface-bright": "#39393c",
+            "surface": "#131316",
+            "outline": "#938e9e",
+            "on-tertiary-container": "#34323e",
+            "on-primary-container": "#36188e",
+            "on-error": "#690005",
+            "on-secondary-fixed-variant": "#00504d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "display-xl": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "mono-metric": ["Space Mono"],
+            "display-xl-mobile": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "devanagari": ["Noto Sans Devanagari", "Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-metric": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "700" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .font-hindi {
+      font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #08080B;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #23222D;
+      border-radius: 2px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #353438;
+    }
+  </style>
+</head>
+<body class="bg-black text-on-surface antialiased flex h-screen w-screen overflow-hidden selection:bg-primary-container selection:text-surface-container-lowest">
+<!-- LEFT SIDEBAR: 224px wide persistent workbench frame -->
+<aside class="w-[224px] min-w-[224px] bg-[#08080B] border-r border-[#23222D] flex flex-col justify-between h-full select-none z-30">
+<div>
+<!-- Wordmark & Glowing Identity Accent -->
+<div class="h-14 px-4 flex items-center justify-between border-b border-[#23222D]/60">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded bg-surface-container-lowest border border-[#23222D] flex items-center justify-center relative overflow-hidden shadow-[0_0_12px_rgba(161,139,255,0.25)]">
+<span class="absolute w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#7DE5E0] -top-0.5 -right-0.5"></span>
+<span class="material-symbols-outlined text-primary-container text-base leading-none">auto_videocam</span>
+</div>
+<span class="text-label-md font-label-md tracking-tight text-on-surface font-semibold">Newbert AI Video</span>
+</div>
+</div>
+<!-- Navigation list in exact required order -->
+<nav class="p-2 space-y-1">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined text-base">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. Projects (ACTIVE / SELECTED with indicator) -->
+<a class="flex items-center justify-between px-3 py-2 rounded bg-[#111116] border border-[#23222D] text-primary-container text-label-md font-label-md relative shadow-[0_0_12px_rgba(161,139,255,0.15)]" href="#">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">folder</span>
+<span class="text-on-surface font-semibold">Projects</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_6px_#7DE5E0]"></span>
+</a>
+<!-- 3. Create a video -->
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined text-base">movie_creation</span>
+<span>Create a video</span>
+</a>
+<!-- 4. Publishing (with badge "Planned · design preview") -->
+<div class="flex flex-col px-3 py-2 rounded text-outline hover:bg-[#111116]/40 cursor-default">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-base">send_and_archive</span>
+<span class="text-label-md font-label-md">Publishing</span>
+</div>
+<div class="mt-1 pl-6">
+<span class="inline-block text-[9px] uppercase tracking-wider text-outline px-1.5 py-0.5 rounded bg-[#181820] border border-[#23222D] font-mono-metric">Planned · preview</span>
+</div>
+</div>
+<!-- 5. Settings -->
+<a class="flex items-center gap-2.5 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined text-base">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Bottom Workspace & Profile Info -->
+<div class="p-3 border-t border-[#23222D]/80 bg-[#08080B] space-y-2">
+<!-- Workspace Status -->
+<div class="px-2 py-1.5 rounded bg-[#111116] border border-[#23222D] flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Personal workspace</span>
+</div>
+<span class="text-[10px] text-outline font-mono-metric px-1 py-0.2 rounded bg-[#181820]">1 seat</span>
+</div>
+<!-- User Profile & Help -->
+<div class="flex items-center justify-between pt-1 px-1">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded bg-[#181820] border border-[#2E2C3D] flex items-center justify-center text-primary-container text-label-sm font-label-md">
+            AS
+          </div>
+<div class="truncate">
+<div class="text-label-sm font-label-md text-on-surface truncate">Aarav S.</div>
+<div class="text-[10px] text-outline truncate leading-none">Owner</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1 rounded hover:bg-[#181820] transition-colors" title="Help &amp; Feedback">
+<span class="material-symbols-outlined text-sm">help_outline</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- MAIN COLUMN: Workbench canvas + topbar + 2-col storyboard editor -->
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-black">
+<!-- TOPBAR: Persistent header and breadcrumbs -->
+<header class="h-14 border-b border-[#23222D] bg-[#08080B] px-6 flex items-center justify-between shrink-0 z-20">
+<div class="flex items-center gap-3">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-label-sm font-label-sm text-outline gap-1.5">
+<span>Workspace</span>
+<span class="text-outline-variant">/</span>
+<span>Projects</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-semibold">Spotlight Effect / Draft</span>
+</nav>
+<span class="text-[10px] px-2 py-0.5 rounded-full bg-[#181820] text-outline border border-[#23222D] font-mono-metric">
+          Design preview · Sample data
+        </span>
+</div>
+<div class="flex items-center gap-3">
+<!-- Keyboard Search Trigger -->
+<div class="flex items-center gap-2 px-2.5 py-1 rounded bg-[#111116] border border-[#23222D] text-outline text-label-sm font-label-sm cursor-pointer hover:border-outline transition-colors">
+<span class="material-symbols-outlined text-sm">search</span>
+<span>Search or jump</span>
+<kbd class="text-[10px] font-mono-metric bg-[#181820] px-1.5 py-0.5 rounded text-on-surface-variant border border-[#2E2C3D]">⌘K</kbd>
+</div>
+<!-- Notification Bell -->
+<button class="w-8 h-8 rounded bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface hover:border-[#2E2C3D] transition-colors relative">
+<span class="material-symbols-outlined text-base">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+</button>
+<!-- Account Avatar -->
+<div class="w-8 h-8 rounded bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary-container font-semibold text-label-md">
+          AS
+        </div>
+</div>
+</header>
+<!-- WORKBENCH SUB-HEADER: Step Indicator & Title Bar -->
+<div class="border-b border-[#23222D] bg-[#0E0E11] px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 shrink-0">
+<div class="flex items-center gap-3"><div><div class="flex items-center gap-2"><h1 class="text-headline-sm font-headline-sm text-on-surface font-bold tracking-tight">Review your explanation</h1><button class="text-outline hover:text-on-surface p-1 rounded hover:bg-[#181820] transition-colors" title="Edit title"><span class="material-symbols-outlined text-sm">edit</span></button><span class="px-2 py-0.5 rounded bg-[#181820] text-secondary text-[11px] font-medium border border-[#23222D] flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Hindi</span><span class="text-[10px] text-outline bg-[#111116] border border-[#23222D] px-2 py-0.5 rounded font-mono-metric">Draft (Future Version 3)</span></div><div class="flex items-center gap-2 mt-0.5 text-body-sm font-body-sm text-outline"><span class="flex items-center gap-1 text-secondary"><span class="material-symbols-outlined text-xs">check_circle</span> Saved draft</span><span>·</span><span>Last ready output: Version 2 (39s) available</span></div></div></div>
+<!-- Step Flow Indicator (Idea -> Storyboard [ACTIVE] -> Generate -> Preview) -->
+<div class="flex items-center bg-[#111116] border border-[#23222D] p-1 rounded-lg">
+<!-- Step 1: Idea -->
+<div class="flex items-center gap-1.5 px-3 py-1 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-xs text-secondary">done</span>
+<span>Idea</span>
+</div>
+<span class="text-[#23222D]">/</span>
+<!-- Step 2: Storyboard (ACTIVE) -->
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-[#181820] border border-primary-container/40 text-on-surface text-label-sm font-label-sm shadow-[0_0_12px_rgba(161,139,255,0.2)]">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_6px_#7DE5E0]"></span>
+<span class="font-semibold text-primary">Storyboard</span>
+<span class="text-[10px] px-1 rounded bg-primary-container/20 text-primary-container font-mono-metric">Active</span>
+</div>
+<span class="text-[#23222D]">/</span>
+<!-- Step 3: Generate -->
+<div class="flex items-center gap-1.5 px-3 py-1 text-label-sm font-label-sm text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span>Generate</span>
+</div>
+<span class="text-[#23222D]">/</span>
+<!-- Step 4: Preview -->
+<div class="flex items-center gap-1.5 px-3 py-1 text-label-sm font-label-sm text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span>Preview</span>
+</div>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN CONTENT AREA -->
+<div class="flex-1 flex overflow-hidden">
+<!-- LEFT/CENTER COLUMN: Storyboard Review (~68% width) -->
+<section class="w-full lg:w-[68%] border-r border-[#23222D] overflow-y-auto custom-scroll p-6 space-y-5 bg-black">
+<!-- Section Bar: Overview & Controls -->
+<div class="flex items-center justify-between pb-2 border-b border-[#23222D]/60">
+<div><h2 class="text-body-lg font-headline-md text-on-surface font-semibold tracking-tight">Storyboard Scenes</h2><p class="text-body-sm font-body-sm text-outline">4 modular scenes synthesized from psychological research. Verify narrative pacing &amp; cognitive focus.</p></div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded bg-[#111116] border border-[#23222D] text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">reorder</span>
+<span>Reorder scenes</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-[#111116] border border-[#23222D] text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Add scene</span>
+</button>
+</div>
+</div>
+<!-- SCENE 01: Setup & Relatable Scenario -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-4 transition-all duration-150 hover:border-[#2E2C3D]">
+<div class="flex items-start justify-between gap-4 mb-3">
+<div class="flex items-center gap-2.5">
+<span class="px-2 py-0.5 rounded bg-[#181820] text-primary-container border border-[#23222D] text-mono-metric font-mono-metric font-semibold">Scene 01</span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold">Setup &amp; Relatable Scenario</span>
+<span class="text-outline text-body-sm font-body-sm">·</span>
+<span class="text-outline text-label-sm font-label-sm">Classroom mistake</span>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="text-[11px] font-mono-metric text-outline">~6.5s audio estimate</span>
+<button class="p-1 hover:text-on-surface rounded hover:bg-[#181820]"><span class="material-symbols-outlined text-base">more_horiz</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+<!-- Narration Input Area (Hindi Devanagari) -->
+<div class="md:col-span-8 space-y-1.5">
+<label class="text-[11px] text-outline uppercase font-mono-metric tracking-wider flex items-center justify-between">
+<span>Spoken Script (Hindi)</span>
+<span class="text-secondary text-[11px] font-sans flex items-center gap-1"><span class="material-symbols-outlined text-xs">verified</span> Ready for synthesis</span>
+</label>
+<div class="bg-[#08080B] border border-[#23222D] rounded p-3 focus-within:border-primary-container focus-within:ring-1 focus-within:ring-primary-container transition-all">
+<p class="font-hindi text-body-lg text-on-surface leading-relaxed">
+                  मान लीजिए क्लास में आपसे पेन गिर गया या बोलते वक्त ज़रा सी हिचकिचाहट हुई...
+                </p>
+</div>
+</div>
+<!-- Concise Visual Blueprint Preview -->
+<div class="md:col-span-4 bg-[#08080B] border border-[#23222D] rounded p-3 h-28 flex flex-col justify-between relative overflow-hidden group"><div class="flex items-center justify-between text-[10px] text-outline font-mono-metric"><span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> Classroom setting</span><span>Scene preview</span></div><div class="relative w-full h-12 flex items-center justify-center"><div class="w-12 h-12 rounded-full border border-primary-container/30 flex items-center justify-center"><div class="w-7 h-7 rounded-full border border-primary-container/60 flex items-center justify-center"><div class="w-2.5 h-2.5 rounded-full bg-primary-container shadow-[0_0_8px_#A18BFF]"></div></div></div><div class="absolute left-6 top-2 w-1.5 h-1.5 rounded-full bg-outline-variant/60"></div><div class="absolute right-6 top-3 w-1.5 h-1.5 rounded-full bg-outline-variant/60"></div><div class="absolute left-10 bottom-1 w-1.5 h-1.5 rounded-full bg-outline-variant/60"></div></div><div class="text-[10px] text-outline truncate text-center">Perceived attention on speaker</div></div>
+</div>
+</div>
+<!-- SCENE 02: Concept Definition (EXPANDED & ACTIVE STATE) -->
+<div class="bg-[#111116] border-2 border-primary-container/80 rounded-lg p-5 shadow-[0_0_24px_rgba(161,139,255,0.18)] relative">
+<!-- Active Spotlight Ribbon -->
+<div class="flex items-start justify-between gap-4 mb-3.5">
+<div class="flex items-center gap-2.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-primary-container text-[#08080B] text-mono-metric font-mono-metric font-bold shadow-[0_0_8px_rgba(161,139,255,0.4)]">Scene 02 · Active</span>
+<span class="text-body-md font-headline-sm text-on-surface font-bold">Concept Definition</span>
+<span class="text-outline text-body-sm font-body-sm">·</span>
+<span class="text-secondary text-label-sm font-label-sm font-medium">Define spotlight effect</span>
+</div>
+<!-- Controls / Layout selector -->
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1.5 bg-[#181820] border border-[#23222D] rounded px-2 py-1 text-label-sm font-label-sm text-on-surface">
+<span class="text-outline">Diagram:</span>
+<span class="font-semibold text-secondary">Comparison</span>
+<span class="material-symbols-outlined text-xs text-outline">arrow_drop_down</span>
+</div>
+<span class="text-[11px] font-mono-metric text-outline bg-[#08080B] px-2 py-1 rounded border border-[#23222D]">~8.2s audio</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+<!-- Left: Editable Narration + Controls -->
+<div class="md:col-span-7 space-y-3">
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="text-[11px] text-outline uppercase font-mono-metric tracking-wider">Spoken Narration (Devanagari)</label>
+<span class="text-[11px] text-outline">35 words</span>
+</div>
+<div class="bg-[#08080B] border border-primary-container/50 rounded-lg p-3.5 shadow-inner">
+<textarea class="w-full bg-transparent border-0 p-0 text-on-surface font-hindi text-body-lg focus:ring-0 resize-none leading-relaxed outline-none" placeholder="Enter Hindi narration..." rows="3">हम सोचते हैं कि हर किसी का ध्यान सिर्फ हम पर है — इसे कहते हैं स्पॉटलाइट इफेक्ट।</textarea>
+</div>
+</div>
+<!-- Pacing & Narration Quality Badges -->
+<div class="flex items-center gap-3 pt-1">
+<div class="flex items-center gap-1.5 text-label-sm font-label-sm text-secondary bg-secondary/10 px-2.5 py-1 rounded border border-secondary/20">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<span>Narration verified</span>
+</div>
+<div class="flex items-center gap-1.5 text-label-sm font-label-sm text-on-surface-variant bg-[#181820] px-2.5 py-1 rounded border border-[#23222D]">
+<span class="material-symbols-outlined text-sm">splitscreen</span>
+<span>Layout: Centered schematic</span>
+</div>
+</div>
+</div>
+<!-- Right: High-Precision Schematic Preview -->
+<div class="md:col-span-5 bg-[#08080B] border border-[#2E2C3D] rounded-lg p-4 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-[11px] font-mono-metric text-outline border-b border-[#23222D]/60 pb-2"><span class="text-primary-container font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-xs">schema</span> Illustrative diagram</span><span class="px-1.5 py-0.5 rounded bg-[#181820] text-on-surface-variant text-[10px]">Scene preview</span></div>
+<!-- Vector schematic: Spotlight Effect Internal vs Reality (NO FAKE PERCENTAGES) -->
+<div class="py-4 my-auto relative flex flex-col items-center justify-center">
+<!-- Outer Faint Perimeter: What others notice -->
+<div class="w-40 h-40 rounded-full border border-dashed border-[#484552] flex items-center justify-center relative">
+<span class="absolute -top-2.5 text-[9px] font-mono-metric bg-[#08080B] px-1.5 text-outline">What others notice</span>
+<!-- Outer Scattered Nodes (Observers) -->
+<div class="absolute top-2 right-4 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="absolute bottom-3 left-6 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="absolute top-8 left-2 w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="absolute bottom-6 right-8 w-2 h-2 rounded-full bg-outline-variant"></div>
+<!-- Inner Intense Ring: How it feels -->
+<div class="w-24 h-24 rounded-full border-2 border-primary-container/80 bg-primary-container/5 flex items-center justify-center relative shadow-[0_0_16px_rgba(161,139,255,0.3)]">
+<span class="absolute -bottom-2 text-[9px] font-mono-metric bg-[#08080B] px-1 text-primary-container font-semibold">How it feels</span>
+<!-- Center focal entity -->
+<div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center text-[#08080B] shadow-[0_0_12px_#A18BFF]">
+<span class="material-symbols-outlined text-sm font-bold">person</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t border-[#23222D]/60 flex items-center justify-between text-[10px] text-outline"><span class="flex items-center gap-1 text-secondary"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Visual pacing verified</span><span class="font-mono-metric text-outline">Standard preview ready</span></div>
+</div>
+</div>
+</div>
+<!-- SCENE 03: Perspective Shift -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-4 transition-all duration-150 hover:border-[#2E2C3D]">
+<div class="flex items-start justify-between gap-4 mb-3">
+<div class="flex items-center gap-2.5">
+<span class="px-2 py-0.5 rounded bg-[#181820] text-primary-container border border-[#23222D] text-mono-metric font-mono-metric font-semibold">Scene 03</span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold">Perspective Shift</span>
+<span class="text-outline text-body-sm font-body-sm">·</span>
+<span class="text-outline text-label-sm font-label-sm">Zoom out to other people</span>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="text-[11px] font-mono-metric text-outline">~7.8s audio estimate</span>
+<button class="p-1 hover:text-on-surface rounded hover:bg-[#181820]"><span class="material-symbols-outlined text-base">more_horiz</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+<div class="md:col-span-8 space-y-1.5">
+<label class="text-[11px] text-outline uppercase font-mono-metric tracking-wider">Spoken Script (Hindi)</label>
+<div class="bg-[#08080B] border border-[#23222D] rounded p-3">
+<p class="font-hindi text-body-lg text-on-surface leading-relaxed">
+                  हकीकत में, बाकी लोग भी अपनी-अपनी चिंताओं और कामों में इतने मशरूफ होते हैं कि वे छोटी बातें देखते ही नहीं।
+                </p>
+</div>
+</div>
+<!-- Preview: Scattered faded observer nodes -->
+<div class="md:col-span-4 bg-[#08080B] border border-[#23222D] rounded p-3 h-28 flex flex-col justify-between">
+<div class="flex items-center justify-between text-[10px] text-outline font-mono-metric">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Dispersed nodes</span>
+<span>Network view</span>
+</div>
+<div class="relative w-full h-12 flex items-center justify-around px-2">
+<div class="flex flex-col items-center gap-0.5 opacity-40">
+<div class="w-3 h-3 rounded-full border border-outline"></div>
+<div class="w-1 h-2 bg-outline-variant rounded"></div>
+</div>
+<div class="flex flex-col items-center gap-0.5 opacity-30">
+<div class="w-3 h-3 rounded-full border border-outline"></div>
+<div class="w-1 h-2 bg-outline-variant rounded"></div>
+</div>
+<div class="flex flex-col items-center gap-0.5">
+<div class="w-4 h-4 rounded-full border border-primary-container bg-primary-container/20"></div>
+<div class="w-1.5 h-2 bg-primary-container/60 rounded"></div>
+</div>
+<div class="flex flex-col items-center gap-0.5 opacity-30">
+<div class="w-3 h-3 rounded-full border border-outline"></div>
+<div class="w-1 h-2 bg-outline-variant rounded"></div>
+</div>
+<div class="flex flex-col items-center gap-0.5 opacity-40">
+<div class="w-3 h-3 rounded-full border border-outline"></div>
+<div class="w-1 h-2 bg-outline-variant rounded"></div>
+</div>
+</div>
+<div class="text-[10px] text-outline text-center">Multi-agent attention dispersed</div>
+</div>
+</div>
+</div>
+<!-- SCENE 04: Practical Takeaway -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-4 transition-all duration-150 hover:border-[#2E2C3D]">
+<div class="flex items-start justify-between gap-4 mb-3">
+<div class="flex items-center gap-2.5">
+<span class="px-2 py-0.5 rounded bg-[#181820] text-primary-container border border-[#23222D] text-mono-metric font-mono-metric font-semibold">Scene 04</span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold">Practical Takeaway</span>
+<span class="text-outline text-body-sm font-body-sm">·</span>
+<span class="text-outline text-label-sm font-label-sm">Check the evidence</span>
+</div>
+<div class="flex items-center gap-2 text-outline">
+<span class="text-[11px] font-mono-metric text-outline">~6.0s audio estimate</span>
+<button class="p-1 hover:text-on-surface rounded hover:bg-[#181820]"><span class="material-symbols-outlined text-base">more_horiz</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+<div class="md:col-span-8 space-y-1.5">
+<label class="text-[11px] text-outline uppercase font-mono-metric tracking-wider">Spoken Script (Hindi)</label>
+<div class="bg-[#08080B] border border-[#23222D] rounded p-3">
+<p class="font-hindi text-body-lg text-on-surface leading-relaxed">
+                  अगली बार जब झिझक महसूस हो, तो खुद से पूछें: क्या सच में सब मुझे देख रहे हैं?
+                </p>
+</div>
+</div>
+<!-- Preview: Balanced checkpoint diagram with mint check dot -->
+<div class="md:col-span-4 bg-[#08080B] border border-[#23222D] rounded p-3 h-28 flex flex-col justify-between">
+<div class="flex items-center justify-between text-[10px] text-outline font-mono-metric">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Cognitive anchor</span>
+<span>Outro card</span>
+</div>
+<div class="relative w-full h-12 flex items-center justify-center">
+<div class="px-3 py-1.5 rounded bg-[#181820] border border-secondary/40 flex items-center gap-2 shadow-[0_0_12px_rgba(125,229,224,0.15)]">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_6px_#7DE5E0]"></span>
+<span class="text-[11px] font-hindi text-on-surface">तथ्य जांचें (Check reality)</span>
+</div>
+</div>
+<div class="text-[10px] text-secondary text-center font-mono-metric">Takeaway card aligned</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT RAIL: Configuration, Sources, Voice & Render Trigger (~32% width) -->
+<aside class="w-full lg:w-[32%] bg-[#08080B] flex flex-col justify-between h-full overflow-y-auto custom-scroll border-l border-[#23222D]">
+<div class="p-5 space-y-6">
+<!-- Section 1: Academic Sources & Grounding -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="text-label-md font-label-md text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-base">menu_book</span>
+                Academic Grounding
+              </h3>
+<span class="text-[10px] px-2 py-0.5 rounded bg-secondary/15 text-secondary border border-secondary/30 font-medium">
+                Verified Science
+              </span>
+</div>
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-3.5 space-y-2.5">
+<div class="flex items-start justify-between gap-2">
+<div>
+<div class="text-label-sm font-label-sm text-on-surface font-semibold">Gilovich, Medvec &amp; Savitsky (2000)</div>
+<div class="text-body-sm font-body-sm text-outline mt-0.5 leading-snug">
+                    "The spotlight effect in social judgment: An egocentric bias in estimates of the salience of one's own actions and appearance."
+                  </div>
+</div>
+</div>
+<!-- PubMed External Link -->
+<a class="inline-flex items-center gap-1.5 text-[11px] font-mono-metric text-primary-container hover:underline group pt-1" href="https://pubmed.ncbi.nlm.nih.gov/10707330/" rel="noopener noreferrer" target="_blank">
+<span>PubMed: 10707330</span>
+<span class="material-symbols-outlined text-xs group-hover:translate-x-0.5 transition-transform">open_in_new</span>
+</a>
+<div class="pt-2 border-t border-[#23222D] flex items-center gap-1.5 text-body-sm font-body-sm text-secondary">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span>Definition supported by source</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Voice & Style Settings -->
+<div class="space-y-3">
+<h3 class="text-label-md font-label-md text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-base">tune</span>
+              Voice &amp; Style Controls
+            </h3>
+<!-- Voice Selection Card -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-3 space-y-2">
+<label class="text-[11px] font-mono-metric text-outline uppercase tracking-wider block">Synthesized Voice</label>
+<div class="flex items-center justify-between bg-[#181820] border border-[#2E2C3D] rounded p-2">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-sm">graphic_eq</span>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-on-surface font-medium">Roger · Hindi conversational</div>
+<div class="text-[11px] text-outline">Warm academic pacing (0.95x)</div>
+</div>
+</div>
+<button class="text-outline hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-sm">volume_up</span>
+</button>
+</div>
+</div>
+<!-- Motion Graphic Style -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-3 space-y-2">
+<label class="text-[11px] font-mono-metric text-outline uppercase tracking-wider block">Motion Vector Style</label>
+<div class="flex items-center justify-between bg-[#181820] border border-[#2E2C3D] rounded p-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-black border border-primary-container shadow-[0_0_6px_#A18BFF]"></span>
+<span class="text-label-sm font-label-sm text-on-surface">Black glow schematic</span>
+</div>
+<span class="text-[10px] text-secondary font-mono-metric">Mint/Violet accents</span>
+</div>
+</div>
+<!-- Crucial Pedagogical Duration & Audio Notice Boxes -->
+<div class="bg-[#111116] border border-[#23222D] rounded-lg p-3 space-y-2">
+<div class="flex items-start gap-2 text-outline">
+<span class="material-symbols-outlined text-secondary text-base shrink-0 mt-0.5">info</span>
+<p class="text-body-sm font-body-sm leading-relaxed text-on-surface-variant">
+<strong class="text-on-surface font-semibold">Estimated only:</strong> Timing strictly follows generated narration. Duration is driven by natural speech audio pacing, not fixed keyframe tracks.
+                </p>
+</div>
+<div class="pt-2 border-t border-[#23222D]/60 text-[11px] text-outline leading-normal font-sans">
+                Editing spoken Hindi text regenerates speech synthesis; visual layout modifications reuse previous audio caching.
+              </div>
+</div>
+</div>
+</div>
+<!-- Render & Approval Drawer (Sticky at Bottom) -->
+<div class="p-5 border-t border-[#23222D] bg-[#0E0E11] space-y-3.5">
+<!-- Approval Checkbox -->
+<label class="flex items-start gap-2.5 cursor-pointer group select-none">
+<input checked="" class="mt-0.5 rounded border-[#2E2C3D] bg-[#181820] text-primary-container focus:ring-primary-container focus:ring-offset-0" type="checkbox"/>
+<span class="text-label-sm font-label-sm text-on-surface group-hover:text-primary transition-colors leading-snug">
+              I've reviewed this script and want to generate narration.
+            </span>
+</label>
+<!-- Primary & Secondary Buttons -->
+<div class="space-y-2">
+<button class="w-full py-2.5 px-4 rounded bg-primary-container hover:bg-[#B3A0FF] active:scale-[0.99] text-[#08080B] font-bold text-label-md font-label-md flex items-center justify-center gap-2 shadow-[0_0_16px_rgba(161,139,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-base font-bold">bolt</span>
+<span>Generate video</span>
+</button>
+<button class="w-full py-2 px-4 rounded bg-[#181820] hover:bg-[#23222D] border border-[#2E2C3D] text-on-surface text-label-sm font-label-sm flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-sm">bookmark</span>
+<span>Save draft</span>
+</button>
+</div>
+<div class="text-center text-[10px] font-mono-metric text-outline">
+            Model: Newbert Cognitive Core v3.2 · Latency ~14s
+          </div>
+</div>
+</aside>
+</div>
+<!-- SHARED FOOTER COMPONENT (From Design System JSON) -->
+</div>
+</body></html>

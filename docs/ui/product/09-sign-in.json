@@ -1,0 +1,30 @@
+{
+  "slug": "09-sign-in",
+  "title": "Sign In and Account Entry",
+  "name": "projects/2520368196713015322/screens/f3825eacf4c74b0dae74ecc35131f572",
+  "width": "2560",
+  "height": "2250",
+  "screenshot": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/04ac3dcc540a4a2c85792fcdce89bfa2:download",
+    "name": "projects/2520368196713015322/files/04ac3dcc540a4a2c85792fcdce89bfa2"
+  },
+  "htmlCode": {
+    "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/7cc6d05a62684bc7b676e4efc8ade499:download",
+    "mimeType": "text/html",
+    "name": "projects/2520368196713015322/files/7cc6d05a62684bc7b676e4efc8ade499"
+  },
+  "output": [
+    {
+      "text": "I have designed the standalone desktop authentication screen for **Newbert AI Video** (`Newbert AI Video - Sign In`), continuing directly from the approved refined homepage.\n\n### Key Architectural & Design Decisions:\n1. **Standalone Minimal Shell:**\n   - Excluded the application sidebar as required for the authentication experience.\n   - Clean top header featuring the `Newbert AI Video` brand mark (with the ice mint status indicator), a subtle `Design preview · Sample data` indicator, and a prominent `Back to home` link.\n\n2. **Pedagogical Brand Continuity & Spotlight Diagram:**\n   - **Left Section:** Displays the headline *\"Make your next idea clear\"* accompanied by the concentric spotlight diagram motif (*The Spotlight Effect* 39s prototype) showing *\"How it feels\"* vs. *\"What others notice\"* with an explicit *\"Illustrative diagram\"* badge.\n   - Includes real bilingual Hindi/Hinglish caption sync preview (*\"हम सोचते हैं कि हर किसी का ध्यान सिर्फ़ हम पर है — इसे कहते हैं स्पॉटलाइट इफ़ेक्ट\"* with Devanagari typography and timestamp indicator).\n   - Private workspace security badge reinforcing that video drafts remain strictly local to the educator's single workspace.\n\n3. **Carried-Over Topic Context Card:**\n   - An intentional continuity card directly above the sign-in form: *\"Draft Idea In Progress — Why do we feel everyone is watching us?\"* showing *\"Draft saved\"*, reassuring educators that their topic prompt entered on the homepage is preserved and ready upon login.\n\n4. **Sign-In & Personal Workspace Onboarding Panel:**\n   - Segmented `Sign In` / `Create account` tab selector.\n   - Standard email address input and password input with an accessible reveal toggle (`aria-label`, show/hide script interaction), plus a `Forgot password?` link.\n   - Explicitly excluded third-party OAuth (e.g., Google) since the authentication provider is not yet finalized.\n   - Clear validation format annotation below inputs.\n   - Primary `Sign in to workspace` action in electric violet `#A18BFF` with dark text.\n   - Transparent helper callout explaining that creating an account automatically provisions one personal workspace without team tiers, invitations, or credit card requirements.\n\n5. **Design System & Responsive Rigor:**\n   - Applied `#000000` page, `#08080B` shell, `#111116` panels, `#23222D` borders, `#F5F2FA` headings, `#A7A1B5` high-contrast secondary text, and `#7DE5E0` mint accents.\n   - Structured with mobile-first responsiveness (collapsing the illustrative column on smaller screens, 44px touch targets, full-width inputs, and `prefers-reduced-motion` compliance)."
+    },
+    {
+      "suggestion": "Add the 'Create account' tab variant to see initial workspace provisioning copy"
+    },
+    {
+      "suggestion": "Design the forgot password / reset link request modal"
+    },
+    {
+      "suggestion": "Transition from login directly into the 'Create a video' topic refinement stage"
+    }
+  ]
+}

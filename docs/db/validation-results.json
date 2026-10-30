@@ -1,0 +1,66 @@
+{
+  "engine": "PGlite embedded PostgreSQL; not a hosted-service or load test",
+  "date": "2026-10-29",
+  "results": [
+    {
+      "name": "OpenAPI structural validation and reference resolution",
+      "passed": true
+    },
+    {
+      "name": "Reference DDL executes on embedded PostgreSQL",
+      "passed": true
+    },
+    {
+      "name": "One workspace per user",
+      "passed": true
+    },
+    {
+      "name": "Cross-workspace draft reference rejected",
+      "passed": true
+    },
+    {
+      "name": "Submitted versions cannot be edited or deleted",
+      "passed": true
+    },
+    {
+      "name": "Only one active job per project",
+      "passed": true
+    },
+    {
+      "name": "Cross-workspace job version rejected",
+      "passed": true
+    },
+    {
+      "name": "Project output cannot reference another tenant artifact",
+      "passed": true
+    },
+    {
+      "name": "Artifact dependencies cannot cross workspaces",
+      "passed": true
+    },
+    {
+      "name": "Only one active Instagram grant per workspace",
+      "passed": true
+    },
+    {
+      "name": "One active owner per remote Instagram account",
+      "passed": true
+    },
+    {
+      "name": "Usage settlement event deduplicates",
+      "passed": true
+    },
+    {
+      "name": "Atomic quota reservation cannot exceed remaining allowance",
+      "passed": true
+    },
+    {
+      "name": "Stale worker fencing token cannot checkpoint",
+      "passed": true
+    },
+    {
+      "name": "RLS hides foreign workspace and missing context from a non-owner role",
+      "passed": true
+    }
+  ]
+}

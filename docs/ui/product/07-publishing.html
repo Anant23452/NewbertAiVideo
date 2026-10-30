@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Publishing</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;family=Space+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-container": "#00302e",
+            "inverse-surface": "#e5e1e6",
+            "inverse-on-surface": "#303034",
+            "surface-container-high": "#2a292d",
+            "tertiary-container": "#9d9aa8",
+            "on-tertiary-container": "#34323e",
+            "outline-variant": "#484552",
+            "on-tertiary": "#302f3b",
+            "error": "#ffb4ab",
+            "background": "#131316",
+            "outline": "#938e9e",
+            "surface-variant": "#353438",
+            "on-tertiary-fixed-variant": "#474552",
+            "on-primary-container": "#36188e",
+            "on-secondary-fixed-variant": "#00504d",
+            "on-secondary-fixed": "#00201f",
+            "on-tertiary-fixed": "#1b1a25",
+            "error-container": "#93000a",
+            "secondary-container": "#2ea09c",
+            "surface-tint": "#cbbeff",
+            "surface-container": "#201f23",
+            "secondary-fixed-dim": "#6fd7d2",
+            "primary-fixed-dim": "#cbbeff",
+            "on-error": "#690005",
+            "primary-container": "#a18bff",
+            "secondary": "#6fd7d2",
+            "primary": "#cbbeff",
+            "on-background": "#e5e1e6",
+            "tertiary": "#c8c4d3",
+            "surface-container-low": "#1b1b1f",
+            "surface": "#131316",
+            "on-surface": "#e5e1e6",
+            "on-secondary": "#003735",
+            "inverse-primary": "#624bbb",
+            "tertiary-fixed-dim": "#c8c4d3",
+            "surface-container-lowest": "#0e0e11",
+            "primary-fixed": "#e6deff",
+            "on-primary": "#33128b",
+            "on-primary-fixed": "#1d0061",
+            "surface-container-highest": "#353438",
+            "secondary-fixed": "#8cf4ef",
+            "on-surface-variant": "#cac4d4",
+            "on-error-container": "#ffdad6",
+            "tertiary-fixed": "#e4e0f0",
+            "surface-dim": "#131316",
+            "surface-bright": "#39393c",
+            "on-primary-fixed-variant": "#4a31a2"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "gutter": "1rem",
+            "space-sm": "0.5rem",
+            "margin": "1.5rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "display-xl-mobile": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "mono-metric": ["Space Mono"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "display-xl": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "display-xl-mobile": ["36px", { "lineHeight": "44px", "fontWeight": "700" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "mono-metric": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "display-xl": ["56px", { "lineHeight": "64px", "fontWeight": "700" }],
+            "headline-lg-mobile": ["26px", { "lineHeight": "34px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Scientific Grid & Photon Glow Custom Rules */
+    .bg-void { background-color: #000000; }
+    .bg-sidebar { background-color: #08080B; }
+    .bg-panel { background-color: #111116; }
+    .bg-elevated { background-color: #181820; }
+    .border-subtle { border-color: #23222D; }
+    .border-interactive { border-color: #2E2C3D; }
+
+    .glow-violet {
+      box-shadow: 0 0 16px rgba(161, 139, 255, 0.28);
+    }
+    .glow-mint {
+      box-shadow: 0 0 16px rgba(125, 229, 224, 0.25);
+    }
+    .glow-inner-top {
+      box-shadow: inset 0 1px 0 rgba(245, 242, 250, 0.06);
+    }
+
+    /* Caliper Grid Background for Thumbnail */
+    .diagram-bg {
+      background-image: 
+        radial-gradient(circle at center, rgba(161, 139, 255, 0.15) 0%, transparent 70%),
+        linear-gradient(rgba(35, 34, 45, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 34, 45, 0.4) 1px, transparent 1px);
+      background-size: 100% 100%, 16px 16px, 16px 16px;
+    }
+  </style>
+<style id="handoff-mobile-account">@media(max-width:767px){[class~="gap-3.5"]{min-width:0;align-items:flex-start}[class~="gap-3.5"]>div{min-width:0}[class~="gap-3.5"] [class~="gap-2"]{flex-wrap:wrap}[class~="gap-3.5"] p{overflow-wrap:anywhere}}</style></head>
+<body class="bg-void text-on-surface antialiased font-body-md text-body-md min-h-screen flex selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- ========================================================================= -->
+<!-- LEFT SIDEBAR RAIL (224px width, bg #08080B, border #23222D)              -->
+<!-- ========================================================================= -->
+<aside class="hidden lg:flex w-56 shrink-0 bg-sidebar border-r border-subtle flex-col justify-between h-screen sticky top-0 z-40 select-none"><div class="flex flex-col"><div class="px-5 py-4 border-b border-subtle flex items-center justify-between"><a class="flex items-center gap-2 group" href="#"><div class="w-2.5 h-2.5 rounded-full bg-primary-container relative flex items-center justify-center"><span class="absolute w-4 h-4 rounded-full bg-secondary opacity-40 animate-ping"></span></div><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface group-hover:text-primary transition-colors duration-150">Newbert AI Video</span></a></div><nav class="p-3 space-y-1"><a class="flex items-center gap-3 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-elevated transition-colors duration-150 text-label-md font-label-md" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span>Dashboard</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-elevated transition-colors duration-150 text-label-md font-label-md" href="#"><span class="material-symbols-outlined text-[18px]">folder</span><span>Projects</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-elevated transition-colors duration-150 text-label-md font-label-md" href="#"><span class="material-symbols-outlined text-[18px]">auto_videocam</span><span>Create a video</span></a><a class="flex items-center justify-between px-3 py-2 rounded bg-elevated border border-primary-container/40 text-primary-container font-label-md text-label-md glow-inner-top" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[18px] text-primary-container">calendar_today</span><span class="font-semibold text-on-surface">Publishing</span></div><span class="text-[9px] font-mono-metric px-1.5 py-0.5 rounded bg-surface-container-high text-secondary border border-secondary/30 tracking-wider font-semibold">PLANNED</span></a><a class="flex items-center gap-3 px-3 py-2 rounded text-outline hover:text-on-surface hover:bg-elevated transition-colors duration-150 text-label-md font-label-md" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Settings</span></a></nav></div><div class="p-3 border-t border-subtle flex flex-col gap-3"><div class="p-2.5 rounded bg-panel border border-subtle"><div class="flex items-center justify-between"><span class="text-label-sm font-label-sm text-on-surface font-semibold">Personal workspace</span><span class="text-[10px] font-mono-metric text-secondary bg-secondary/10 px-1.5 py-0.2 rounded border border-secondary/20">1 seat</span></div><p class="text-label-sm font-label-sm text-outline mt-1">Free educational pilot</p></div><div class="flex items-center justify-between px-1"><div class="flex items-center gap-2.5"><div class="w-7 h-7 rounded bg-surface-variant border border-outline-variant flex items-center justify-center font-mono-metric text-[11px] font-bold text-on-surface">AS</div><div class="flex flex-col"><span class="text-label-md font-label-md font-semibold text-on-surface leading-tight">Aarav S.</span><span class="text-[10px] text-outline">Owner</span></div></div><a class="text-outline hover:text-on-surface transition-colors p-1" href="#" title="Help &amp; Feedback"><span class="material-symbols-outlined text-[18px]">help</span></a></div><a class="text-label-sm font-label-sm text-outline hover:text-secondary px-1 flex items-center gap-1.5 transition-colors" href="#"><span class="material-symbols-outlined text-[14px]">support</span><span>Help &amp; Feedback</span></a></div></aside>
+<!-- ========================================================================= -->
+<!-- MAIN APPLICATION SHELL & CONTENT                                          -->
+<!-- ========================================================================= -->
+<div class="flex-1 flex flex-col min-w-0 bg-void">
+<!-- TOP BAR (Breadcrumbs, Jump Search, Quick Actions) -->
+<header class="min-h-14 border-b border-subtle bg-sidebar px-4 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-30 glow-inner-top"><div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-wrap"><div class="flex items-center gap-1.5 text-label-md font-label-md text-outline"><span class="hidden md:inline">Workspace</span><span class="hidden md:inline text-outline-variant">/</span><span class="text-on-surface font-semibold truncate">Publishing</span></div><span class="hidden md:inline-flex items-center gap-1.5 text-[11px] font-mono-metric px-2 py-0.5 rounded bg-surface-container border border-subtle text-secondary truncate"><span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>Design preview · Sample data</span></div><div class="flex items-center gap-2 sm:gap-3 shrink-0"><button class="hidden md:flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded bg-panel border border-subtle text-outline hover:border-interactive hover:text-on-surface transition-colors text-label-sm font-label-sm"><span class="material-symbols-outlined text-[16px]">search</span><span class="hidden sm:inline">Quick jump...</span><kbd class="hidden sm:inline font-mono-metric text-[10px] bg-surface-container-high px-1.5 py-0.5 rounded border border-outline-variant text-on-surface-variant">⌘K</kbd></button><button aria-label="Notifications" class="relative w-8 h-8 rounded flex items-center justify-center text-outline hover:text-on-surface hover:bg-panel border border-transparent hover:border-subtle transition-colors"><span class="material-symbols-outlined text-[18px]">notifications</span><span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary-container rounded-full"></span></button><div class="w-8 h-8 rounded bg-surface-variant border border-outline-variant flex items-center justify-center font-mono-metric text-[11px] font-bold text-on-surface cursor-pointer hover:border-primary-container transition-colors">AS</div></div></header>
+<!-- MAIN SCROLLABLE CONTENT CANVAS -->
+<main class="flex-1 p-6 lg:p-8 max-w-[1440px] w-full mx-auto space-y-6">
+<!-- TOP BANNER & PAGE HEADER SECTION -->
+<section class="space-y-4">
+<!-- System Announcement Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-panel border border-subtle text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">science</span>
+<span>Planned feature · Design preview</span>
+</div>
+<!-- Headline & Educational Value Subtitle -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">
+              Plan your next explanation
+            </h1>
+<p class="text-body-md font-body-md text-outline mt-1 max-w-3xl leading-relaxed">
+              Schedule completed educational videos to your connected Instagram account. This workflow is a planned design preview.
+            </p>
+</div>
+<div class="md:hidden flex items-center gap-1.5 text-[11px] font-mono-metric px-2 py-1 rounded bg-surface-container border border-subtle text-secondary w-fit mt-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span><span>Design preview · Sample data</span></div></div>
+<!-- TOP ACCOUNT SUMMARY BAR (Single Connected Account Card) -->
+<div class="p-4 rounded-lg bg-panel border border-subtle flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glow-inner-top">
+<div class="flex items-center gap-3.5">
+<!-- Instagram Icon container -->
+<div class="w-10 h-10 rounded bg-elevated border border-interactive flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">photo_camera</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">@newbert_explains</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono-metric bg-secondary/10 border border-secondary/20 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Single connected account · Connected
+                </span>
+</div>
+<p class="text-label-sm font-label-sm text-outline mt-0.5">
+                One connected Instagram account per workspace. Schedules use an exact ready video version.
+              </p>
+</div>
+</div>
+<!-- Account Operational Status -->
+<div class="flex items-center gap-2 self-end sm:self-center px-3 py-1.5 rounded bg-surface-container border border-subtle text-label-sm font-label-sm text-outline">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span>Active &amp; ready for October schedules</span>
+</div>
+</div>
+</section>
+<!-- CONTROLS & TIMELINE TOOLBAR BAR -->
+<section class="flex flex-wrap items-center justify-between gap-4 p-2.5 rounded bg-panel border border-subtle">
+<!-- Left: View Toggle & Month Navigation -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Calendar / List Toggle -->
+<div class="inline-flex p-0.5 rounded bg-sidebar border border-subtle">
+<button class="px-3 py-1 rounded text-label-sm font-label-sm bg-elevated text-on-surface border border-interactive font-semibold shadow-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">calendar_view_month</span>
+              Calendar view
+            </button>
+<button class="px-3 py-1 rounded text-label-sm font-label-sm text-outline hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">format_list_bulleted</span>
+              List view
+            </button>
+</div>
+<div class="h-4 w-px bg-subtle"></div>
+<!-- Month Selector -->
+<div class="flex items-center gap-2">
+<button class="w-7 h-7 rounded bg-sidebar border border-subtle hover:border-interactive flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<span class="text-label-md font-label-md font-semibold text-on-surface px-1">October 2026</span>
+<button class="w-7 h-7 rounded bg-sidebar border border-subtle hover:border-interactive flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- Timezone Pill -->
+<span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-sidebar border border-subtle text-label-sm font-label-sm text-outline font-mono-metric">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+            Asia/Kolkata (IST)
+          </span>
+</div>
+<!-- Right: Status Legend Pills & Action Button -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Legend Pills (Sample States) -->
+<div class="hidden lg:flex items-center gap-3 text-label-sm font-label-sm text-outline">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span>Scheduled</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+<span>Needs attention</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Published</span>
+</div>
+<span class="text-[10px] font-mono-metric text-outline-variant">(Sample states)</span>
+</div>
+<!-- Action Button -->
+<button class="px-3.5 py-1.5 rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold flex items-center gap-1.5 hover:opacity-95 active:scale-[0.98] transition-all glow-violet">
+<span class="material-symbols-outlined text-[16px]">add</span>
+            + Schedule a video
+          </button>
+</div>
+</section>
+<!-- TWO-COLUMN WORKSPACE LAYOUT -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- ================================================================= -->
+<!-- LEFT COLUMN: CALENDAR VIEW (~65% width / 8 cols)                  -->
+<!-- ================================================================= -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Monthly Calendar Card -->
+<div class="md:hidden bg-panel border border-subtle rounded-lg p-4 space-y-3 glow-inner-top"><div class="flex items-center justify-between border-b border-subtle pb-3"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-secondary">calendar_today</span><span class="text-label-md font-label-md font-semibold text-on-surface">October 2026 Schedule</span></div><span class="text-[11px] font-mono-metric text-outline">3 scheduled events</span></div><div class="space-y-2.5"><div class="p-3 rounded bg-sidebar border border-secondary/30 flex items-start justify-between gap-3"><div class="space-y-1"><div class="flex items-center gap-2"><span class="text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/20">Oct 14 · 10:00</span><span class="text-[10px] font-mono-metric text-secondary">Published</span></div><p class="text-label-md font-label-md font-semibold text-on-surface">How Binary Works</p><span class="text-[11px] text-outline font-mono-metric">21s duration · Reels</span></div><span class="material-symbols-outlined text-[18px] text-secondary shrink-0">check_circle</span></div><div class="p-3 rounded bg-sidebar border border-amber-400/30 flex items-start justify-between gap-3"><div class="space-y-1"><div class="flex items-center gap-2"><span class="text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/20">Oct 22 · 14:15</span><span class="text-[10px] font-mono-metric text-amber-400">Attention</span></div><p class="text-label-md font-label-md font-semibold text-on-surface">Cognitive Load #02</p><span class="text-[11px] text-outline font-mono-metric">45s duration · Reels</span></div><span class="material-symbols-outlined text-[18px] text-amber-400 shrink-0">warning</span></div><div class="p-3 rounded bg-elevated border-2 border-primary-container glow-violet flex items-start justify-between gap-3 relative"><div class="space-y-1"><div class="flex items-center gap-2"><span class="text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-primary-container text-on-primary-container font-semibold">Oct 30 · 18:30</span><span class="text-[10px] font-mono-metric text-primary">Selected</span></div><p class="text-label-md font-label-md font-semibold text-on-surface">The Spotlight Effect · Version 2</p><span class="text-[11px] text-secondary font-mono-metric">39s duration · Hindi (हिंदी)</span></div><span class="material-symbols-outlined text-[18px] text-primary-container shrink-0">play_circle</span></div></div></div><div class="bg-panel border border-subtle rounded-lg overflow-hidden glow-inner-top hidden md:block">
+<!-- Day of Week Headers -->
+<div class="grid grid-cols-7 border-b border-subtle bg-sidebar text-center text-label-sm font-label-sm text-outline font-mono-metric py-2.5">
+<div>Mon</div>
+<div>Tue</div>
+<div>Wed</div>
+<div>Thu</div>
+<div>Fri</div>
+<div>Sat</div>
+<div>Sun</div>
+</div>
+<!-- Calendar Grid (October 2026: Oct 1 is Thursday) -->
+<div class="grid grid-cols-7 divide-x divide-y divide-subtle bg-void/50">
+<!-- Week 1: Sep 28 - Oct 4 -->
+<div class="min-h-[96px] p-2 bg-sidebar/20 text-outline-variant text-label-sm font-mono-metric">28</div>
+<div class="min-h-[96px] p-2 bg-sidebar/20 text-outline-variant text-label-sm font-mono-metric">29</div>
+<div class="min-h-[96px] p-2 bg-sidebar/20 text-outline-variant text-label-sm font-mono-metric">30</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">01</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">02</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">03</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">04</div>
+<!-- Week 2: Oct 5 - Oct 11 -->
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">05</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">06</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">07</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">08</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">09</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">10</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">11</div>
+<!-- Week 3: Oct 12 - Oct 18 (Oct 14 Published Sample) -->
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">12</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">13</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric bg-panel/30">
+<div class="flex items-center justify-between">
+<span>14</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+<!-- Published pill -->
+<div class="mt-2 p-1.5 rounded bg-sidebar border border-secondary/30 text-left cursor-pointer hover:border-secondary transition-colors">
+<div class="text-[10px] font-mono-metric text-secondary font-medium truncate">10:00 · How Binary Works</div>
+<div class="text-[9px] text-outline mt-0.5 flex items-center justify-between">
+<span>21s</span>
+<span class="text-secondary font-mono-metric">Published</span>
+</div>
+</div>
+</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">15</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">16</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">17</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">18</div>
+<!-- Week 4: Oct 19 - Oct 25 (Oct 22 Attention Sample) -->
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">19</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">20</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">21</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric bg-panel/30">
+<div class="flex items-center justify-between">
+<span>22</span>
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+</div>
+<!-- Attention pill -->
+<div class="mt-2 p-1.5 rounded bg-sidebar border border-amber-400/30 text-left cursor-pointer hover:border-amber-400 transition-colors">
+<div class="text-[10px] font-mono-metric text-amber-300 font-medium truncate">14:15 · Cognitive Load #02</div>
+<div class="text-[9px] text-outline mt-0.5 flex items-center justify-between">
+<span>45s</span>
+<span class="text-amber-400 font-mono-metric">Attention</span>
+</div>
+</div>
+</div>
+<div class="min-h-[96px] p-2 text-on-surface-variant text-label-sm font-mono-metric">23</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">24</div>
+<div class="min-h-[96px] p-2 text-outline text-label-sm font-mono-metric">25</div>
+<!-- Week 5: Oct 26 - Nov 1 (Oct 29 Today / Oct 30 SELECTED) -->
+<div class="min-h-[110px] p-2 text-on-surface-variant text-label-sm font-mono-metric">26</div>
+<div class="min-h-[110px] p-2 text-on-surface-variant text-label-sm font-mono-metric">27</div>
+<div class="min-h-[110px] p-2 text-on-surface-variant text-label-sm font-mono-metric">28</div>
+<!-- Oct 29 (Relative review date / Today) -->
+<div class="min-h-[110px] p-2 text-on-surface text-label-sm font-mono-metric bg-sidebar/50 border-t-2 border-t-outline">
+<div class="flex items-center justify-between">
+<span class="font-bold text-on-surface">29</span>
+<span class="text-[9px] px-1 rounded bg-surface-variant text-outline">Today</span>
+</div>
+<div class="mt-3 text-[10px] text-outline font-body-sm leading-tight">
+                  Review date
+                </div>
+</div>
+<!-- Oct 30 (SELECTED DATE WITH GLOWING VIOLET BORDER) -->
+<div class="min-h-[110px] p-2 text-on-surface text-label-sm font-mono-metric bg-panel border-2 border-primary-container relative z-10 glow-violet">
+<div class="flex items-center justify-between">
+<span class="font-bold text-primary-container">30</span>
+<span class="text-[9px] font-mono-metric px-1 rounded bg-primary-container text-on-primary-container font-semibold">SELECTED</span>
+</div>
+<!-- Scheduled Post Pill -->
+<div class="mt-2 p-2 rounded bg-elevated border border-primary-container/40 text-left shadow-sm">
+<div class="flex items-center gap-1 text-[10px] font-mono-metric text-primary-container font-semibold truncate">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container shrink-0"></span>
+<span>18:30 · Spotlight Effect · v2</span>
+</div>
+<div class="flex items-center justify-between text-[10px] text-outline mt-1 font-mono-metric">
+<span class="px-1 py-0.2 bg-sidebar rounded border border-subtle">39s</span>
+<span class="text-primary text-[10px]">Scheduled</span>
+</div>
+</div>
+</div>
+<!-- Oct 31 & Nov 01 -->
+<div class="min-h-[110px] p-2 text-outline text-label-sm font-mono-metric">31</div>
+<div class="min-h-[110px] p-2 bg-sidebar/20 text-outline-variant text-label-sm font-mono-metric">01</div>
+</div>
+</div>
+<!-- DIAGNOSTIC / ATTENTION CARD (Safe delivery & status checks) -->
+<div class="p-5 rounded-lg bg-panel border border-subtle space-y-4 glow-inner-top">
+<div class="flex items-center justify-between border-b border-subtle pb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+<h2 class="text-label-md font-label-md font-semibold text-on-surface">
+                  Safe delivery &amp; status checks (Sample states)
+                </h2>
+</div>
+<span class="text-[11px] font-mono-metric text-outline">Product Truth Framework</span>
+</div>
+<!-- Item 1: Attention Alert -->
+<div class="p-3.5 rounded bg-sidebar border border-amber-400/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-amber-400/10 text-amber-400 border border-amber-400/30 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                    Connection needs renewal — delivery paused
+                  </span>
+</div>
+<p class="text-body-sm font-body-sm text-outline">
+                  The Instagram publishing permission expired. Click Reconnect to resume pending posts without affecting queued schedules.
+                </p>
+</div>
+<button class="px-3 py-1.5 rounded bg-elevated border border-amber-400/40 text-amber-300 hover:bg-surface-variant text-label-sm font-label-sm font-semibold shrink-0 transition-colors">
+                Reconnect account
+              </button>
+</div>
+<!-- Item 2: Unknown submission explanation -->
+<div class="p-3.5 rounded bg-sidebar border border-subtle space-y-2"><div class="flex items-center justify-between flex-wrap gap-2"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/30 font-semibold"><span class="material-symbols-outlined text-[12px]">sync</span>State verification</span><span class="text-label-sm font-label-sm text-on-surface font-semibold">Check provider activity &amp; verify delivery state</span></div><button class="px-2.5 py-1 rounded bg-panel border border-subtle text-secondary hover:border-secondary text-[11px] font-mono-metric transition-colors">Check provider activity</button></div><p class="text-body-sm font-body-sm text-outline leading-relaxed"><strong class="text-on-surface-variant font-medium">No blind retries:</strong> Uncertain remote outcome triggers state verification. Scheduled releases are paused without losing queued posts until Instagram confirms receipt.</p></div>
+</div>
+</div>
+<!-- ================================================================= -->
+<!-- RIGHT COLUMN: SELECTED POST DETAIL PANEL (~35% width / 4 cols)    -->
+<!-- ================================================================= -->
+<div class="lg:col-span-4 bg-panel border border-subtle rounded-lg p-5 space-y-5 glow-inner-top sticky top-20">
+<!-- Header & Selected Date -->
+<div class="flex items-center justify-between border-b border-subtle pb-4">
+<div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Selected schedule</span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface font-semibold mt-0.5">Oct 30, 2026</h3>
+</div>
+<span class="inline-flex items-center gap-1.5 text-[11px] font-mono-metric px-2.5 py-1 rounded bg-primary-container/10 border border-primary-container/30 text-primary-container font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+              Scheduled (Planned preview)
+            </span>
+</div>
+<!-- Video Preview Card & Diagram Graphic -->
+<div class="space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<h4 class="text-label-md font-label-md font-semibold text-on-surface">The Spotlight Effect · Version 2</h4>
+<p class="text-label-sm font-label-sm text-secondary font-mono-metric mt-0.5">39s duration • Hindi (हिंदी)</p>
+</div>
+<span class="text-[10px] font-mono-metric bg-sidebar border border-subtle px-2 py-0.5 rounded text-outline">v2 locked</span>
+</div>
+<!-- 9:16 Aspect Ratio Preview (Vertical Shorts/Reels Canvas) -->
+<div class="w-full aspect-[9/16] max-h-72 bg-sidebar rounded border border-interactive relative overflow-hidden flex flex-col items-center justify-center diagram-bg p-4 select-none">
+<!-- Spotlight Effect Concentric Ring Schematic -->
+<div class="relative w-36 h-36 flex items-center justify-center"><div class="absolute inset-0 rounded-full border border-dashed border-primary-container/30"></div><div class="absolute inset-3 rounded-full border border-secondary/40"></div><div class="absolute inset-8 rounded-full bg-primary-container/20 border border-primary-container flex items-center justify-center glow-violet"><div class="w-3.5 h-3.5 rounded-full bg-secondary shadow-md"></div></div><span class="absolute top-0 text-[8px] font-mono-metric text-outline uppercase">How it feels</span><span class="absolute bottom-0 text-[8px] font-mono-metric text-secondary uppercase">What others notice</span><span class="text-[7px] font-mono-metric text-outline-variant uppercase tracking-wider">Illustrative diagram</span></div>
+<!-- Overlaid Audio Waveform / Scene Indicator -->
+<div class="absolute bottom-3 inset-x-3 p-2 rounded bg-elevated/90 border border-subtle backdrop-blur-sm flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-secondary">graphic_eq</span>
+<span class="text-[10px] font-mono-metric text-on-surface">Hindi VO · 142 wpm</span>
+</div>
+<span class="text-[10px] font-mono-metric text-secondary">00:39</span>
+</div>
+</div>
+<div class="text-center">
+<span class="text-[11px] font-mono-metric text-outline">1080×1920 • 30fps MP4 locked</span>
+</div>
+</div>
+<!-- Publishing Specifications -->
+<div class="space-y-3 border-t border-subtle pt-4 text-label-sm font-label-sm"><div class="flex items-center justify-between flex-wrap gap-2"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1 text-[10px] font-mono-metric px-1.5 py-0.5 rounded bg-secondary/10 text-secondary border border-secondary/30 font-semibold"><span class="material-symbols-outlined text-[12px]">sync</span>State verification</span><span class="text-label-sm font-label-sm text-on-surface font-semibold">Check provider activity &amp; verify delivery state</span></div><button class="px-2.5 py-1 rounded bg-panel border border-subtle text-secondary hover:border-secondary text-[11px] font-mono-metric transition-colors">Check provider activity</button></div><p class="text-body-sm font-body-sm text-outline leading-relaxed"><strong class="text-on-surface-variant font-medium">No blind retries:</strong> Uncertain remote outcome triggers state verification. Scheduled releases are paused without losing queued posts until Instagram confirms receipt.</p></div>
+<!-- Post Actions Buttons -->
+<div class="space-y-2 border-t border-subtle pt-4">
+<div class="grid grid-cols-2 gap-2">
+<button class="w-full py-2 px-3 rounded bg-elevated border border-interactive hover:border-primary-container hover:text-on-surface text-on-surface-variant text-label-md font-label-md font-semibold transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">edit_calendar</span>
+                Reschedule
+              </button>
+<button class="w-full py-2 px-3 rounded bg-elevated border border-subtle hover:border-error/50 hover:text-error text-outline text-label-md font-label-md font-semibold transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+                Cancel schedule
+              </button>
+</div>
+<a class="w-full py-2 rounded bg-sidebar border border-subtle hover:border-interactive text-outline hover:text-secondary text-label-sm font-label-sm flex items-center justify-center gap-1.5 transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+              Preview video (39s)
+            </a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER FROM SHARED COMPONENTS BLUEPRINT -->
+</div>
+</body></html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Create a video</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;family=Noto+Sans+Devanagari:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed-dim": "#6fd7d2",
+            "inverse-on-surface": "#303034",
+            "outline": "#938e9e",
+            "on-tertiary-container": "#34323e",
+            "on-secondary-fixed-variant": "#00504d",
+            "tertiary-fixed-dim": "#c8c4d3",
+            "tertiary": "#c8c4d3",
+            "primary": "#cbbeff",
+            "background": "#131316",
+            "surface-container-low": "#1b1b1f",
+            "surface-container-highest": "#353438",
+            "surface-container": "#201f23",
+            "on-secondary": "#003735",
+            "on-primary-fixed": "#1d0061",
+            "primary-fixed": "#e6deff",
+            "on-tertiary": "#302f3b",
+            "on-error": "#690005",
+            "surface-variant": "#353438",
+            "on-secondary-container": "#00302e",
+            "on-error-container": "#ffdad6",
+            "secondary": "#6fd7d2",
+            "secondary-fixed": "#8cf4ef",
+            "on-tertiary-fixed-variant": "#474552",
+            "on-surface": "#e5e1e6",
+            "on-background": "#e5e1e6",
+            "on-primary-container": "#36188e",
+            "error": "#ffb4ab",
+            "primary-container": "#a18bff",
+            "primary-fixed-dim": "#cbbeff",
+            "surface-container-high": "#2a292d",
+            "surface-dim": "#131316",
+            "on-secondary-fixed": "#00201f",
+            "tertiary-fixed": "#e4e0f0",
+            "outline-variant": "#484552",
+            "surface-tint": "#cbbeff",
+            "surface-container-lowest": "#0e0e11",
+            "inverse-primary": "#624bbb",
+            "on-surface-variant": "#cac4d4",
+            "inverse-surface": "#e5e1e6",
+            "surface-bright": "#39393c",
+            "on-tertiary-fixed": "#1b1a25",
+            "error-container": "#93000a",
+            "secondary-container": "#2ea09c",
+            "surface": "#131316",
+            "on-primary-fixed-variant": "#4a31a2",
+            "tertiary-container": "#9d9aa8",
+            "on-primary": "#33128b"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "gutter": "1rem",
+            "space-lg": "1.5rem",
+            "margin": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          fontFamily: {
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "display-xl": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "mono-metric": ["Space Mono"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "display-xl-mobile": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "devanagari": ["Noto Sans Devanagari", "Plus Jakarta Sans"]
+          },
+          fontSize: {
+            "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
+            "display-xl": ["56px", { lineHeight: "64px", fontWeight: "700" }],
+            "label-md": ["13px", { lineHeight: "16px", fontWeight: "600" }],
+            "mono-metric": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "headline-lg-mobile": ["26px", { lineHeight: "34px", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "display-xl-mobile": ["36px", { lineHeight: "44px", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #23222D;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#000000] text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-[#08080B] font-body-md text-body-md overflow-x-hidden">
+<!-- Desktop App Wrapper (1440px target container) -->
+<div class="flex h-screen w-full bg-[#08080B] overflow-hidden">
+<!-- LEFT 224px SIDEBAR -->
+<aside class="w-[224px] flex-shrink-0 bg-[#08080B] border-r border-[#23222D] flex flex-col justify-between z-20 select-none">
+<!-- Top Section -->
+<div class="flex flex-col">
+<!-- Brand Wordmark Header -->
+<div class="h-14 px-5 flex items-center gap-2.5 border-b border-[#23222D]/60">
+<div class="relative flex items-center justify-center">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(111,215,210,0.8)]"></span>
+</div>
+<span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-semibold text-[15px]">
+            Newbert AI Video
+          </span>
+</div>
+<!-- Navigation Rail (Exact item list and order) -->
+<nav class="p-3 space-y-1">
+<!-- 1. Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. Projects -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="folder">folder</span>
+<span>Projects</span>
+</a>
+<!-- 3. Create a video (ACTIVE / SELECTED) -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg bg-[#181820] text-primary border border-primary-container/30 shadow-[0_0_14px_rgba(161,139,255,0.15)] font-label-md text-label-md font-semibold" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="video_call" data-weight="fill" style="font-variation-settings: 'FILL' 1;">video_call</span>
+<span>Create a video</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_rgba(203,190,255,0.9)]"></span>
+</a>
+<!-- 4. Publishing -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 font-label-md text-label-md group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span>Publishing</span>
+</div>
+</a>
+<div class="px-3 -mt-1 pb-1">
+<span class="text-[9px] font-mono-metric text-[#938e9e] bg-[#111116] px-1.5 py-0.5 rounded border border-[#23222D]">
+              Planned · design preview
+            </span>
+</div>
+<!-- 5. Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline hover:text-on-surface hover:bg-[#111116] transition-colors duration-150 font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Sidebar Gutter -->
+<div class="p-3 border-t border-[#23222D] space-y-3 bg-[#08080B]">
+<!-- Workspace Card -->
+<div class="p-2.5 rounded-xl bg-[#111116] border border-[#23222D] flex items-center justify-between">
+<div class="truncate">
+<p class="text-on-surface text-[12px] font-label-md font-medium truncate">Personal workspace</p>
+<div class="flex items-center gap-1.5 text-outline text-[11px] font-mono-metric">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+<span>1 creator</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline" data-icon="swap_vert">swap_vert</span>
+</div>
+<!-- User Profile Pill -->
+<div class="flex items-center gap-2.5 px-2 py-1.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high border border-[#23222D] flex items-center justify-center text-primary font-headline-sm text-xs font-semibold">
+            AS
+          </div>
+<div class="truncate leading-tight">
+<p class="text-on-surface text-[12px] font-label-md truncate font-medium">Aarav S.</p>
+<p class="text-outline text-[10px] font-mono-metric">Owner</p>
+</div>
+</div>
+<!-- Help Link -->
+<a class="flex items-center gap-2 px-2 py-1.5 text-outline hover:text-on-surface text-label-sm font-label-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]" data-icon="help">help</span>
+<span>Help &amp; Feedback</span>
+</a>
+</div>
+</aside>
+<!-- RIGHT MAIN CONTENT WORKSPACE -->
+<div class="flex-1 flex flex-col min-w-0 bg-[#000000] overflow-hidden">
+<!-- TOP NAVIGATION BAR -->
+<header class="h-14 bg-[#08080B] border-b border-[#23222D] px-6 flex items-center justify-between flex-shrink-0 z-10">
+<!-- Breadcrumb & Status Pill -->
+<div class="flex items-center gap-3">
+<nav class="flex items-center gap-2 font-label-md text-label-md text-outline">
+<span class="hover:text-on-surface cursor-pointer">Workspace</span>
+<span class="material-symbols-outlined text-xs text-outline-variant" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface font-semibold">New video</span>
+</nav>
+<span class="text-[11px] font-mono-metric text-secondary-fixed-dim bg-[#111116] border border-[#23222D] px-2.5 py-0.5 rounded-full">
+            Design preview · Sample data
+          </span>
+</div>
+<!-- Right Utilities -->
+<div class="flex items-center gap-3">
+<!-- Search / Shortcut Input -->
+<div class="relative hidden sm:flex items-center">
+<span class="material-symbols-outlined absolute left-2.5 text-outline text-[15px]" data-icon="search">search</span>
+<input class="w-48 bg-[#111116] border border-[#23222D] focus:border-primary-container focus:ring-0 text-on-surface text-label-sm font-label-sm pl-8 pr-8 py-1.5 rounded-lg placeholder-outline" placeholder="Search concepts..." type="text"/>
+<kbd class="absolute right-2 font-mono-metric text-[10px] text-outline bg-[#181820] border border-[#23222D] px-1 rounded">⌘K</kbd>
+</div>
+<!-- Notification Bell -->
+<button aria-label="Notifications" class="w-8 h-8 rounded-lg bg-[#111116] border border-[#23222D] flex items-center justify-center text-outline hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<!-- Avatar -->
+<div class="w-8 h-8 rounded-full bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary text-xs font-semibold cursor-pointer">
+            A
+          </div>
+</div>
+</header>
+<!-- SCROLLABLE CANVAS / WORKBENCH BODY -->
+<main class="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-8">
+<div class="max-w-[1240px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- LEFT / CENTER COLUMN: Pedagogical Composer & Conversation (7 cols desktop) -->
+<section class="lg:col-span-7 space-y-6">
+<!-- Page Header -->
+<div>
+<div class="inline-flex items-center gap-2 mb-2 font-mono-metric text-label-sm text-secondary tracking-wider">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>STEP 1 · CONCEPT &amp; OUTLINE</span>
+</div>
+<h1 class="text-3xl lg:text-[32px] font-bold text-on-surface leading-tight tracking-tight">
+                What would you like to explain?
+              </h1>
+<p class="text-outline text-body-md font-body-md mt-1.5">
+                Turn a question or educational topic into a clear, narrated video with conceptual motion graphics.
+              </p>
+</div>
+<!-- Topic Composer Card -->
+<div class="bg-[#111116] border border-[#23222D] rounded-2xl p-5 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
+<label class="block font-label-sm text-label-sm text-outline mb-2" for="topic-input">
+                Core query or pedagogical question
+              </label>
+<!-- Topic Input with Action -->
+<div class="relative">
+<input class="w-full bg-[#181820] border border-[#2E2C3D] focus:border-primary-container focus:ring-1 focus:ring-primary-container text-on-surface text-[15px] font-body-md px-4 py-3 rounded-xl placeholder-outline" id="topic-input" type="text" value="Why do we feel everyone is watching us?"/>
+<div class="absolute right-2 top-2 bottom-2 flex items-center">
+<button class="bg-[#23222D] hover:bg-[#2E2C3D] text-on-surface text-label-sm font-label-sm px-3 py-1 rounded-lg transition-colors flex items-center gap-1.5 border border-[#2E2C3D]">
+<span class="material-symbols-outlined text-[14px] text-primary" data-icon="auto_awesome">auto_awesome</span>
+<span>Analyze</span>
+</button>
+</div>
+</div>
+<!-- Quick Topic Tags / Suggestions -->
+<div class="mt-4 pt-3 border-t border-[#23222D]/60 flex flex-wrap items-center gap-2">
+<span class="text-label-sm font-label-sm text-outline font-medium mr-1">Quick prompts:</span>
+<button class="px-2.5 py-1 rounded-full bg-[#181820] hover:bg-[#23222D] border border-[#23222D] text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>The spotlight effect</span>
+</button>
+<button class="px-2.5 py-1 rounded-full bg-[#181820] hover:bg-[#23222D] border border-[#23222D] text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-colors">
+                  Confirmation bias
+                </button>
+<button class="px-2.5 py-1 rounded-full bg-[#181820] hover:bg-[#23222D] border border-[#23222D] text-on-surface-variant hover:text-on-surface text-label-sm font-label-sm transition-colors">
+                  How binary works
+                </button>
+</div>
+</div>
+<!-- Conversational Idea Refinement Dialogue -->
+<div class="space-y-3.5">
+<div class="flex items-center justify-between px-1">
+<span class="font-mono-metric text-[11px] text-outline uppercase tracking-wider">
+                  Dialogue refinement (Pedagogical Angle)
+                </span>
+<span class="text-label-sm text-secondary font-mono-metric">2 turns</span>
+</div>
+<!-- User Bubble -->
+<div class="flex justify-end items-start gap-3">
+<div class="max-w-[85%] bg-[#181820] border border-[#2E2C3D] rounded-2xl rounded-tr-sm p-3.5 text-on-surface shadow-sm">
+<p class="text-body-md font-body-md">
+                    For college students, with a classroom example.
+                  </p>
+</div>
+<div class="w-7 h-7 rounded-full bg-[#23222D] border border-[#2E2C3D] flex items-center justify-center text-on-surface text-xs font-medium flex-shrink-0 mt-0.5">
+                  AS
+                </div>
+</div>
+<!-- Assistant Response Bubble with Diagrammatic Preview -->
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-primary-container/20 border border-primary-container/40 flex items-center justify-center text-primary text-xs font-semibold flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[15px]" data-icon="psychology">psychology</span>
+</div>
+<div class="max-w-[90%] bg-[#111116] border border-[#23222D] rounded-2xl rounded-tl-sm p-4 space-y-3 shadow-md">
+<p class="text-on-surface text-body-md font-body-md leading-relaxed">
+                    We can explain the spotlight effect using a small mistake in class, then show how imagined attention differs from what others may notice.
+                  </p>
+<!-- Vernacular Devanagari Context Snippet -->
+<div class="px-3 py-2 rounded-lg bg-[#181820] border border-[#23222D] flex items-center gap-3">
+<span class="font-mono-metric text-[10px] text-secondary bg-[#201f23] px-1.5 py-0.5 rounded border border-[#23222D]">Hindi Narrator</span>
+<p class="text-on-surface text-body-sm font-devanagari italic leading-normal text-[#cac4d4]">
+                      "सच यह है कि लोग उतना ध्यान नहीं दे रहे होते जितना हम सोचते हैं..."
+                    </p>
+</div>
+<!-- Perceptual Ring Schema Preview -->
+<div class="p-3 bg-[#08080B] rounded-xl border border-[#23222D] flex items-center gap-3"><div class="w-12 h-12 rounded-lg bg-[#111116] border border-primary-container/40 flex items-center justify-center relative flex-shrink-0 overflow-hidden"><div class="absolute inset-0 flex items-center justify-center"><span class="w-9 h-9 rounded-full border border-primary/40 animate-ping opacity-25"></span><span class="w-8 h-8 rounded-full border border-primary/50"></span><span class="w-4 h-4 rounded-full border border-secondary bg-secondary/20"></span><span class="w-1 h-1 rounded-full bg-primary"></span></div></div><div class="truncate"><div class="flex items-center gap-2"><span class="text-label-sm font-label-md font-semibold text-on-surface">Scene preview: Illustrative diagram of the spotlight effect</span><span class="text-[10px] font-mono-metric text-secondary bg-secondary/10 px-1.5 py-0.5 rounded">Illustrative diagram</span></div><p class="text-[#cac4d4] text-body-sm font-body-sm truncate mt-0.5">Visualizes how it feels compared to what others may notice in a room.</p></div></div>
+</div>
+</div>
+</div>
+<!-- Suggested Learning Objective Card -->
+<div class="bg-gradient-to-b from-[#181820] to-[#111116] border border-primary-container/30 rounded-2xl p-5 relative overflow-hidden shadow-[0_0_20px_rgba(161,139,255,0.06)]">
+<div class="flex items-start justify-between gap-4">
+<div>
+<span class="font-mono-metric text-[10px] tracking-wider text-primary font-bold uppercase bg-primary-container/15 px-2 py-0.5 rounded border border-primary-container/30">
+                    SUGGESTED LEARNING OBJECTIVE
+                  </span>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mt-2 font-semibold">
+                    The Spotlight Effect in Everyday Settings
+                  </h3>
+</div>
+<button class="bg-[#181820] hover:bg-[#23222D] text-on-surface hover:text-primary border border-[#2E2C3D] hover:border-primary-container/50 text-label-md font-label-md px-3.5 py-1.5 rounded-lg transition-colors flex items-center gap-2 flex-shrink-0">
+<span class="material-symbols-outlined text-secondary text-[16px]" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Use this direction</span>
+</button>
+</div>
+<!-- Pedagogical Pillars / Bullet Points -->
+<ul class="mt-4 space-y-2 text-on-surface-variant text-body-md font-body-md border-t border-[#23222D] pt-3"><li class="flex items-start gap-2"><span class="text-primary font-bold leading-none mt-1">•</span><span><strong>Relatable classroom scenario:</strong> Dropping a pen or making a minor speech stumble during a seminar presentation.</span></li><li class="flex items-start gap-2"><span class="text-primary font-bold leading-none mt-1">•</span><span><strong>The feeling:</strong> <em>How it feels</em> — imagining that everyone in the room noticed and is evaluating the mistake.</span></li><li class="flex items-start gap-2"><span class="text-primary font-bold leading-none mt-1">•</span><span><strong>The reality:</strong> <em>What others may notice</em> — most peers are occupied with their own notes and thoughts.</span></li></ul>
+</div>
+<!-- Dialogue Follow-up Input Bar -->
+<div class="relative">
+<input class="w-full bg-[#111116] border border-[#23222D] focus:border-primary-container focus:ring-1 focus:ring-primary-container text-on-surface text-body-md font-body-md pl-4 pr-12 py-3 rounded-xl placeholder-outline shadow-inner" placeholder="Refine the idea, or continue with this topic..." type="text"/>
+<button class="absolute right-2 top-2 bottom-2 w-9 rounded-lg bg-primary-container hover:bg-primary text-[#08080B] flex items-center justify-center transition-transform active:scale-95 shadow-[0_0_10px_rgba(161,139,255,0.3)]">
+<span class="material-symbols-outlined text-[18px]" data-icon="arrow_upward">arrow_upward</span>
+</button>
+</div>
+</section>
+<!-- RIGHT COLUMN: Video Brief & Specifications Panel (5 cols desktop) -->
+<aside class="lg:col-span-5">
+<div class="bg-[#111116] border border-[#23222D] rounded-2xl p-6 space-y-6 shadow-[0_8px_32px_rgba(0,0,0,0.7)] sticky top-6">
+<!-- Section Title & Helper -->
+<div class="border-b border-[#23222D] pb-4">
+<div class="flex items-center justify-between">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">
+                    Video brief
+                  </h2>
+<span class="text-[11px] font-mono-metric text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">
+                    Draft v1
+                  </span>
+</div>
+<p class="text-outline text-label-sm font-label-sm mt-1">
+                  Guides narration pacing and diagrams
+                </p>
+</div>
+<!-- Parameter 1: Language Selector -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-outline">Narration Language</label>
+<div class="grid grid-cols-2 gap-2 bg-[#08080B] p-1 rounded-xl border border-[#23222D]">
+<button class="py-2 px-3 rounded-lg text-label-md font-label-md font-semibold bg-[#181820] text-primary border border-primary-container/40 flex items-center justify-center gap-1.5 shadow-sm">
+<span>Hindi</span>
+<span class="text-[10px] font-mono-metric bg-primary-container/20 text-primary px-1 rounded">Active</span>
+</button>
+<button class="py-2 px-3 rounded-lg text-label-md font-label-md text-outline hover:text-on-surface transition-colors flex items-center justify-center">
+<span>Hinglish</span>
+</button>
+</div>
+</div>
+<!-- Parameter 2: Audience Selector -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-outline">Target Audience</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-[#201f23] text-secondary border border-secondary/40 text-label-sm font-label-md flex items-center gap-1.5 shadow-[0_0_8px_rgba(111,215,210,0.15)]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>College students</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-[#181820] hover:bg-[#201f23] text-outline hover:text-on-surface border border-[#23222D] text-label-sm font-label-md transition-colors">
+                    School students
+                  </button>
+<button class="px-3 py-1.5 rounded-lg bg-[#181820] hover:bg-[#201f23] text-outline hover:text-on-surface border border-[#23222D] text-label-sm font-label-md transition-colors">
+                    Curious learners
+                  </button>
+</div>
+</div>
+<!-- Parameter 3: Approximate Length -->
+<div class="p-3.5 bg-[#181820] rounded-xl border border-[#23222D] flex items-center justify-between">
+<div>
+<span class="block font-label-sm text-label-sm text-outline">Target duration</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">About 40 seconds</span>
+</div>
+<span class="text-[10px] font-mono-metric text-outline text-right max-w-[120px] leading-tight">
+                  Final length follows narration timing (Pilot max 60s)
+                </span>
+</div>
+<!-- Parameter 4: Voice Selector & Preview -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-outline">Synthetic Voice Model</label>
+<div class="flex items-center justify-between p-3 rounded-xl bg-[#181820] border border-[#23222D]">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="record_voice_over">record_voice_over</span>
+<div>
+<p class="text-on-surface text-label-md font-label-md font-semibold">Roger · Hindi conversational</p>
+<p class="text-outline text-[11px] font-mono-metric">Warm academic pacing · 145 wpm</p>
+</div>
+</div>
+<button class="px-2.5 py-1.5 rounded-lg bg-[#23222D] hover:bg-[#2E2C3D] text-on-surface text-label-sm font-label-sm transition-colors flex items-center gap-1.5 border border-[#2E2C3D]">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="volume_up">volume_up</span>
+<span>Sample preview</span>
+</button>
+</div>
+</div>
+<!-- Parameter 5: Visual Style Selector -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-outline">Motion Rendering Engine</label>
+<div class="grid grid-cols-2 gap-2">
+<!-- Option 1: Black glow (Selected) -->
+<div class="p-3 rounded-xl bg-[#181820] border border-primary-container/40 relative cursor-pointer shadow-[0_0_12px_rgba(161,139,255,0.1)]">
+<div class="flex items-center justify-between mb-2">
+<span class="text-on-surface font-label-md text-label-md font-semibold">Black glow</span>
+<span class="w-3.5 h-3.5 rounded-full border-2 border-primary bg-primary flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-[#08080B]"></span>
+</span>
+</div>
+<!-- Miniature vector thumbnail -->
+<div class="h-10 bg-[#08080B] rounded-lg border border-[#23222D] flex items-center justify-center relative overflow-hidden">
+<span class="w-6 h-6 rounded-full border border-primary/40 shadow-[0_0_8px_rgba(161,139,255,0.5)]"></span>
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_6px_rgba(111,215,210,0.8)] absolute"></span>
+</div>
+</div>
+<!-- Option 2: Standard schematic -->
+<div class="p-3 rounded-xl bg-[#0e0e11] hover:bg-[#181820] border border-[#23222D] cursor-pointer transition-colors">
+<div class="flex items-center justify-between mb-2">
+<span class="text-outline font-label-md text-label-md">Standard schematic</span>
+<span class="w-3.5 h-3.5 rounded-full border border-outline"></span>
+</div>
+<div class="h-10 bg-[#08080B] rounded-lg border border-[#23222D] flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-[18px]" data-icon="schema">schema</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Parameter 6: Workflow Generation Mode Cards -->
+<div class="space-y-2">
+<label class="block font-label-sm text-label-sm text-outline">Workflow Generation Mode</label>
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Card 1: Guided (SELECTED) -->
+<div class="p-3.5 rounded-xl bg-[#181820] border-2 border-primary-container relative cursor-pointer shadow-[0_0_16px_rgba(161,139,255,0.18)]">
+<div class="flex items-start justify-between">
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="text-on-surface font-label-md text-label-md font-semibold">Guided</span>
+<span class="font-mono-metric text-[10px] text-secondary bg-secondary/15 px-2 py-0.5 rounded-full border border-secondary/30">
+                            Recommended for concepts
+                          </span>
+</div>
+<p class="text-outline text-label-sm font-label-sm">
+                          Review the script before narration
+                        </p>
+</div>
+<div class="w-4 h-4 rounded-full border-2 border-primary-container bg-primary-container flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-[#08080B]"></span>
+</div>
+</div>
+</div>
+<!-- Card 2: Automatic -->
+<div class="p-3.5 rounded-xl bg-[#0e0e11] hover:bg-[#181820] border border-[#23222D] cursor-pointer transition-colors">
+<div class="flex items-start justify-between">
+<div class="space-y-0.5">
+<span class="text-on-surface font-label-md text-label-md font-semibold">Automatic</span>
+<p class="text-outline text-label-sm font-label-sm">
+                          Create the full video after checks
+                        </p>
+</div>
+<div class="w-4 h-4 rounded-full border border-outline flex-shrink-0 mt-0.5"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Action CTA -->
+<div class="pt-2">
+<button class="w-full py-3.5 px-4 rounded-lg bg-primary-container hover:bg-primary text-[#08080B] font-semibold text-headline-sm text-[15px] flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(161,139,255,0.35)] transition-all active:scale-[0.99]">
+<span>Generate storyboard</span>
+<span class="material-symbols-outlined text-[18px] font-bold" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<!-- Supporting Disclaimers -->
+<div class="space-y-1.5 pt-1 text-center font-mono-metric text-[11px] text-outline">
+<p>No Instagram account needed to create or download.</p>
+<p class="text-[10px] text-outline-variant">
+                  Usage subject to pilot allowance (2 of 3 creations remaining today · Illustrative sample).
+                </p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</div>
+<!-- Shared Component: Footer (from JSON blueprint, tucked for semantic fidelity) -->
+</body></html>

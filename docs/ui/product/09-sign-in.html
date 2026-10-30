@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newbert AI Video - Sign In</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            page: '#000000',
+            shell: '#08080B',
+            panel: '#111116',
+            'panel-subtle': '#16161D',
+            'border-custom': '#23222D',
+            'heading-white': '#F5F2FA',
+            'text-muted': '#A7A1B5',
+            'violet-primary': '#A18BFF',
+            'mint-accent': '#7DE5E0'
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            devanagari: ['"Noto Sans Devanagari"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    .spotlight-radial {
+      background: radial-gradient(circle at 50% 50%, rgba(161, 139, 255, 0.12) 0%, rgba(125, 229, 224, 0.04) 40%, rgba(0, 0, 0, 0) 70%);
+    }
+  </style>
+</head>
+<body class="bg-page text-heading-white font-sans min-h-screen flex flex-col justify-between selection:bg-violet-primary/20 selection:text-violet-primary antialiased">
+
+  <!-- Top Minimal Bar: Standalone auth (no sidebar) -->
+  <header class="w-full border-b border-border-custom bg-shell/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Wordmark -->
+      <a href="#" class="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-primary rounded-lg py-1 px-1.5" aria-label="Newbert AI Video Home">
+        <span class="w-2.5 h-2.5 rounded-full bg-mint-accent shadow-[0_0_8px_rgba(125,229,224,0.6)]"></span>
+        <span class="font-bold text-lg tracking-tight text-heading-white group-hover:text-violet-primary transition-colors">Newbert AI Video</span>
+      </a>
+
+      <!-- Back to home & design tag -->
+      <div class="flex items-center gap-4">
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-text-muted bg-panel border border-border-custom px-2.5 py-1 rounded-full">
+          <span class="w-1.5 h-1.5 rounded-full bg-mint-accent"></span>
+          Design preview · Sample data
+        </span>
+        <a href="#" class="inline-flex items-center gap-1.5 text-sm font-medium text-text-muted hover:text-heading-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-primary rounded-md py-1.5 px-2.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to home
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 flex items-center justify-center">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 w-full items-center">
+
+      <!-- Left Column: Pedagogical Visual Narrative & Spotlight Motif (hidden/compact on mobile) -->
+      <div class="hidden lg:flex lg:col-span-6 xl:col-span-7 flex-col justify-center space-y-8 pr-0 lg:pr-6">
+        <!-- Eyebrow & Headline -->
+        <div class="space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-panel border border-border-custom text-xs font-medium text-mint-accent">
+            <span class="w-1.5 h-1.5 rounded-full bg-mint-accent"></span>
+            Hindi & Hinglish Educational Videos
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-heading-white leading-[1.15]">
+            Make your next idea clear.
+          </h1>
+          <p class="text-base text-text-muted leading-relaxed max-w-lg">
+            Turn complex topics into concise, synchronized visual explanations. Sign in to continue to your private educational workspace.
+          </p>
+        </div>
+
+        <!-- Spotlight Effect Cognitive Ring Visual & Caption Preview Card -->
+        <div class="relative bg-panel border border-border-custom rounded-2xl p-6 sm:p-7 overflow-hidden shadow-2xl">
+          <!-- Ambient spotlight glow -->
+          <div class="absolute inset-0 spotlight-radial pointer-events-none"></div>
+
+          <!-- Card Header / Meta -->
+          <div class="flex items-center justify-between border-b border-border-custom/60 pb-3 mb-5 relative z-10">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold uppercase tracking-wider text-text-muted">Cognitive Diagram Model</span>
+              <span class="text-border-custom">/</span>
+              <span class="text-xs text-mint-accent">The Spotlight Effect (39s prototype)</span>
+            </div>
+            <span class="text-[11px] font-medium text-text-muted/80 bg-panel-subtle px-2 py-0.5 rounded border border-border-custom/40">
+              Illustrative diagram
+            </span>
+          </div>
+
+          <!-- Interactive Schematic Centerpiece -->
+          <div class="relative flex flex-col items-center justify-center py-6 z-10">
+            <!-- Diagram SVG -->
+            <div class="relative w-64 h-64 flex items-center justify-center">
+              <!-- Outer Perceived Scrutiny Ring -->
+              <div class="absolute inset-2 rounded-full border border-dashed border-violet-primary/30 flex items-center justify-center">
+                <span class="absolute -top-2.5 px-2 bg-panel text-[11px] font-medium text-violet-primary/90 border border-violet-primary/20 rounded-full">
+                  How it feels
+                </span>
+              </div>
+
+              <!-- Mid Ring -->
+              <div class="absolute inset-10 rounded-full border border-violet-primary/50 shadow-[0_0_20px_rgba(161,139,255,0.12)]"></div>
+
+              <!-- Inner Reality Ring -->
+              <div class="absolute inset-20 rounded-full border border-mint-accent/60 bg-mint-accent/5 flex items-center justify-center shadow-[0_0_15px_rgba(125,229,224,0.15)]">
+                <span class="absolute -bottom-2.5 px-2 bg-panel text-[11px] font-medium text-mint-accent border border-mint-accent/30 rounded-full">
+                  What others notice
+                </span>
+              </div>
+
+              <!-- Center Persona Marker -->
+              <div class="w-11 h-11 rounded-full bg-violet-primary/15 border border-violet-primary/80 flex flex-col items-center justify-center text-center shadow-[0_0_12px_rgba(161,139,255,0.4)]">
+                <svg class="w-5 h-5 text-violet-primary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-[9px] font-bold text-violet-primary tracking-tighter uppercase -mt-0.5">You</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Devanagari Synced Subtitle Snippet -->
+          <div class="relative z-10 mt-3 pt-4 border-t border-border-custom/50 bg-shell/50 rounded-xl p-3.5 border border-border-custom/40">
+            <div class="flex items-center justify-between text-xs text-text-muted mb-1.5">
+              <span class="flex items-center gap-1.5 font-medium">
+                <svg class="w-3.5 h-3.5 text-mint-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" />
+                </svg>
+                Hindi narration · Synchronized timing
+              </span>
+              <span class="font-mono text-[11px] text-text-muted/70">[00:14.300]</span>
+            </div>
+            <p class="font-devanagari text-sm text-heading-white/95 font-medium leading-relaxed">
+              "हम सोचते हैं कि हर किसी का ध्यान सिर्फ़ हम पर है — इसे कहते हैं <span class="text-violet-primary font-semibold">स्पॉटलाइट इफ़ेक्ट</span>।"
+            </p>
+            <p class="text-xs text-text-muted mt-1 italic">
+              "We assume everyone is noticing our small mistakes — this is the spotlight effect."
+            </p>
+          </div>
+        </div>
+
+        <!-- Private workspace promise badge -->
+        <div class="flex items-center gap-3 text-xs text-text-muted pl-1">
+          <div class="w-7 h-7 rounded-lg bg-panel border border-border-custom flex items-center justify-center text-mint-accent shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <span>Your videos and drafts stay strictly in your personal private workspace.</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Accessible Authentication Panel -->
+      <div class="w-full lg:col-span-6 xl:col-span-5 flex flex-col justify-center">
+
+        <!-- Mobile Brief Header (visible only on small screens) -->
+        <div class="block lg:hidden mb-6 text-center sm:text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-panel border border-border-custom text-xs font-medium text-mint-accent mb-2">
+            Hindi & Hinglish Educational Videos
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-heading-white">
+            Make your next idea clear.
+          </h1>
+          <p class="text-xs sm:text-sm text-text-muted mt-1">
+            Sign in to continue to your private educational workspace.
+          </p>
+        </div>
+
+        <!-- Carried-over Topic Continuity Card -->
+        <div class="mb-5 bg-panel border border-border-custom/90 rounded-xl p-3.5 sm:p-4 flex items-start gap-3 shadow-md relative overflow-hidden" role="region" aria-label="Carried over idea">
+          <div class="w-2 self-stretch rounded-full bg-violet-primary/80 shrink-0"></div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] font-semibold uppercase tracking-wider text-text-muted">Draft Idea In Progress</span>
+              <span class="text-[11px] text-mint-accent font-medium">Draft saved</span>
+            </div>
+            <p class="text-sm font-semibold text-heading-white truncate mt-0.5">
+              Why do we feel everyone is watching us?
+            </p>
+            <p class="text-xs text-text-muted mt-0.5">
+              Sign in to keep working on this explanation and generate diagrams.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sign-in Container Panel -->
+        <div class="bg-panel border border-border-custom rounded-2xl p-6 sm:p-8 shadow-xl relative">
+
+          <!-- Segmented Tab Navigation: Sign In / Create account -->
+          <div class="flex items-center bg-panel-subtle p-1 rounded-lg border border-border-custom mb-6" role="tablist" aria-label="Authentication mode">
+            <button type="button" role="tab" aria-selected="true" class="flex-1 py-2 text-xs sm:text-sm font-semibold rounded-md bg-panel text-heading-white border border-border-custom shadow-sm transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-primary">
+              Sign In
+            </button>
+            <button type="button" role="tab" aria-selected="false" class="flex-1 py-2 text-xs sm:text-sm font-medium rounded-md text-text-muted hover:text-heading-white transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-primary">
+              Create account
+            </button>
+          </div>
+
+          <!-- Form Header -->
+          <div class="mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-heading-white tracking-tight">
+              Welcome back
+            </h2>
+            <p class="text-xs sm:text-sm text-text-muted mt-1">
+              Enter your email to access your personal workspace.
+            </p>
+          </div>
+
+          <!-- Main Sign In Form -->
+          <form class="space-y-4" onsubmit="event.preventDefault();" novalidate>
+
+            <!-- Email Input Field -->
+            <div class="space-y-1.5">
+              <label for="email" class="block text-xs sm:text-sm font-medium text-heading-white">
+                Email address
+              </label>
+              <div class="relative">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value="aarav@newbert.example"
+                  placeholder="name@example.com"
+                  autocomplete="email"
+                  class="w-full bg-shell border border-border-custom focus:border-violet-primary focus:ring-1 focus:ring-violet-primary rounded-lg px-3.5 py-2.5 text-sm text-heading-white placeholder:text-text-muted/50 transition-colors focus:outline-none h-11"
+                  aria-describedby="email-note"
+                >
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-text-muted">
+                  <svg class="w-4 h-4 text-text-muted/60" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206" />
+                  </svg>
+                </div>
+              </div>
+              <p id="email-note" class="text-[11px] text-text-muted">
+                One personal workspace is linked to your email address.
+              </p>
+            </div>
+
+            <!-- Password Input Field with Reveal Toggle -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <label for="password" class="block text-xs sm:text-sm font-medium text-heading-white">
+                  Password
+                </label>
+                <a href="#forgot" class="text-xs font-medium text-violet-primary hover:text-violet-primary/80 transition-colors focus:outline-none focus-visible:underline">
+                  Forgot password?
+                </a>
+              </div>
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value="••••••••••••"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                  class="w-full bg-shell border border-border-custom focus:border-violet-primary focus:ring-1 focus:ring-violet-primary rounded-lg px-3.5 py-2.5 text-sm text-heading-white placeholder:text-text-muted/50 transition-colors focus:outline-none h-11 pr-11"
+                  aria-describedby="password-format-hint"
+                >
+                <!-- Accessible Password Reveal Toggle -->
+                <button
+                  type="button"
+                  aria-label="Show password as plain text"
+                  class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-text-muted hover:text-heading-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-primary rounded-r-lg"
+                  onclick="const input = document.getElementById('password'); const isPass = input.type === 'password'; input.type = isPass ? 'text' : 'password'; this.setAttribute('aria-label', isPass ? 'Hide password' : 'Show password as plain text');"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </button>
+              </div>
+              <span id="password-format-hint" class="sr-only">Password field with reveal toggle</span>
+            </div>
+
+            <!-- Subtle Error / Format Annotation (Design System Spec Note) -->
+            <div class="pt-1 pb-1">
+              <div class="flex items-center gap-2 px-3 py-2 rounded-lg bg-shell border border-border-custom/80 text-xs text-text-muted">
+                <svg class="w-3.5 h-3.5 text-mint-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Validates format on submit (<code class="text-heading-white/90">name@domain.com</code>).</span>
+              </div>
+            </div>
+
+            <!-- Primary Submit Button -->
+            <div class="pt-2">
+              <button
+                type="submit"
+                class="w-full h-11 bg-violet-primary hover:bg-[#8F75FF] active:scale-[0.99] text-shell font-bold text-sm rounded-lg transition-all shadow-[0_0_16px_rgba(161,139,255,0.25)] flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-page focus-visible:ring-violet-primary cursor-pointer"
+              >
+                <span>Sign in to workspace</span>
+                <svg class="w-4 h-4 text-shell" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-border-custom"></div>
+            </div>
+            <div class="relative flex justify-center text-xs">
+              <span class="bg-panel px-3 text-text-muted">Personal workspace access</span>
+            </div>
+          </div>
+
+          <!-- Secondary / Account Creation Explanation -->
+          <div class="bg-panel-subtle rounded-xl p-3.5 border border-border-custom/70 text-xs text-text-muted space-y-1.5">
+            <div class="flex items-center justify-between text-heading-white font-medium">
+              <span>New to Newbert?</span>
+              <a href="#signup" class="text-mint-accent hover:underline font-semibold focus:outline-none focus-visible:ring-1 focus-visible:ring-mint-accent rounded px-1">
+                Create personal account
+              </a>
+            </div>
+            <p class="text-[11px] leading-relaxed text-text-muted">
+              Account creation instantly provisions your own private workspace. No organization setup, team invites, or billing required for pilot prototyping.
+            </p>
+          </div>
+
+          <!-- Helper Privacy & Data Note -->
+          <div class="mt-6 pt-4 border-t border-border-custom/60 flex items-center justify-center gap-2 text-center text-xs text-text-muted">
+            <svg class="w-3.5 h-3.5 text-mint-accent shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span>Your videos and voice scripts stay in your private workspace.</span>
+          </div>
+
+        </div>
+
+        <!-- Footer Terms & Links below form -->
+        <div class="mt-6 text-center text-xs text-text-muted flex flex-wrap items-center justify-center gap-4">
+          <a href="#" class="hover:text-heading-white transition-colors focus:outline-none focus-visible:underline">Terms of Service</a>
+          <span class="text-border-custom">•</span>
+          <a href="#" class="hover:text-heading-white transition-colors focus:outline-none focus-visible:underline">Privacy Policy</a>
+          <span class="text-border-custom">•</span>
+          <a href="#" class="hover:text-heading-white transition-colors focus:outline-none focus-visible:underline">Educational Pilot Notice</a>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Minimal Page Footer -->
+  <footer class="w-full border-t border-border-custom bg-shell/60 py-4 px-4 sm:px-6 lg:px-8 text-xs text-text-muted">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div>
+        <span class="text-heading-white font-medium">Newbert AI Video</span>
+        <span class="mx-1.5 text-border-custom">·</span>
+        <span>Educational videos, made clearer.</span>
+      </div>
+      <div>
+        <span>© 2026 Newbert AI Video. Built for Indian educators and conceptual explainers.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

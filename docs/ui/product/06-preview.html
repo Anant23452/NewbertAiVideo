@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Newbert AI Video - Video Ready &amp; Schedule</title>
+<!-- Tailwind CDN & Fonts -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            hindi: ['"Noto Sans Devanagari"', 'sans-serif'],
+          },
+          colors: {
+            page: '#000000',
+            shell: '#08080B',
+            panel: '#111116',
+            'panel-subtle': '#16161D',
+            border: '#23222D',
+            'border-subtle': '#1B1A24',
+            heading: '#F5F2FA',
+            muted: '#A7A1B5',
+            'muted-dim': '#757083',
+            primary: '#A18BFF',
+            'primary-hover': '#8F74FF',
+            'primary-subtle': 'rgba(161, 139, 255, 0.12)',
+            mint: '#7DE5E0',
+            'mint-subtle': 'rgba(125, 229, 224, 0.12)',
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    /* Custom subtle glow */
+    .glow-accent {
+      background: radial-gradient(circle at 50% 30%, rgba(161, 139, 255, 0.08) 0%, rgba(8, 8, 11, 0) 70%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0d0d12;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #23222D;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-page text-heading font-sans min-h-screen flex flex-col antialiased selection:bg-primary/30 selection:text-heading">
+<div class="flex-1 flex flex-col min-h-screen">
+<div class="flex-1 flex w-full">
+<!-- 224px Left Sidebar (Collapsible on tablet/mobile) -->
+<aside class="w-56 bg-shell border-r border-border shrink-0 hidden md:flex flex-col justify-between z-20">
+<div>
+<!-- Brand Wordmark -->
+<div class="px-5 py-4 border-b border-border/70 flex items-center gap-2.5">
+<div class="w-2.5 h-2.5 rounded-full bg-primary shadow-[0_0_8px_rgba(161,139,255,0.8)]"></div>
+<span class="font-bold tracking-tight text-[15px] text-heading">Newbert AI Video</span>
+</div>
+<!-- Nav Items in Exact Specified Order -->
+<nav class="px-3 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-muted hover:text-heading hover:bg-panel transition-colors" href="#">
+<svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<rect height="7" rx="1.5" stroke-width="1.75" width="7" x="3" y="3"></rect>
+<rect height="7" rx="1.5" stroke-width="1.75" width="7" x="14" y="3"></rect>
+<rect height="7" rx="1.5" stroke-width="1.75" width="7" x="14" y="14"></rect>
+<rect height="7" rx="1.5" stroke-width="1.75" width="7" x="3" y="14"></rect>
+</svg>
+<span>Dashboard</span>
+</a>
+<!-- Active Nav: Projects -->
+<a class="flex items-center justify-between px-3 py-2 text-sm font-semibold rounded-lg bg-panel text-heading border border-border/80 shadow-sm" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+<span>Projects</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-muted hover:text-heading hover:bg-panel transition-colors" href="#">
+<svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+<span>Create a video</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium rounded-lg text-muted hover:text-heading hover:bg-panel transition-colors" href="#">
+<div class="flex items-center gap-3">
+<svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+<span>Publishing</span>
+</div>
+<span class="text-[10px] px-1.5 py-0.5 rounded bg-panel-subtle text-muted border border-border text-[9px] uppercase tracking-wider font-semibold">Planned</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg text-muted hover:text-heading hover:bg-panel transition-colors" href="#">
+<svg class="w-4 h-4 text-muted shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Sidebar Section -->
+<div class="p-3 border-t border-border/70 space-y-2">
+<!-- Personal Workspace Badge -->
+<div class="px-3 py-2 rounded-lg bg-panel border border-border text-xs">
+<div class="flex items-center justify-between text-muted">
+<span class="flex items-center gap-1.5 font-medium text-heading">
+<span class="w-1.5 h-1.5 rounded-full bg-mint"></span>
+                Personal workspace
+              </span>
+<span class="text-[10px] text-muted">1 seat</span>
+</div>
+<p class="text-[11px] text-muted mt-0.5">Free educational pilot</p>
+</div>
+<!-- Account & Help -->
+<div class="pt-1 flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-full bg-panel-subtle border border-border flex items-center justify-center text-xs font-semibold text-heading">
+                AS
+              </div>
+<div class="text-xs">
+<p class="font-medium text-heading leading-tight">Aarav S.</p>
+<p class="text-[10px] text-muted leading-tight">Owner</p>
+</div>
+</div>
+<button class="text-muted hover:text-heading p-1.5 rounded hover:bg-panel transition-colors" title="Help &amp; Feedback">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Layout Surface -->
+<div class="flex-1 flex flex-col min-w-0 bg-page">
+<!-- Top App Bar -->
+<header class="h-14 border-b border-border bg-shell/80 backdrop-blur px-4 md:px-6 flex items-center justify-between shrink-0 z-10 flex-wrap">
+<div class="flex items-center gap-3 min-w-0">
+<!-- Mobile Menu Toggle Button (visible on small screens) -->
+<button class="md:hidden text-muted hover:text-heading p-1.5 -ml-1.5 rounded-lg border border-border bg-panel">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-1.5 text-xs text-muted truncate">
+<a class="hover:text-heading transition-colors" href="#">Projects</a>
+<span class="text-border">/</span>
+<a class="hover:text-heading transition-colors truncate" href="#">Spotlight Effect</a>
+<span class="text-border">/</span>
+<span class="text-heading font-medium">Version 2</span>
+</nav>
+<!-- Unobtrusive Design Preview tag -->
+<span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-panel-subtle text-muted border border-border/80">
+              Design preview · Sample data
+            </span>
+</div>
+<!-- Top Right Controls -->
+<div class="flex items-center gap-2.5">
+<div class="hidden sm:flex items-center gap-1 text-[11px] text-muted bg-panel border border-border px-2.5 py-1 rounded-md">
+<span class="w-1.5 h-1.5 rounded-full bg-mint"></span>
+<span>1 connected Instagram account</span>
+</div>
+<!-- Notification & Accessible Profile -->
+<div class="flex items-center gap-2 pl-2 border-l border-border/60">
+<button class="p-1.5 text-muted hover:text-heading rounded-md hover:bg-panel transition-colors" title="Notifications">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path>
+</svg>
+</button>
+<button class="flex items-center gap-1.5 p-1 rounded-md hover:bg-panel transition-colors border border-transparent hover:border-border">
+<div class="w-6 h-6 rounded-full bg-primary/20 text-primary border border-primary/40 flex items-center justify-center text-[11px] font-semibold">
+                  AS
+                </div>
+<svg class="w-3.5 h-3.5 text-muted" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Screen Body: 3-column on desktop (Player 360px, Details 320px, Open Drawer 360px) -->
+<main class="flex-1 flex flex-col min-w-0 p-4 md:p-6 lg:p-7 overflow-y-auto custom-scrollbar">
+<!-- Screen Header -->
+<div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-border/80">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-mint-subtle text-mint border border-mint/30">
+<span class="w-1.5 h-1.5 rounded-full bg-mint mr-1.5 animate-pulse"></span>
+                  Ready
+                </span>
+<span class="text-xs text-muted">Hindi (हिंदी)</span>
+<span class="text-muted/40">•</span>
+<span class="text-xs text-muted">39 seconds duration</span>
+</div>
+<h1 class="text-2xl md:text-3xl font-bold tracking-tight text-heading">Your video is ready</h1>
+</div>
+<!-- Primary Actions in Header -->
+<div class="flex items-center gap-2.5">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-heading bg-panel border border-border rounded-lg hover:bg-panel-subtle hover:border-border/80 transition-colors">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Revise this video</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-page bg-primary hover:bg-primary-hover rounded-lg shadow-sm transition-colors">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Download MP4</span>
+</button>
+</div>
+</div>
+<!-- 3-Column Content Flow (Video Player Preview + Detail/History Rail + Schedule Drawer) -->
+<div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- COLUMN 1: 9:16 Video Player Preview (width ~360px on wide desktop) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col items-center w-full min-w-0">
+<div class="w-full max-w-[340px] bg-panel border border-border rounded-2xl p-3.5 shadow-2xl relative">
+<!-- Player Header meta -->
+<div class="flex items-center justify-between px-1 mb-2.5 text-[11px] text-muted">
+<span class="flex items-center gap-1.5 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    9:16 Vertical Preview
+                  </span>
+<span class="text-muted/80">1080×1920 • 30fps</span>
+</div>
+<!-- 9:16 Phone/Screen Aspect Ratio Frame -->
+<div class="relative w-full aspect-[9/16] bg-black rounded-xl overflow-hidden border border-border/90 flex flex-col justify-between p-5 select-none glow-accent">
+<!-- Top Video Overlay: Prototype Tag & Title -->
+<div class="text-center pt-2">
+<div class="inline-block px-2 py-0.5 rounded text-[10px] tracking-wider uppercase font-semibold text-muted bg-[#121217] border border-border mb-3">
+                      Illustrative diagram
+                    </div>
+<h2 class="text-white text-base font-bold tracking-widest uppercase">The Spotlight Effect</h2>
+<p class="text-[11px] text-muted mt-0.5">Concept explanation • Psychology</p>
+</div>
+<!-- Central Glowing Ring Diagram (Spotlight Effect Psychology prototype) -->
+<div class="relative flex items-center justify-center my-auto w-full py-4">
+<!-- Concentric Rings with violet and mint accents -->
+<div class="relative w-48 h-48 flex items-center justify-center">
+<!-- Outer perceived boundary ring -->
+<div class="absolute inset-0 rounded-full border border-primary/20 border-dashed animate-spin-slow"></div>
+<!-- Middle perceived spotlight ring (Violet glow) -->
+<div class="absolute inset-3 rounded-full border-2 border-primary/50 shadow-[0_0_24px_rgba(161,139,255,0.25)]"></div>
+<!-- Inner ring: actual noticed area -->
+<div class="absolute inset-10 rounded-full border border-mint/60 shadow-[0_0_15px_rgba(125,229,224,0.3)]"></div>
+<!-- Central Person / Focus Node -->
+<div class="relative z-10 flex flex-col items-center justify-center">
+<div class="w-11 h-11 rounded-full bg-primary/20 border border-primary flex items-center justify-center text-primary shadow-[0_0_12px_rgba(161,139,255,0.5)]">
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<span class="text-[9px] uppercase tracking-wider text-heading font-semibold mt-1">You</span>
+</div>
+<!-- Honest Non-stat Perceptual Labels -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#0c0c10]/90 px-2 py-0.5 rounded text-[10px] text-primary border border-primary/30 font-medium whitespace-nowrap">
+                        How it feels
+                      </div>
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-[#0c0c10]/90 px-2 py-0.5 rounded text-[10px] text-mint border border-mint/30 font-medium whitespace-nowrap">
+                        What others notice
+                      </div>
+</div>
+</div>
+<!-- Bottom Safe Area: Hindi Narration Subtitle & Caption -->
+<div class="pb-1 text-center">
+<div class="bg-black/85 backdrop-blur-sm border border-border/80 rounded-lg p-2.5 shadow-lg">
+<p class="font-hindi text-[13px] font-medium text-white leading-relaxed">
+                        "हम सोचते हैं कि हर किसी का ध्यान सिर्फ हम पर है — इसे कहते हैं स्पॉटलाइट इफेक्ट।"
+                      </p>
+<p class="text-[10px] text-muted mt-1 font-sans">
+                        [00:14.300] Narration pacing matches diagram cues
+                      </p>
+</div>
+</div>
+<!-- Center Paused Play Overlay Button -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="w-14 h-14 rounded-full bg-page/70 border border-heading/30 backdrop-blur flex items-center justify-center shadow-2xl">
+<svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewbox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+</div>
+</div>
+</div>
+<!-- Native Player Controls (Paused state, 00:00 / 00:39) -->
+<div class="mt-3 px-1 space-y-2">
+<div class="flex items-center gap-2">
+<span class="text-[11px] font-mono text-muted">00:00</span>
+<div class="flex-1 h-1.5 bg-panel-subtle border border-border/60 rounded-full overflow-hidden relative">
+<div class="h-full bg-primary w-0 rounded-full"></div>
+</div>
+<span class="text-[11px] font-mono text-muted">00:39</span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-2">
+<button class="p-1 text-muted hover:text-heading transition-colors" title="Replay">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="px-2 py-0.5 rounded text-[11px] bg-panel-subtle text-muted border border-border">
+                        1.0x
+                      </button>
+</div>
+<span class="text-[11px] text-muted flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-mint"></span>
+                      Audio &amp; visuals locked
+                    </span>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: Details, Downloads & Version Management (width ~320px) -->
+<div class="lg:col-span-7 xl:col-span-4 space-y-4 w-full min-w-0">
+<!-- Download & File Assets Card -->
+<div class="bg-panel border border-border rounded-xl p-4 space-y-3">
+<h3 class="text-xs font-bold uppercase tracking-wider text-muted">Export package</h3>
+<div class="space-y-2">
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-panel-subtle border border-border hover:border-primary/50 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="text-left">
+<p class="text-xs font-semibold text-heading">Download MP4 video</p>
+<p class="text-[11px] text-muted">1080×1920 (9:16) • Ready to share</p>
+</div>
+</div>
+<svg class="w-4 h-4 text-muted group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="w-full flex items-center justify-between p-3 rounded-lg bg-panel-subtle border border-border hover:border-border/80 transition-colors group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-[#191924] border border-border flex items-center justify-center text-mint group-hover:scale-105 transition-transform">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div class="text-left">
+<p class="text-xs font-semibold text-heading">Download captions (.SRT)</p>
+<p class="text-[11px] text-muted">Devanagari synchronized timestamps</p>
+</div>
+</div>
+<svg class="w-4 h-4 text-muted group-hover:text-heading transition-colors" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+<!-- Version Selector & Version History -->
+<div class="bg-panel border border-border rounded-xl p-4 space-y-3">
+<div class="flex items-center justify-between">
+<h3 class="text-xs font-bold uppercase tracking-wider text-muted">Version history</h3>
+<span class="text-[11px] text-mint font-medium">Latest ready</span>
+</div>
+<!-- Version List -->
+<div class="space-y-2">
+<!-- Version 2 Selected -->
+<div class="p-3 rounded-lg bg-panel-subtle border border-primary/60 relative">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-heading">Version 2</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-semibold bg-primary/20 text-primary border border-primary/30">Active</span>
+</div>
+<p class="text-[11px] text-muted mt-1">Refined concentric radius and Hindi phrasing</p>
+</div>
+<span class="text-[10px] text-muted">39s • Today</span>
+</div>
+</div>
+<!-- Version 1 -->
+<div class="p-3 rounded-lg bg-[#0e0e13] border border-border/70 hover:border-border transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-muted">Version 1</span>
+<span class="text-[10px] text-muted/80">Archived baseline</span>
+</div>
+<p class="text-[11px] text-muted/70 mt-1">Initial draft with wider focal schema</p>
+</div>
+<button class="text-[11px] text-primary hover:underline">Restore</button>
+</div>
+</div>
+</div>
+<!-- Helper text stating versioning logic clearly -->
+<div class="p-2.5 rounded-lg bg-[#0a0a0e] border border-border/60 flex items-start gap-2">
+<svg class="w-3.5 h-3.5 text-muted shrink-0 mt-0.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<p class="text-[11px] text-muted leading-relaxed">
+                    Changes create a new version. Existing schedules keep their selected video.
+                  </p>
+</div>
+</div>
+<!-- Source & Review Summary -->
+<div class="bg-panel border border-border rounded-xl p-4 space-y-3">
+<h3 class="text-xs font-bold uppercase tracking-wider text-muted">Source review summary</h3>
+<div class="space-y-2 text-xs">
+<div class="flex justify-between py-1.5 border-b border-border/50">
+<span class="text-muted">Pedagogical topic</span>
+<span class="text-heading font-medium text-right">The Spotlight Effect</span>
+</div>
+<div class="flex justify-between py-1.5 border-b border-border/50">
+<span class="text-muted">Narration style</span>
+<span class="text-heading font-medium">Conversational Hindi</span>
+</div>
+<div class="flex justify-between py-1.5 border-b border-border/50">
+<span class="text-muted">Narration duration</span>
+<span class="text-heading font-medium">39 seconds</span>
+</div>
+<div class="flex justify-between py-1.5">
+<span class="text-muted">Illustrative diagram</span>
+<span class="text-heading font-medium">Concentric attention schema</span>
+</div>
+</div>
+<!-- Revise button -->
+<button class="w-full mt-2 py-2 px-3 rounded-lg text-xs font-semibold text-heading bg-panel-subtle hover:bg-border border border-border transition-colors flex items-center justify-center gap-1.5">
+<span>Revise in Storyboard</span>
+<span class="text-muted font-normal">(creates Version 3)</span>
+</button>
+</div>
+</div>
+<!-- COLUMN 3: Open Schedule Drawer on Right (Interactive intended UX, width ~360px) -->
+<div class="lg:col-span-12 xl:col-span-4 w-full min-w-0">
+<aside class="bg-panel border border-primary/40 rounded-2xl p-5 shadow-2xl relative space-y-5 w-full">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-3.5 border-b border-border">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<h2 class="text-sm font-bold text-heading">Schedule on Instagram</h2>
+</div>
+<span class="text-[10px] px-2 py-0.5 rounded font-semibold bg-panel-subtle text-primary border border-primary/30 uppercase tracking-wide">
+                    Planned · design preview
+                  </span>
+</div>
+<!-- Target Account (At most one Instagram account connected per user) -->
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-muted block">Connected Instagram account</label>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-panel-subtle border border-border">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 via-pink-600 to-yellow-500 flex items-center justify-center text-white text-[11px] font-bold">
+                        IG
+                      </div>
+<div>
+<p class="text-xs font-semibold text-heading">@newbert_explains</p>
+<p class="text-[10px] text-muted">Single connected account</p>
+</div>
+</div>
+<span class="text-[10px] text-mint font-medium">Connected</span>
+</div>
+</div>
+<!-- Fixed Video Association Note -->
+<div class="p-3 rounded-lg bg-[#0e0e13] border border-border/80 space-y-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-semibold text-heading">Spotlight Effect · Version 2</span>
+<span class="text-muted">39s</span>
+</div>
+<p class="text-[11px] text-muted leading-relaxed">
+                    This schedule retains exact Version 2 output even if later drafts are created.
+                  </p>
+</div>
+<!-- Post Caption Input Field -->
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<label class="text-xs font-semibold text-muted">Post caption</label>
+<span class="text-[10px] text-muted">Optional tags</span>
+</div>
+<textarea class="w-full p-2.5 text-xs bg-panel-subtle border border-border rounded-lg text-heading focus:outline-none focus:border-primary placeholder:text-muted/50 resize-none font-sans" placeholder="Write caption for this video... (e.g. क्यों लगता है सब हमें ही देख रहे हैं? Here is the spotlight effect explained.)" rows="3">क्यों लगता है सब हमें ही देख रहे हैं? In psychology, this is called the Spotlight Effect. 39-second visual breakdown for learners. #Psychology #Learning #SpotlightEffect</textarea>
+</div>
+<!-- Date & Time Picker + Timezone Asia/Kolkata -->
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-muted block">Publishing time</label>
+<div class="grid grid-cols-2 gap-2">
+<input class="p-2 text-xs bg-panel-subtle border border-border rounded-lg text-heading focus:outline-none focus:border-primary" type="date" value="2026-10-30"/>
+<input class="p-2 text-xs bg-panel-subtle border border-border rounded-lg text-heading focus:outline-none focus:border-primary" type="time" value="18:30"/>
+</div>
+<p class="text-[11px] text-muted flex items-center gap-1 mt-1">
+<svg class="w-3.5 h-3.5 text-muted shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+                    Timezone: <span class="text-heading font-medium">Asia/Kolkata (IST)</span>
+</p>
+</div>
+<!-- Explicit Publishing Consent Checkbox -->
+<div class="pt-2 border-t border-border/80">
+<label class="flex items-start gap-2.5 cursor-pointer">
+<input checked="" class="mt-0.5 rounded border-border bg-panel-subtle text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+<span class="text-[11px] text-muted leading-snug">I authorize posting this exact video and caption to @newbert_explains at the selected time.</span>
+</label>
+</div>
+<!-- Schedule Action CTA -->
+<div class="space-y-2 pt-1">
+<button class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-page text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Schedule post (Planned · design preview)</span>
+</button>
+<p class="text-[10px] text-center text-muted/70">
+                    Mock workflow • Direct social publishing is a planned feature
+                  </p>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Product Footer Bar -->
+<footer class="h-12 border-t border-border bg-shell px-6 flex items-center justify-between text-xs text-muted shrink-0 flex-wrap">
+<div class="flex items-center gap-3">
+<span class="font-medium text-heading">Newbert AI Video</span>
+<span class="text-border">•</span>
+<span>Educational videos, made clearer.</span>
+</div>
+<div class="flex items-center gap-4 text-[11px]">
+<a class="hover:text-heading transition-colors" href="#">Privacy</a>
+<a class="hover:text-heading transition-colors" href="#">Terms</a>
+<a class="hover:text-heading transition-colors" href="#">Contact</a>
+<span class="text-muted/50">© 2026 Newbert AI Video</span>
+</div>
+</footer>
+</div>
+</div>
+</div>
+</body>
+</html>
+

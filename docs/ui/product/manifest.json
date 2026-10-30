@@ -1,0 +1,378 @@
+{
+  "date": "2026-10-29",
+  "status": "Desktop concepts for review",
+  "projectId": "2520368196713015322",
+  "screens": [
+    {
+      "slug": "01-dashboard",
+      "title": "Creator Dashboard",
+      "name": "projects/2520368196713015322/screens/f35b14412b86413f86dbbb1328b41d1e",
+      "width": "2560",
+      "height": "2048",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/32a99fcc9a5f41cdbdc773c731d4cdba:download",
+        "name": "projects/2520368196713015322/files/32a99fcc9a5f41cdbdc773c731d4cdba"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/53179823c5984d50ab30dd90e71923aa:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/53179823c5984d50ab30dd90e71923aa"
+      },
+      "output": [
+        {
+          "text": "I have designed the authenticated desktop **Dashboard** screen for **Newbert AI Video**, directly continuing the aesthetic and factual principles established in the approved homepage.\n\n### Key Design & UX Implementations:\n\n1. **Dedicated Application Shell & Navigation:**\n   - **Left Sidebar (224px fixed reference):** Features the \"Newbert AI Video\" brand mark, followed by the exact navigation sequence: **Dashboard** (active state), **Projects**, **Create a video**, **Publishing** (flagged with a *\"Planned\"* status pill), and **Settings**.\n   - **Account & Workspace Footer:** Grounded in single-creator simplicity with a \"Personal workspace\" indicator, owner account profile (\"Aarav S.\"), and direct Help & Feedback access.\n   - **Top Navigation Bar:** Includes breadcrumbs (`Workspace / Dashboard`), an accessible search/menu cluster, and an explicit **\"Design preview · Sample data\"** label.\n\n2. **Calm, Focused Topic Quick-Start:**\n   - Prominent heading: *\"Your next explanation starts here.\"* with primary electric violet CTA (*\"Create a video\"*).\n   - Topic composer input featuring quick Hindi/Hinglish selection toggles, sample prompt ideas (*The spotlight effect*, *How binary works*, *Confirmation bias*), and immediate action button.\n\n3. **Authentic Prototype Projects & Real Diagrams:**\n   - **Active Rendering Banner:** Shows *\"New version rendering · The Spotlight Effect\"* noting Hindi pacing and audio/visual timing lock, avoiding synthetic percentage counters.\n   - **The Spotlight Effect (39s, Hindi, Ready):** Embedded vector diagram displaying the concentric cognitive radius motif with Devanagari voiceover caption snippet.\n   - **How Binary Works (21s, Hinglish, Ready):** Clean `5 = 4 + 0 + 1` decomposition diagram showcasing the 3-bit binary calculation resulting in `101`.\n   - **Confirmation Bias (Hinglish, Draft):** Wireframe schematic thumbnail ready for continuation.\n\n4. **Transparent Pilot Quota & Roadmap Side Rail:**\n   - **Pilot Allowance Card:** Clearly marked with an **\"Illustrative limits\"** label, tracking *\"2 of 3 creations remaining\"*, with reset scheduled at 05:30 IST (00:00 UTC policy) and truthful duration explanations.\n   - **Instagram Publishing Card:** Transparently badged as **\"Planned\"** exploring upcoming 9:16 export workflows without claiming shipped functionality.\n   - **Design Annotation Note:** Notes the empty-state pattern where an empty project list smoothly transitions the quick-start input into an expanded topic guidance prompt."
+        },
+        {
+          "suggestion": "Design the 'Create a video' step-by-step topic to script flow"
+        },
+        {
+          "suggestion": "Explore the 'The Spotlight Effect' video preview dialog"
+        },
+        {
+          "suggestion": "Design the Publishing scheduling preview drawer"
+        }
+      ],
+      "pixelWidth": 2560,
+      "pixelHeight": 2048,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": []
+    },
+    {
+      "slug": "02-projects",
+      "title": "Projects Library",
+      "name": "projects/2520368196713015322/screens/3c6f073b21354a219b9245061eb08dda",
+      "width": "2560",
+      "height": "2612",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/6ce6b45738c8412e83cd83c0279da559:download",
+        "name": "projects/2520368196713015322/files/6ce6b45738c8412e83cd83c0279da559"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/5c5f12690f804ce2b8c1dba275c4746c:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/5c5f12690f804ce2b8c1dba275c4746c"
+      },
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2612,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": []
+    },
+    {
+      "slug": "03-create",
+      "title": "Create a Video — Idea and Brief",
+      "name": "projects/2520368196713015322/screens/b420d669a3fe4d56993044ac7b517553",
+      "width": "2560",
+      "height": "2048",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/58828468ec734332885dd693b7c36a62:download",
+        "name": "projects/2520368196713015322/files/58828468ec734332885dd693b7c36a62"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/62c7afcea85841f3b3008997c2adfceb:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/62c7afcea85841f3b3008997c2adfceb"
+      },
+      "output": [
+        {
+          "text": "I have designed the **\"Create a video\"** desktop product screen for **Newbert AI Video**, maintaining full visual and architectural continuity with the approved refined homepage, projects view, and dashboard.\n\n### What Was Designed:\n\n1. **Persistent Workspace Shell & Navigation:**\n   - **Sidebar (224px):** Featuring the `Newbert AI Video` brand mark with active glowing indicator, navigation links in the exact required order (`Dashboard`, `Projects`, `Create a video` [Active state with violet pill indicator], `Publishing` with `Planned · design preview` badge, and `Settings`).\n   - **Footer Rail:** Displays `Personal workspace` (`1 creator`), sample user avatar `Aarav S. / Owner`, and `Help & Feedback`.\n   - **Top Navigation Bar:** Includes `Workspace > New video` breadcrumbs, an unobtrusive `Design preview · Sample data` tag, fast search trigger, notifications bell, and user profile.\n\n2. **Main Topic Composer & Dialogue Refinement (Left Column):**\n   - **Header:** Eyebrow `STEP 1 · CONCEPT & OUTLINE` with the headline *\"What would you like to explain?\"* and realistic pedagogical subtext.\n   - **Topic Field:** Pre-filled with *\"Why do we feel everyone is watching us?\"* accompanied by quick-start prompts (*The spotlight effect*, *Confirmation bias*, *How binary works*).\n   - **Conversational Concept Refinement:**\n     - User turn: *\"For college students, with a classroom example.\"*\n     - Assistant response: *\"We can explain the spotlight effect using a small mistake in class, then show how imagined attention differs from what others may notice.\"* featuring a sample Devanagari Hindi snippet (*\"सच यह है कि लोग उतना ध्यान नहीं दे रहे होते जितना हम सोचते हैं...\"*) and an illustrative perceptual ring thumbnail tying back to the psychology prototype.\n   - **Suggested Learning Objective Card:** Highlights key teaching angles (*Relatable classroom scenario*, *Egocentric scrutiny bias*, *Concentric perception vs. reality diagram*) with an explicit **\"Use this direction\"** action.\n   - **Refinement Input Bar:** Bottom prompt input allowing creators to either refine or proceed.\n\n3. **Structured Video Brief & Configuration Rail (Right Panel):**\n   - **Language Selection:** Toggle between `Hindi` (active) and `Hinglish`.\n   - **Target Audience:** Segmented chips selecting `College students` (with `School students` and `Curious learners`).\n   - **Narration-Driven Duration:** Set to `About 40 seconds` with the essential grounding helper: *\"Final length follows narration timing (Pilot max 60s)\"*.\n   - **Synthetic Voice Model:** `Roger · Hindi conversational` with a `Sample preview` audio trigger.\n   - **Motion Rendering Style:** Selectable visual mode chips for `Black glow` (selected) and `Standard schematic`.\n   - **Workflow Generation Modes:**\n     - **Guided** (Selected): *\"Review the script before narration\"* with a *\"Recommended for concepts\"* highlight tag.\n     - **Automatic**: *\"Create the full video after checks\"*.\n   - **Primary CTA:** High-contrast electric violet button labeled **\"Generate storyboard →\"** (which switches to \"Create video\" under Automatic mode).\n   - **Grounded Footnote Disclaimers:** Explicitly states that no Instagram account is needed to create or download, and clarifies pilot allowance boundaries.\n\n4. **Responsive Architecture:**\n   - Engineered for responsive fluid scaling down to tablet and mobile viewports with single-column vertical stacking, preserving accessible 44px tap targets and high contrast text ratios throughout."
+        },
+        {
+          "suggestion": "Show the next step: Script review and storyboard preview"
+        },
+        {
+          "suggestion": "Explore the Automatic generation mode variant"
+        },
+        {
+          "suggestion": "Inspect the mobile responsive layout of this creation flow"
+        }
+      ],
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2048,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "<div class=\"max-w-[85%] bg-[#181820] border border-[#2E2C3D] rounded-2xl rounded-tr-sm p-3.5 text-on-surface sha",
+        "<div class=\"max-w-[90%] bg-[#111116] border border-[#23222D] rounded-2xl rounded-tl-sm p-4 space-y-3 shadow-md\">"
+      ]
+    },
+    {
+      "slug": "04-storyboard",
+      "title": "Storyboard Review",
+      "name": "projects/2520368196713015322/screens/0686ba1a07904733bcfc4f18025430be",
+      "width": "2560",
+      "height": "2048",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/3196dfb5d6bf4aeeb3cdb261ba1585d5:download",
+        "name": "projects/2520368196713015322/files/3196dfb5d6bf4aeeb3cdb261ba1585d5"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/a42a2aca2e5a4a9f9bc4f3e4785ca469:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/a42a2aca2e5a4a9f9bc4f3e4785ca469"
+      },
+      "output": [
+        {
+          "text": "I have created the desktop product screen for **Newbert AI Video — Storyboard Review** (Newbert AI Video - Storyboard Review), continuing the exact approved visual aesthetic, tone, and constraints established in the refined homepage.\n\n### Key Design & UX Implementations:\n\n1. **Required Shell & Workspace Context:**\n   - **Shell Architecture:** Standard 1440px desktop reference with `#000000` deep canvas, `#08080B` left sidebar (224px), `#111116` panels, and `#23222D` borders.\n   - **Navigation Hierarchy:** Exact sequence implemented (`Dashboard`, `Projects` [Active/Selected state], `Create a video`, `Publishing` labeled with `\"Planned · design preview\"`, and `Settings`).\n   - **Single-User Workspace:** Grounded in a personal workspace model (`1 creator`), Aarav S. account avatar, Help & Feedback, and top-bar breadcrumb `Workspace > Projects > Spotlight Effect / Draft` alongside the `\"Design preview · Sample data\"` indicator.\n\n2. **Step Progression & Clear Topic Header:**\n   - **Step Flow:** `Idea` → `Storyboard` (Active highlighted pill with mint status indicator) → `Generate` → `Preview`, avoiding fake completion percentages.\n   - **Header & Version Tracking:** Displays the editable title *\"The Spotlight Effect\"*, language pill *\"Hindi\"*, autosave confirmation (*\"Saved just now\"*), and version distinction noting this draft is a future `v3` while preserving the existing rendered `v2 Ready`.\n\n3. **Four Ordered Storyboard Scenes (No Complex Timeline):**\n   - **Scene 01 (Setup & Relatable Scenario):** Classroom mistake scenario with spoken Devanagari Hindi text and initial focal ring preview.\n   - **Scene 02 (Concept Definition - Expanded State):** Active card highlighting the core psychology concept. Features the diagram component selector (*\"Comparison\"*), editable spoken Devanagari narration, and the controlled concentric schematic labeled with *\"How it feels\"* and *\"What others may notice\"*, explicitly flagged as an *\"Illustrative diagram\"*, with zero fabricated statistical metrics.\n   - **Scene 03 (Perspective Shift):** Narrative deconstruction zooming out to surrounding peers with network node preview.\n   - **Scene 04 (Check the Evidence):** Reflective takeaway grounding the concept.\n\n4. **Academic Grounding & Generation Rail:**\n   - **Verified Research Grounding:** Verbatim citation of *Gilovich, Medvec & Savitsky (2000)* with valid PubMed reference link (`10707330`) and a *\"Definition supported by source\"* indicator.\n   - **Voice & Motion Controls:** Configured to *Roger · Hindi conversational* and *Black glow schematic* styling.\n   - **Truthful Duration Handling:** Clear guidance that final duration is estimated and strictly dictated by natural spoken narration timing, with note: *\"Editing spoken text generates a new voice track; visual layout edits may reuse it.\"*\n   - **Approval & Primary Action:** Guided confirmation checkbox (*\"I've reviewed this script and want to generate narration\"*) followed by the high-contrast Electric Violet `#A18BFF` **Generate video** primary CTA."
+        },
+        {
+          "suggestion": "Create the subsequent video generation progress/rendering modal state"
+        },
+        {
+          "suggestion": "Design the final video preview screen with synchronized captions and MP4 download"
+        },
+        {
+          "suggestion": "Show the expanded view when editing a diagram component layout"
+        }
+      ],
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2048,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "<!-- LEFT/CENTER COLUMN: Storyboard Review (~68% width) -->",
+        "<section class=\"w-full lg:w-[68%] border-r border-[#23222D] overflow-y-auto custom-scroll p-6 space-y-5 bg-black\">",
+        " Configuration, Sources, Voice & Render Trigger (~32% width) -->",
+        "<aside class=\"w-full lg:w-[32%] bg-[#08080B] flex flex-col justify-between h-full overflow-y-auto custom-scroll border-l"
+      ]
+    },
+    {
+      "slug": "05-generation",
+      "title": "Generation Progress",
+      "name": "projects/2520368196713015322/screens/f4d395f5065f4b61bbf5c200c96443ae",
+      "width": "2560",
+      "height": "2794",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/48cb582ad52d4063b9e5616361aa5db7:download",
+        "name": "projects/2520368196713015322/files/48cb582ad52d4063b9e5616361aa5db7"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/94d6bfe74e3d4147a5c67d1ee1effb3a:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/94d6bfe74e3d4147a5c67d1ee1effb3a"
+      },
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2794,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "      0% { opacity: 0.7; transform: scale(0.96); }",
+        "      100% { opacity: 1; transform: scale(1.05); }"
+      ]
+    },
+    {
+      "slug": "06-preview",
+      "title": "Video Preview and Version History",
+      "name": "projects/2520368196713015322/screens/2f6af0b2ac0440978b2df15b4196cfea",
+      "width": "2560",
+      "height": "2048",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/04695c3668d94e2fb83f56b05b0edfba:download",
+        "name": "projects/2520368196713015322/files/04695c3668d94e2fb83f56b05b0edfba"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/cd4902328e8e43a396585565766af29c:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/cd4902328e8e43a396585565766af29c"
+      },
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2048,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": true,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "      background: radial-gradient(circle at 50% 30%, rgba(161, 139, 255, 0.08) 0%, rgba(8, 8, 11, 0) 70%);"
+      ]
+    },
+    {
+      "slug": "07-publishing",
+      "title": "Publishing Calendar",
+      "name": "projects/2520368196713015322/screens/9b50c16622814a09878e4e227408b41b",
+      "width": "2560",
+      "height": "2746",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/d9ff811a068940c39c590f46a62acb7c:download",
+        "name": "projects/2520368196713015322/files/d9ff811a068940c39c590f46a62acb7c"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/85f9ff18735240718aaf93f696f61832:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/85f9ff18735240718aaf93f696f61832"
+      },
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2746,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "dient(circle at center, rgba(161, 139, 255, 0.15) 0%, transparent 70%),",
+        "      background-size: 100% 100%, 16px 16px, 16px 16px;",
+        "<!-- LEFT COLUMN: CALENDAR VIEW (~65% width / 8 cols)                  -->",
+        "<!-- RIGHT COLUMN: SELECTED POST DETAIL PANEL (~35% width / 4 cols)    -->"
+      ]
+    },
+    {
+      "slug": "08-settings",
+      "title": "Settings — Connections and Allowance",
+      "name": "projects/2520368196713015322/screens/4d65a9d5a5e44f4f841ff9fefec10fa8",
+      "width": "2560",
+      "height": "3090",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/fae11eb9c1d7489ba99e6748ef6177e0:download",
+        "name": "projects/2520368196713015322/files/fae11eb9c1d7489ba99e6748ef6177e0"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/93700a6c50de4275b9cbd031559d2111:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/93700a6c50de4275b9cbd031559d2111"
+      },
+      "output": [
+        {
+          "text": "The **Newbert AI Video - Settings** screen (Newbert AI Video - Settings) has been crafted following the approved product shell and visual system.\n\n### Key Architectural & Design Highlights:\n1. **Unified Navigation & Shell Continuity:**\n   - **Persistent 224px Left Sidebar:** Wordmark `Newbert AI Video`, precise navigation order (*Dashboard*, *Projects*, *Create a video*, *Publishing* [Planned], and *Settings* active), personal workspace footer with single-seat pilot indicator, Aarav S. owner profile, and Help & Feedback.\n   - **Top Bar:** Breadcrumb trail (`Workspace / Settings`), prominent `Design preview · Sample data` tag, search input, notifications, and profile pill.\n\n2. **Connections Management (Main Column):**\n   - **Personal Speech Key Card (ElevenLabs):** Features masked credentials (`••••••••••••••••••••••••`), sample active permissions (`Voices: Read`, `Text to Speech`), and an explicit `Disconnect` action with the replacement guidance: *\"To replace your key, disconnect this connection first.\"* Includes a notice warning explaining voice catalog permissions, plus the shared engine status note: *\"Script generation: Available (powered by workspace engine — no personal script API key needed).\"*\n   - **Instagram Publishing Card:** Explicitly marked with the `Planned · design preview` badge, showing the single connected account (`@newbert_explains`) alongside `Reconnect account` and `Disconnect` controls, with the safety confirmation note that pending scheduled deliveries pause upon disconnection.\n   - **Workspace Defaults:** Clean configuration controls for default narration language (**Hindi** / **Hinglish**), workspace timezone (`Asia/Kolkata (IST)`), pedagogical pacing (`0.95x academic pace`), and a prominent `Save preferences` primary button.\n\n3. **Illustrative Pilot Allowance Rail (Right Column):**\n   - Incorporates the concentric focal ring diagram motif echoing the Spotlight Effect video prototype.\n   - Grounded in honest product truths with clear `Illustrative limits` tagging: **2 of 3 daily creations used** (max 60s per prototype), reset scheduled for **05:30 IST**, **2 rendered · 1 in queue**, and **3 of 6 project slots used**.\n   - Explicit pilot declaration confirming no paid plans, credit purchases, or upgrades.\n\n4. **Visual Craft & Ergonomics:**\n   - Adheres to the true black palette (`#000000` base, `#08080B` shell, `#111116` containers, `#23222D` hairline borders) with accessible `#A7A1B5` secondary text, `#7DE5E0` mint status accents, and `#A18BFF` violet interactive elements. Fully responsive structure that gracefully collapses for tablet and mobile viewports."
+        },
+        {
+          "suggestion": "View the Usage & limits tab variation"
+        },
+        {
+          "suggestion": "Adjust the ElevenLabs key disconnected/empty state"
+        },
+        {
+          "suggestion": "Review mobile responsive layout for Settings"
+        }
+      ],
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 3090,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "<!-- LEFT COLUMN: CONNECTIONS (ACTIVE TAB) ~65% (8 COLS) -->",
+        "<!-- RIGHT COLUMN: USAGE & LIMITS RAIL ~35% (4 COLS) -->",
+        "<!-- Progress Bar (66%) -->"
+      ]
+    },
+    {
+      "slug": "09-sign-in",
+      "title": "Sign In and Account Entry",
+      "name": "projects/2520368196713015322/screens/f3825eacf4c74b0dae74ecc35131f572",
+      "width": "2560",
+      "height": "2250",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/04ac3dcc540a4a2c85792fcdce89bfa2:download",
+        "name": "projects/2520368196713015322/files/04ac3dcc540a4a2c85792fcdce89bfa2"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/7cc6d05a62684bc7b676e4efc8ade499:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/7cc6d05a62684bc7b676e4efc8ade499"
+      },
+      "output": [
+        {
+          "text": "I have designed the standalone desktop authentication screen for **Newbert AI Video** (`Newbert AI Video - Sign In`), continuing directly from the approved refined homepage.\n\n### Key Architectural & Design Decisions:\n1. **Standalone Minimal Shell:**\n   - Excluded the application sidebar as required for the authentication experience.\n   - Clean top header featuring the `Newbert AI Video` brand mark (with the ice mint status indicator), a subtle `Design preview · Sample data` indicator, and a prominent `Back to home` link.\n\n2. **Pedagogical Brand Continuity & Spotlight Diagram:**\n   - **Left Section:** Displays the headline *\"Make your next idea clear\"* accompanied by the concentric spotlight diagram motif (*The Spotlight Effect* 39s prototype) showing *\"How it feels\"* vs. *\"What others notice\"* with an explicit *\"Illustrative diagram\"* badge.\n   - Includes real bilingual Hindi/Hinglish caption sync preview (*\"हम सोचते हैं कि हर किसी का ध्यान सिर्फ़ हम पर है — इसे कहते हैं स्पॉटलाइट इफ़ेक्ट\"* with Devanagari typography and timestamp indicator).\n   - Private workspace security badge reinforcing that video drafts remain strictly local to the educator's single workspace.\n\n3. **Carried-Over Topic Context Card:**\n   - An intentional continuity card directly above the sign-in form: *\"Draft Idea In Progress — Why do we feel everyone is watching us?\"* showing *\"Draft saved\"*, reassuring educators that their topic prompt entered on the homepage is preserved and ready upon login.\n\n4. **Sign-In & Personal Workspace Onboarding Panel:**\n   - Segmented `Sign In` / `Create account` tab selector.\n   - Standard email address input and password input with an accessible reveal toggle (`aria-label`, show/hide script interaction), plus a `Forgot password?` link.\n   - Explicitly excluded third-party OAuth (e.g., Google) since the authentication provider is not yet finalized.\n   - Clear validation format annotation below inputs.\n   - Primary `Sign in to workspace` action in electric violet `#A18BFF` with dark text.\n   - Transparent helper callout explaining that creating an account automatically provisions one personal workspace without team tiers, invitations, or credit card requirements.\n\n5. **Design System & Responsive Rigor:**\n   - Applied `#000000` page, `#08080B` shell, `#111116` panels, `#23222D` borders, `#F5F2FA` headings, `#A7A1B5` high-contrast secondary text, and `#7DE5E0` mint accents.\n   - Structured with mobile-first responsiveness (collapsing the illustrative column on smaller screens, 44px touch targets, full-width inputs, and `prefers-reduced-motion` compliance)."
+        },
+        {
+          "suggestion": "Add the 'Create account' tab variant to see initial workspace provisioning copy"
+        },
+        {
+          "suggestion": "Design the forgot password / reset link request modal"
+        },
+        {
+          "suggestion": "Transition from login directly into the 'Create a video' topic refinement stage"
+        }
+      ],
+      "pixelWidth": 2560,
+      "pixelHeight": 2250,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": true,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "      background: radial-gradient(circle at 50% 50%, rgba(161, 139, 255, 0.12) 0%, rgba(125, 229, 224, 0.04) 40%, rgba(0, 0, 0, 0) 70%);"
+      ]
+    },
+    {
+      "slug": "10-create-account",
+      "title": "Create an Account",
+      "name": "projects/2520368196713015322/screens/3e607abd5d3940939ec2b1b2a884b9cb",
+      "width": "2560",
+      "height": "2178",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/7f45dfc94d9b493fb554c6536bed5cf2:download",
+        "name": "projects/2520368196713015322/files/7f45dfc94d9b493fb554c6536bed5cf2"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/af7575d9ce7e46b2baf9fb5f47ee24c8:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/af7575d9ce7e46b2baf9fb5f47ee24c8"
+      },
+      "pixelWidth": 2560,
+      "pixelHeight": 2178,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "      0%, 100% { opacity: 0.7; transform: scale(1); }",
+        "      50% { opacity: 0.95; transform: scale(1.02); }"
+      ]
+    },
+    {
+      "slug": "11-password-recovery",
+      "title": "Password Recovery",
+      "name": "projects/2520368196713015322/screens/95ebfb2fdb4046d9b1c6c486b6b868fb",
+      "width": "2560",
+      "height": "2048",
+      "screenshot": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/ab55d51b503d470db2bab20d4bf2d147:download",
+        "name": "projects/2520368196713015322/files/ab55d51b503d470db2bab20d4bf2d147"
+      },
+      "htmlCode": {
+        "downloadUrl": "https://stitch.googleapis.com/v1/projects/2520368196713015322/files/1afba13ccef04a5380d8f0fa90187766:download",
+        "mimeType": "text/html",
+        "name": "projects/2520368196713015322/files/1afba13ccef04a5380d8f0fa90187766"
+      },
+      "refined": true,
+      "pixelWidth": 2560,
+      "pixelHeight": 2048,
+      "responsiveMarkers": {
+        "breakpointClasses": true,
+        "mediaQueries": false,
+        "viewport": true
+      },
+      "claimsToReview": [
+        "      background: radial-gradient(circle at 50% 30%, rgba(161, 139, 255, 0.08) 0%, rgba(111, 215, 210, 0.04) 45%, rgba(0, 0, 0, 0) 75%);"
+      ]
+    }
+  ]
+}
