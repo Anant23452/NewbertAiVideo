@@ -1636,3 +1636,128 @@ details p {
     font-size: 11px;
   }
 }
+
+.story-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 25px 0;
+}
+.storyboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+  gap: 24px;
+}
+.storyboard-layout > div,
+.storyboard-layout > aside {
+  min-width: 0;
+}
+.storyboard-layout .panel {
+  margin-bottom: 24px;
+}
+.scene-editor label,
+.storyboard-layout aside label {
+  margin-top: 18px;
+}
+.scene-editor textarea,
+.storyboard-layout select {
+  margin-top: 9px;
+}
+.controlled-preview {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 25px 12px;
+  margin: 20px 0;
+  background: radial-gradient(ellipse, #44326630, transparent 70%), #08070c;
+  border-radius: 10px;
+  border: 1px solid #302339;
+}
+.controlled-preview span {
+  border: 1px solid var(--violet);
+  border-radius: 14px;
+  padding: 14px 18px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.visual-steps,
+.visual-timeline {
+  flex-direction: column;
+}
+.visual-typography span {
+  font-size: 23px;
+  border: 0;
+}
+.evidence-panel article {
+  border-top: 1px solid var(--line);
+  padding: 20px 0;
+}
+.evidence-panel p,
+.approval-panel p {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.evidence-panel a,
+.storyboard-layout aside a {
+  font-size: 11px;
+  color: var(--violet);
+}
+.storyboard-layout .checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 11px;
+}
+.storyboard-layout .checkbox-label input {
+  width: 16px;
+  min-height: 16px;
+  flex-shrink: 0;
+}
+.discussion {
+  margin-bottom: 24px;
+}
+.discussion textarea {
+  margin: 10px 0;
+  min-height: 90px;
+}
+.discussion button {
+  font-size: 12px;
+}
+.discussion-messages {
+  max-height: 350px;
+  overflow: auto;
+}
+.discussion-messages article {
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.discussion-messages p {
+  white-space: pre-wrap;
+  font-size: 12px;
+  margin: 10px 0 0;
+}
+.discussion-assistant {
+  background: #20152b;
+}
+.storyboard-layout input[type="color"] {
+  height: 48px;
+  padding: 6px;
+  margin-top: 8px;
+}
+.storyboard-layout button {
+  font-size: 12px;
+}
+.evidence-panel details p {
+  white-space: pre-wrap;
+}
+@media (max-width: 1000px) {
+  .storyboard-layout {
+    grid-template-columns: 1fr;
+  }
+}

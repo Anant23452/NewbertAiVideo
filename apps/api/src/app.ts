@@ -14,7 +14,7 @@ export function buildApi(options: { database?: pg.Pool; identity?: IdentityRunti
   app.addHook('onRequest', async (request, reply) => {
     reply.header('X-Request-Id', request.id).header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
   });
-  app.get('/health/live', async () => ({ service: 'newbert-api', milestone: options.identity ? 'F6' : 'F2', status: 'alive' }));
+  app.get('/health/live', async () => ({ service: 'newbert-api', milestone: options.identity ? 'F8' : 'F2', status: 'alive' }));
   app.get('/health/ready', async (_request, reply) => {
     const database = await databaseState(options.database);
     let worker=false;try{worker=Boolean((await options.database?.query("SELECT EXISTS(SELECT 1 FROM newbert.worker_heartbeats WHERE online AND last_seen>now()-interval '10 seconds') AS connected"))?.rows[0]?.connected);}catch{}
@@ -23,7 +23,7 @@ export function buildApi(options: { database?: pg.Pool; identity?: IdentityRunti
     const ready=database==='connected'&&identity==='connected'&&mediaReady&&worker;
     return reply.code(ready?200:503).send({ service: 'newbert-api', status:ready?'ready':'not_ready',checks:{database,mediaStorage:mediaReady?'connected':'not_connected',worker:worker?'connected':'not_connected',...(identity?{identity}:{})} });
   });
-  if(options.identity && options.database){registerIdentityRoutes(app,options.database,options.identity);registerProjectRoutes(app,options.database,options.identity);if(media)registerMediaRoutes(app,options.database,options.identity,media);}
+  if(options.identity && options.database){registerIdentityRoutes(app,options.database,options.identity);registerProjectRoutes(app,options.database,options.identity,media);if(media)registerMediaRoutes(app,options.database,options.identity,media);}
   app.setNotFoundHandler((request, reply) => reply.code(404).type('application/problem+json').send({ type: 'about:blank', title: 'Not found', status: 404, code: 'NOT_FOUND', detail: 'This endpoint is not available.', requestId: request.id }));
   app.setErrorHandler((error, request, reply) => {
     const candidate = error !== null && typeof error === 'object' && 'statusCode' in error ? error.statusCode : undefined;

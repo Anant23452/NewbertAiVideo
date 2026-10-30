@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { setTimeout as delay } from "node:timers/promises";
 import { createRuntimePool } from "../../../packages/database/src/client.js";
 import { LocalMediaStore } from "../../../packages/database/src/media.js";
+import { runPlanning } from "../../api/src/modules/planning/runner.js";
 import {
   claimNext,
   finish,
@@ -31,7 +32,7 @@ try {
   if (!(await new LocalMediaStore().ready()))
     throw new Error("Private media store unavailable.");
   console.log(
-    "Newbert F6 worker ready. Paid providers disabled; unconnected pipeline stages pause safely.",
+    "Newbert F7/F8 worker ready. Planning calls are bounded; speech and video stages remain disabled.",
   );
   while (!stopping) {
     try {
@@ -44,12 +45,15 @@ try {
       if (lease) {
         // F7–F10 register actual stage handlers. Never invent a successful output or
         // call the feasibility prototype from the durable production worker.
-        await finish(
-          pool,
-          lease,
-          "paused",
-          stopping ? "WORKER_SHUTDOWN" : "PIPELINE_NOT_READY",
-        );
+        if (!stopping && ["plan", "ideation"].includes(lease.kind))
+          await runPlanning(pool, lease, new LocalMediaStore());
+        else
+          await finish(
+            pool,
+            lease,
+            "paused",
+            stopping ? "WORKER_SHUTDOWN" : "PIPELINE_NOT_READY",
+          );
       } else await delay(1000);
     } catch {
       console.error(

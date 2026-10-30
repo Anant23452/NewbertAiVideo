@@ -1,6 +1,6 @@
 # Newbert AI Video
 
-Current stage: **F5/F6 — saved projects, immutable versions and local durable processing**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
+Current stage: **F7/F8 — discussion, research-backed scripts and storyboard review**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
 
 Start the local database with `npm run db:local` only if it is not already running. Apply setup with `npm run db:migrate`, `npm run auth:setup` and `npm run worker:setup`. In `apps/api/.env`, set `AUTH_BASE_URL` and `APP_ORIGIN` to `http://127.0.0.1:3001`. Keep all credentials in ignored local files. Run `npm run dev:api`, `npm run dev:worker` and `npm run dev:web` in separate terminals. Open **http://127.0.0.1:3001**. API: port 3100. Production-style local web startup: `npm run build:web`, then `npm run start:web`.
 
@@ -8,7 +8,9 @@ Development email is local-only. After registration: `npm run auth:mail -- your@
 
 Verify with `npm run check:web`, `npm run build:web`, `npm run test:f4` and, with the local servers running, `npm run test:f4:browser`. Browser checks create a unique local test account; no provider calls or external email. On Windows, installed Edge is used. Else install Playwright Chromium or set `PLAYWRIGHT_EXECUTABLE_PATH`.
 
-Project creation, search, archive/restore, drafts, version snapshots and queue controls are connected. Planning requests currently pause until the F7 scripting handler is built; no production video or provider request is made. `npm run processing -- status/pause/resume` controls local admission/workers. `npm run media:audit` inspects aged orphan objects without deleting anything by default.
+Project creation, search, archive/restore, drafts, version snapshots and queue controls are connected. Planning/discussion now use the configured Gemini account behind capped requests. Use the project’s storyboard review screen to apply results, review evidence, choose a voice/style and approve the exact saved snapshot. Speech/video generation remain later features. Account quotas and billing apply; no paid search or model fallback is used. `npm run processing -- status/pause/resume` controls local admission/workers. `npm run media:audit` inspects aged orphan objects without deleting anything by default.
+
+F7/F8 checks: `npm run test:f7` and `npm run test:f7:browser` use isolated databases and deterministic provider adapters, without live AI credits. See [delivery record](docs/milestones/F7-F8-PLANNING-STORYBOARD.md).
 
 F5/F6 checks: `npm run test:f5`, `npm run test:f6` and, with the three servers running, `npm run test:f5:browser`. The older feasibility prototype and its commands below remain separate.
 

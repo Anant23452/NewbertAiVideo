@@ -43,7 +43,7 @@ test('real PostgreSQL applies ordered migrations and replay performs no work',as
   const applied=await migrate(owner);assert.equal(applied.length,expectedMigrations);
   assert.equal((await migrate(owner)).length,0);
   const history=await owner.query('SELECT name FROM public.pgmigrations ORDER BY id');assert.equal(history.rowCount,expectedMigrations);
-  const tables=await owner.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='newbert'");assert.equal(tables.rows[0].n,30);
+  const tables=await owner.query("SELECT count(*)::int AS n FROM information_schema.tables WHERE table_schema='newbert'");assert.equal(tables.rows[0].n,32);
   await owner.query('GRANT newbert_runtime TO newbert_app');
   runtime=createRuntimePool(connectionUrl(local.config,databaseName,true));
   results.push(`PostgreSQL ${version.rows[0].server_version}: ${expectedMigrations} migrations, replay zero, 28 domain tables plus F6 policy/worker health`);

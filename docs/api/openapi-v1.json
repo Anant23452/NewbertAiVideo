@@ -3,7 +3,7 @@
   "info": {
     "title": "Newbert AI Video — V1 proposed API",
     "version": "1.0.0-draft",
-    "description": "V1 design contract with an implemented F3–F6 subset. See IDENTITY-F3.md and PROJECTS-PROCESSING-F5-F6.md for the exact working endpoints and unavailable later stages. Auth adapter and operator-only APIs remain separate."
+    "description": "V1 design contract with implemented F3–F8 local endpoints. See milestone/API handoffs for exact working boundaries. Narration, rendering and publishing remain later milestones."
   },
   "servers": [
     {
@@ -4077,6 +4077,86 @@
           }
         }
       }
+    },
+    "/projects/{projectId}/storyboard": {
+      "get": {
+        "tags": [
+          "Creation"
+        ],
+        "summary": "Read current storyboard, planning binding and exact-revision approval",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Draft fields, planningVersionId and current approval or null",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/storyboard/approve": {
+      "post": {
+        "tags": [
+          "Creation"
+        ],
+        "summary": "Approve exact saved storyboard and create an immutable approved version",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CsrfToken"
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          },
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StoryboardApprovalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Saved approval reference; productionAvailable is false until F9/F10."
+          },
+          "409": {
+            "$ref": "#/components/responses/Error409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Error412"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5657,6 +5737,11 @@
                 "retrievedAt": {
                   "type": "string",
                   "format": "date-time"
+                },
+                "excerpt": {
+                  "type": "string",
+                  "maxLength": 2500,
+                  "description": "Retrieved introductory source excerpt; not an automated fact-check."
                 }
               },
               "required": [
@@ -6626,6 +6711,27 @@
         "required": [
           "items",
           "nextCursor"
+        ]
+      },
+      "StoryboardApprovalRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reviewedClaimIds": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "acknowledgedVoiceTerms": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "reviewedClaimIds",
+          "acknowledgedVoiceTerms"
         ]
       }
     }

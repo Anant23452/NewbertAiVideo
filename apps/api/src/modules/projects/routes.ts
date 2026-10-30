@@ -27,12 +27,15 @@ import {
   type Result,
 } from "./core.js";
 import { emit, policy, reserve, settle } from "../processing/queue.js";
+import { registerPlanningRoutes } from "../planning/routes.js";
+import type { LocalMediaStore } from "../../../../../packages/database/src/media.js";
 
 type Auth = NonNullable<Awaited<ReturnType<typeof current>>>;
 export function registerProjectRoutes(
   app: FastifyInstance,
   database: Pool,
   identity: IdentityRuntime,
+  media?: LocalMediaStore,
 ) {
   app.addSchema(contractSchema);
   function route(
@@ -96,6 +99,7 @@ export function registerProjectRoutes(
   }
   const params = (r: FastifyRequest) => r.params as Record<string, string>;
   const query = (r: FastifyRequest) => r.query as Record<string, unknown>;
+  registerPlanningRoutes(route, media);
   route("GET", "/projects", async (c, r) => {
     const q = query(r),
       { limit, cursor } = pagination(q);
@@ -353,8 +357,23 @@ export function registerProjectRoutes(
       { limit, cursor } = pagination(q);
     const projectId = typeof q.projectId === "string" ? id(q.projectId) : null;
     const state = q.state ?? null;
-    if (state !== null && (typeof state !== "string" || !["queued", "running", "paused", "succeeded", "failed", "cancelled"].includes(state)))
-      throw new DomainError(400, "INVALID_STATE", "Choose a supported processing state.");
+    if (
+      state !== null &&
+      (typeof state !== "string" ||
+        ![
+          "queued",
+          "running",
+          "paused",
+          "succeeded",
+          "failed",
+          "cancelled",
+        ].includes(state))
+    )
+      throw new DomainError(
+        400,
+        "INVALID_STATE",
+        "Choose a supported processing state.",
+      );
     const rows = (
       await c.query(
         `SELECT *,created_at::text AS cursor_time FROM newbert.generation_jobs WHERE ($1::uuid IS NULL OR project_id=$1) AND ($2::timestamptz IS NULL OR (created_at,id)<($2::timestamptz,$3::uuid)) AND ($5::text IS NULL OR state=$5) ORDER BY created_at DESC,id DESC LIMIT $4`,
@@ -556,6 +575,13 @@ export function registerProjectRoutes(
     const start = new Date();
     start.setUTCHours(0, 0, 0, 0);
     const end = new Date(start.getTime() + 86400000);
+    const planningUsed = Number(
+      (
+        await c.query(
+          "SELECT count(*)::int AS n FROM newbert.planning_calls WHERE created_at>=(date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC')",
+        )
+      ).rows[0].n,
+    );
     return {
       body: {
         allowanceTimezone: "UTC",
@@ -594,6 +620,15 @@ export function registerProjectRoutes(
             ),
             periodStart: "1970-01-01T00:00:00.000Z",
             resetsAt: null,
+          },
+          {
+            resource: "provider_credits",
+            limit: 2,
+            used: planningUsed,
+            reserved: 0,
+            remaining: Math.max(0, 2 - planningUsed),
+            periodStart: start,
+            resetsAt: end,
           },
         ],
       },

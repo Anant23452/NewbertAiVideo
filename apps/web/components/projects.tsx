@@ -18,6 +18,7 @@ import {
   type Usage,
 } from "../lib/projects";
 import { useWorkspace } from "./workspace";
+import { Discussion } from "./storyboard";
 
 function ErrorMessage({ text }: { text: string }) {
   return text ? (
@@ -62,6 +63,9 @@ function ProjectCards({ items }: { items: Project[] }) {
 }
 export function UsageCard({ usage }: { usage: Usage | null }) {
   const r = usage?.resources.find((r) => r.resource === "generation_count");
+  const planning = usage?.resources.find(
+    (r) => r.resource === "provider_credits",
+  );
   if (!r) return null;
   return (
     <section className="panel allowance">
@@ -82,6 +86,12 @@ export function UsageCard({ usage }: { usage: Usage | null }) {
             : ""}
         </p>
       </div>
+      {planning && (
+        <p className="fine">
+          Gemini requests: {planning.used}/{planning.limit} today · account
+          quota applies
+        </p>
+      )}
       <span className="pill">
         {usage?.platformCapacity === "paused"
           ? "Processing paused"
@@ -399,9 +409,8 @@ export function CreateProject() {
           </p>
           <div className="field-divider" />
           <p>
-            Planning requests can enter the durable queue now. Automated
-            scripting, voice selection and video rendering are still being
-            built.
+            Planning retrieves sources and generates scripts. Storyboard review
+            is available; voice generation and rendering come next.
           </p>
           <span className="pill">No provider calls on save</span>
         </aside>
@@ -529,7 +538,7 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
       await load();
       await progress();
       setNotice(
-        "Planning request saved to the queue. It will pause until the scripting stage is connected.",
+        "Planning request queued. Open storyboard review after it completes.",
       );
     });
   }
@@ -624,6 +633,14 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
         </p>
       )}
       <UsageCard usage={usage} />
+      <p>
+        <Link
+          className="button secondary"
+          href={"/app/projects/" + projectId + "/storyboard"}
+        >
+          Open storyboard review →
+        </Link>
+      </p>
       <div className="project-detail-layout">
         <div>
           <form
@@ -755,6 +772,14 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
           </section>
         </div>
         <aside>
+          <Discussion
+            projectId={projectId}
+            etag={draftTag(draft)}
+            disabled={
+              busy || dirty || !!activeJob || project.status !== "active"
+            }
+            onSent={() => void progress()}
+          />
           <section className="panel planning-panel">
             <span className="tag">THE NEXT STEP</span>
             <h3>Planning queue</h3>
@@ -763,8 +788,10 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
               processing slot.
             </p>
             <p className="message">
-              The queue is connected. Automated scripting is coming next, so
-              requests currently pause safely. No voice or video is generated.
+              Planning retrieves source excerpts and generates a scene-by-scene
+              script using your configured Gemini account. Account quotas and
+              billing apply; no paid search grounding or model fallback is used.
+              Voice and video generation come next.
             </p>
             <label className="checkbox-label">
               <input
@@ -801,6 +828,16 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
               jobs.map((j) => (
                 <article key={j.id} className="job-item">
                   <span className={"pill job-state-" + j.state}>{j.state}</span>
+                  {j.state === "paused" &&
+                    j.pauseReason !== "PROVIDER_OUTCOME_UNKNOWN" && (
+                      <button
+                        className="secondary small"
+                        disabled={busy}
+                        onClick={() => void jobAction(j, "resume")}
+                      >
+                        Resume request
+                      </button>
+                    )}
                   <p>
                     {j.pauseReason === "PIPELINE_NOT_READY"
                       ? "Waiting for the scripting stage to be connected."
@@ -813,8 +850,26 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
                             running: "A worker is handling this request.",
                             cancelled:
                               "Cancelled. Unused allowance has been released.",
-                            succeeded: "Processing completed.",
-                            paused: "Processing needs attention.",
+                            succeeded:
+                              "Processing completed. Open storyboard review to use the result.",
+                            paused:
+                              (
+                                {
+                                  PLANNING_DAILY_LIMIT:
+                                    "Daily Gemini request cap reached. Try after UTC midnight.",
+                                  PROVIDER_QUOTA:
+                                    "The configured Gemini account reached its quota. No request will be repeated automatically.",
+                                  PROVIDER_CREDENTIALS:
+                                    "The script provider rejected its credentials. Check server configuration.",
+                                  RESEARCH_UNAVAILABLE:
+                                    "Source retrieval is unavailable. No citations were invented.",
+                                  EVIDENCE_UNAVAILABLE:
+                                    "No suitable source excerpt was retrieved. Refine the topic before replanning.",
+                                  PROVIDER_NOT_CONFIGURED:
+                                    "Configure the Gemini API key before resuming.",
+                                } as Record<string, string>
+                              )[j.pauseReason || ""] ||
+                              "Processing needs attention.",
                             failed: "Processing failed.",
                           }[j.state]}
                   </p>

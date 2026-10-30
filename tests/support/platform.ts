@@ -16,7 +16,7 @@ import {
 import { buildApi } from "../../apps/api/src/app.js";
 import type { AuthMessage } from "../../apps/api/src/modules/identity/mail.js";
 import type { AuthConfig } from "../../apps/api/src/modules/identity/config.js";
-export async function platform() {
+export async function platform(browserOrigin = "http://127.0.0.1:3110") {
   const directory = resolve("test-results/platform", randomUUID());
   const local = await startCluster({ directory, port: await freePort() });
   const owner = new pg.Client({
@@ -53,7 +53,7 @@ export async function platform() {
   const authPool = createIdentityPool(
     await login("test_identity", "newbert_identity"),
   );
-  const origin = "http://127.0.0.1:3110";
+  const origin = browserOrigin;
   const config: AuthConfig = {
     databaseUrl: "unused",
     secret: randomBytes(32).toString("hex"),
@@ -116,6 +116,8 @@ export async function platform() {
     const me = (await call("/api/v1/me", "GET", undefined, cookie)).json();
     return {
       cookie,
+      email,
+      password,
       csrf: me.csrfToken as string,
       workspaceId: me.workspace.id as string,
     };

@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { Pool,PoolClient } from "pg";
+import type { Pool, PoolClient } from "pg";
 import { type Lease } from "./queue.js";
 import { type LocalMediaStore } from "../../../../../packages/database/src/media.js";
 
@@ -25,7 +25,7 @@ export async function saveArtifact(
     bytes: Buffer;
     inputFingerprint: string;
   },
-  afterInsert?:(client:PoolClient,artifactId:string)=>Promise<void>,
+  afterInsert?: (client: PoolClient, artifactId: string) => Promise<void>,
 ) {
   if (!supported.includes(input.mimeType))
     throw new Error("Unsupported media type.");
@@ -107,7 +107,7 @@ export async function saveArtifact(
         object.byteSize,
       ],
     );
-    if(afterInsert)await afterInsert(c,artifactId);
+    if (afterInsert) await afterInsert(c, artifactId);
     await c.query("COMMIT");
     return artifactId;
   } catch (e) {

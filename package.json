@@ -43,7 +43,11 @@
     "test:f5:browser": "node tests/f5/browser.mjs",
     "processing": "node scripts/db/processing.mjs",
     "media:audit": "node scripts/db/media-audit.mjs",
-    "start:worker": "node --env-file-if-exists=apps/api/.env dist/apps/worker/src/main.js"
+    "start:worker": "node --env-file-if-exists=apps/api/.env dist/apps/worker/src/main.js",
+    "test:f7": "tsx --test --test-concurrency=1 tests/f7/*.test.ts",
+    "test:f8": "npm run test:f7",
+    "test:f7:browser": "tsx tests/f7/browser.ts",
+    "test:f8:browser": "npm run test:f7:browser"
   },
   "dependencies": {
     "better-auth": "1.7.14",
@@ -54,7 +58,9 @@
     "nodemailer": "10.3.1",
     "pg": "8.23.1",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
   },
   "devDependencies": {
     "@types/node": "22.20.5",

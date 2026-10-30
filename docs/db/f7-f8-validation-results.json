@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-30T10:36:08.137Z",
+  "scope": "F7/F8 local",
+  "checks": {
+    "planningAndStoryboardIntegration": 9,
+    "projectRegression": 7,
+    "queueMediaRegression": 15,
+    "migrationRegression": 7,
+    "browser": 7,
+    "frontendBuild": "passed",
+    "backendBuild": "passed",
+    "types": "passed",
+    "liveResearchRetrieval": "two article excerpts; provenance only"
+  },
+  "liveAiCalls": 0,
+  "liveSpeechCalls": 0,
+  "commitReviewRegressions": [
+    "Changed display narration cannot reuse the original storyboard evidence approval",
+    "Unexpected provider-adapter exceptions persist as unknown outcomes and block resume"
+  ],
+  "testProviders": "deterministic injected adapters; protocol checks use mocked HTTP",
+  "remaining": "Live model/account quality evaluation, full accessibility/device audit, narration, rendering and release gates remain pending"
+}

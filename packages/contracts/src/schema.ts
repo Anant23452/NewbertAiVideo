@@ -1257,6 +1257,11 @@ export const contractSchema = {
               "retrievedAt": {
                 "type": "string",
                 "format": "date-time"
+              },
+              "excerpt": {
+                "type": "string",
+                "maxLength": 2500,
+                "description": "Retrieved introductory source excerpt; not an automated fact-check."
               }
             },
             "required": [
@@ -2226,6 +2231,27 @@ export const contractSchema = {
       "required": [
         "items",
         "nextCursor"
+      ]
+    },
+    "StoryboardApprovalRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reviewedClaimIds": {
+          "type": "array",
+          "maxItems": 200,
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "acknowledgedVoiceTerms": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "reviewedClaimIds",
+        "acknowledgedVoiceTerms"
       ]
     }
   }

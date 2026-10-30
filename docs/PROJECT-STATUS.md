@@ -1,6 +1,6 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 30 October 2026. Current milestone: **F5/F6 — projects and local durable processing complete for review**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 30 October 2026. Current milestone: **F7/F8 — source-backed planning and storyboard review complete for local review**. Product stage: feature-by-feature development. Production release: not deployed.
 
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
@@ -22,7 +22,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Product requirements | Working baseline | [PRD V1](PRD-V1.md); refine only through recorded scope decisions |
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
-| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), 41 proposed operations; implemented subset in the F3 and F5/F6 handoffs |
+| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), 43 proposed operations; implemented F3–F8 subset in milestone/API handoffs |
 | Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 28 domain tables on local PostgreSQL, no hosted DB |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
@@ -31,7 +31,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Production implementation | F1–F6 foundations, projects and processing infrastructure complete for review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; no provider stage handlers, external email delivery or Instagram integration |
+| Production implementation | F1–F6 foundations, projects and processing infrastructure complete for review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; bounded planning/discussion handlers and reviewed storyboard approval; no speech/rendering handlers, external email delivery or Instagram integration |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
@@ -51,8 +51,8 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 | F4 | Approved homepage and shared responsive app shell/auth UI | F2,F3 | Complete for review | Next.js/React components, real identity and timezone/password forms, 13 live-browser checks and return-path security test; 1440/768/390/360px geometry; see F4 record |
 | F5 | Projects, library, draft editing and immutable submitted versions | F3,F4 | Complete for review | 7 real-DB cases and connected browser workflow; owner-scoped create/search/archive/restore, conflict-aware drafts and immutable snapshots |
 | F6 | Durable jobs, usage admission, private media and operational controls | F2,F3,F5 | Complete for review — local foundation | 14 real-DB cases; atomic admission, restricted worker, fairness/leases/fencing, bounded recovery, cancellation/retry, quotas, signed private media and operator controls; stage handlers remain F7–F10 |
-| F7 | Topic discussion, evidence retrieval, Gemini scripting | F5,F6 | Not started | Guided/automatic brief; stored source/claim support; no invented citations; quota/provider errors and structured input validation |
-| F8 | Storyboard review, controlled visuals, voice/style selection and approval | F7 | Not started | Supported scene schema; exact-draft approval; automatic mode preserves checks without requiring manual review |
+| F7 | Topic discussion, evidence retrieval, Gemini scripting | F5,F6 | Complete for local review | Queued discussion/planning; retrieved excerpts and claim provenance; bounded Gemini adapter; provider error/uncertainty and call caps; live AI account output evaluation still a release gate |
+| F8 | Storyboard review, controlled visuals, voice/style selection and approval | F7 | Complete for local review | Controlled editable scenes, voice/style choice, evidence review and immutable approved snapshot; automatic application only without unresolved factual flags; narration edits require fresh evidence |
 | F9 | Generated narration, pronunciation mapping and validated alignment | F6,F8 | Not started | Eligible voice/allowance; saved audio and provider identity; Hindi/Hinglish evaluation; actual timing; no blind repeat after uncertain chargeable request |
 | F10 | Motion graphics, captions, rendering and validation | F9 | Not started | Application-owned components, same preview/export scene definitions; cap enforcement; two-line captions; no clipping or arbitrary model code; validated private MP4 |
 | F11 | Ready-video preview/download, version history and revision reuse | F10 | Not started | Exact output/version; signed access; caption export; safe audio reuse fingerprints; last good output survives failed replacement |
@@ -144,4 +144,5 @@ F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 
 - 30 October 2026: F4 complete for review. [Milestone record](milestones/F4-WEB-AUTH.md), [browser results](ui/f4/validation-results.json), responsive screenshots and repeatable tests added. Web on 127.0.0.1:3001; API on 3100; private local PostgreSQL. No cloud deployment, paid generation or external email.
 - 30 October 2026: F5 and F6 delivered together at user request. [F5 projects](milestones/F5-PROJECTS.md), [F6 processing](milestones/F6-PROCESSING.md), [ADR 003](decisions/ADR-003-DURABLE-PROCESSING.md), [API handoff](api/PROJECTS-PROCESSING-F5-F6.md). Seven migrations, 30 newbert tables plus private auth tables; no cloud or paid calls.
 - Validation: 68 automated tests across existing and F2–F6 suites, plus 24 live-browser checks (13 account + 11 project/processing). Production builds and type checks pass; dependency audit reports zero known runtime vulnerabilities. See [combined record](db/f5-f6-validation-results.json). F4 independent QA observations remain recorded separately; this is not a complete accessibility/public-release sign-off.
-- Next after review: F7 topic discussion, evidence retrieval and Gemini scripting, using the new queue. Current planning jobs pause honestly until those stage handlers exist. Voice/video generation and Instagram remain later milestones.
+- 30 October 2026: F7/F8 delivered. [Scope and validation](milestones/F7-F8-PLANNING-STORYBOARD.md): optional queued discussion, retrieved Wikipedia excerpts, bounded Gemini scripting, controlled storyboard editing, voice/style preferences and immutable approved versions. Four forward migrations applied. Nine integration/adapter checks, seven browser checks and 29 project/queue/migration regressions passed; builds/type checks pass. No live AI/speech requests in testing.
+- Next after review: F9 narration/voice eligibility and alignment, then F10 motion rendering. Live account output evaluation and educational-quality gates remain required before pilot; source matching is not semantic fact verification.

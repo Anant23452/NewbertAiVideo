@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-30T12:33:52.396Z",
+  "checks": [
+    "Generated result applies to the real editable storyboard",
+    "Voice and style selection persist with the saved revision",
+    "Approval blocks factual claims that have not been reviewed",
+    "Reviewed evidence produces an exact immutable approval snapshot",
+    "Storyboard fits desktop, tablet and mobile widths",
+    "Editing the saved storyboard invalidates previous approval",
+    "Optional discussion uses queued generation and shows the saved reply"
+  ],
+  "providerMode": "Deterministic test adapters; real database, APIs, worker handler and browser; isolated dynamic ports and copied source app",
+  "externalProviderCalls": 0
+}
