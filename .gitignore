@@ -6,3 +6,7 @@ node_modules/
 artifacts/
 *.log
 test-results/
+.local/
+dist/
+.next/
+*.tsbuildinfo

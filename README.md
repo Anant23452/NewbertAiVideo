@@ -1,6 +1,8 @@
 # Newbert AI Video
 
-Current stage: **F1 — foundation scaffold**, following user approval of the homepage and all product designs. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F1 scope and verification](docs/milestones/F1-FOUNDATION.md).
+Current stage: **F2 — implementation stack and PostgreSQL foundation**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F2 scope and verification](docs/milestones/F2-STACK-DATABASE.md) · [Database setup](packages/database/README.md).
+
+F2 commands: run `npm run db:local` in one terminal, then `npm run db:migrate` and `npm run dev:f2` in another. The TypeScript/Fastify API runs on port 3100. `npm run check:f2`, `npm run build:api`, and `npm run test:f2` verify this milestone. Next.js/React and Better Auth are selected for the coming UI/auth features, not implemented yet.
 
 Run the new, separate foundation with `npm run dev:f1` (port 3100); `npm run check:f1` checks its syntax. It currently exposes health endpoints only. The instructions below refer to the earlier feasibility prototype, whose startup remains unchanged. Production features will be implemented one milestone at a time.
 
