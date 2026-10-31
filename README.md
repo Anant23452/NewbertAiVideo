@@ -1,6 +1,6 @@
 # Newbert AI Video
 
-Current stage: **F7/F8 — discussion, research-backed scripts and storyboard review**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
+Current stage: **F9/F10 — generated narration and validated motion videos**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
 
 Start the local database with `npm run db:local` only if it is not already running. Apply setup with `npm run db:migrate`, `npm run auth:setup` and `npm run worker:setup`. In `apps/api/.env`, set `AUTH_BASE_URL` and `APP_ORIGIN` to `http://127.0.0.1:3001`. Keep all credentials in ignored local files. Run `npm run dev:api`, `npm run dev:worker` and `npm run dev:web` in separate terminals. Open **http://127.0.0.1:3001**. API: port 3100. Production-style local web startup: `npm run build:web`, then `npm run start:web`.
 
@@ -91,3 +91,5 @@ Tests cover language/schema validation, Unicode alignment, invalid timestamps, A
 - [Processing pipeline](docs/VIDEO-PIPELINE-V1.md)
 - [Architecture and implementation status](docs/SYSTEM-ARCHITECTURE-V1.md)
 - [Requirements comparison](docs/PRD-COMPARISON.md)
+
+F9/F10: `npm run speech:preflight` checks free-plan voice access without generating speech. `npm run test:f9` and `npm run test:f9:browser` use isolated accounts and mocked speech. See [pipeline, limits and verification](docs/milestones/F9-F10-NARRATION-RENDERING.md).

@@ -3,6 +3,7 @@ import { setTimeout as delay } from "node:timers/promises";
 import { createRuntimePool } from "../../../packages/database/src/client.js";
 import { LocalMediaStore } from "../../../packages/database/src/media.js";
 import { runPlanning } from "../../api/src/modules/planning/runner.js";
+import {runProduction} from '../../api/src/modules/production/runner.js';
 import {
   claimNext,
   finish,
@@ -32,7 +33,7 @@ try {
   if (!(await new LocalMediaStore().ready()))
     throw new Error("Private media store unavailable.");
   console.log(
-    "Newbert F7/F8 worker ready. Planning calls are bounded; speech and video stages remain disabled.",
+    "Newbert F10 worker ready. Planning, narration and validated video processing are bounded.",
   );
   while (!stopping) {
     try {
@@ -47,6 +48,7 @@ try {
         // call the feasibility prototype from the durable production worker.
         if (!stopping && ["plan", "ideation"].includes(lease.kind))
           await runPlanning(pool, lease, new LocalMediaStore());
+        else if(!stopping&&lease.kind==='produce')await runProduction(pool,lease,new LocalMediaStore());
         else
           await finish(
             pool,

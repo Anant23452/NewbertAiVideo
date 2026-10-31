@@ -64,7 +64,7 @@ function ProjectCards({ items }: { items: Project[] }) {
 export function UsageCard({ usage }: { usage: Usage | null }) {
   const r = usage?.resources.find((r) => r.resource === "generation_count");
   const planning = usage?.resources.find(
-    (r) => r.resource === "provider_credits",
+    (r) => r.resource === "planning_requests",
   );
   if (!r) return null;
   return (

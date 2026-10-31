@@ -19,6 +19,21 @@ const webDir = resolve(".local/f7-browser-web", randomUUID());
 await mkdir(webDir, { recursive: true });
 for (const name of ["app", "components", "lib", "public", "tsconfig.json"])
   await cp(join("apps/web", name), join(webDir, name), { recursive: true });
+await cp(
+  "packages/contracts/src/composition.ts",
+  join(webDir, "lib/composition.ts"),
+);
+const productionSource = await readFile(
+  join(webDir, "components/production.tsx"),
+  "utf8",
+);
+await writeFile(
+  join(webDir, "components/production.tsx"),
+  productionSource.replace(
+    "../../../packages/contracts/src/composition",
+    "../lib/composition",
+  ),
+);
 const config = (await readFile("apps/web/next.config.mjs", "utf8")).replace(
   'process.env.API_INTERNAL_ORIGIN || "http://127.0.0.1:3100"',
   JSON.stringify("http://127.0.0.1:" + apiPort),

@@ -1,3 +1,5 @@
+import { registerProductionRoutes } from "../production/routes.js";
+import { admitProduction, reserveRetryMedia } from "../production/admission.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type { Pool, PoolClient } from "pg";
 import { randomUUID } from "node:crypto";
@@ -100,6 +102,7 @@ export function registerProjectRoutes(
   const params = (r: FastifyRequest) => r.params as Record<string, string>;
   const query = (r: FastifyRequest) => r.query as Record<string, unknown>;
   registerPlanningRoutes(route, media);
+  registerProductionRoutes(route);
   route("GET", "/projects", async (c, r) => {
     const q = query(r),
       { limit, cursor } = pagination(q);
@@ -290,11 +293,7 @@ export function registerProjectRoutes(
               "Acknowledge the processing allowance before submitting.",
             );
           if (b.kind === "produce")
-            throw new DomainError(
-              409,
-              "PRODUCTION_NOT_READY",
-              "Video production is not connected yet. Save your draft or submit it for the planning queue.",
-            );
+            return admitProduction(c, p, d, a, r.body, media);
           if (
             (
               await c.query(
@@ -521,17 +520,18 @@ export function registerProjectRoutes(
               "Resolve the previous provider outcome before retrying.",
             );
           if (
+            row.kind !== "produce" &&
             !(r.body as { allowNewProviderRequest: boolean })
               .allowNewProviderRequest
           )
             throw new DomainError(
               409,
               "RETRY_CONSENT_REQUIRED",
-              "A fresh queue reservation requires explicit retry consent. No provider calls are connected yet.",
+              "A fresh queue reservation requires explicit retry consent.",
             );
           const next = (
             await c.query(
-              `INSERT INTO newbert.generation_jobs(id,workspace_id,project_id,version_id,kind,operation_key,retry_of_job_id) VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+              `INSERT INTO newbert.generation_jobs(id,workspace_id,project_id,version_id,kind,operation_key,retry_of_job_id,provider_binding) VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
               [
                 randomUUID(),
                 a.domain.workspace_id,
@@ -540,10 +540,18 @@ export function registerProjectRoutes(
                 row.kind,
                 randomUUID(),
                 row.id,
+                JSON.stringify(row.provider_binding),
               ],
             )
           ).rows[0]!;
           await reserve(c, a.domain.workspace_id, next.id);
+          if (next.kind === "produce")
+            await reserveRetryMedia(
+              c,
+              next,
+              (r.body as { allowNewProviderRequest: boolean })
+                .allowNewProviderRequest,
+            );
           await emit(c, next, "job.queued");
           return {
             body: job(next),
@@ -572,6 +580,14 @@ export function registerProjectRoutes(
       Number(storage?.limit_units ?? p.storage_bytes_limit),
       Number(p.storage_bytes_limit),
     );
+    const mediaLimits = (
+      await c.query("SELECT * FROM newbert.production_limits WHERE singleton")
+    ).rows[0]!;
+    const mediaBuckets = (
+      await c.query(
+        "SELECT * FROM newbert.usage_buckets WHERE resource IN ('provider_credits','narration_ms','render_ms') AND period_start=date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'",
+      )
+    ).rows;
     const start = new Date();
     start.setUTCHours(0, 0, 0, 0);
     const end = new Date(start.getTime() + 86400000);
@@ -622,7 +638,7 @@ export function registerProjectRoutes(
             resetsAt: null,
           },
           {
-            resource: "provider_credits",
+            resource: "planning_requests",
             limit: 2,
             used: planningUsed,
             reserved: 0,
@@ -630,6 +646,30 @@ export function registerProjectRoutes(
             periodStart: start,
             resetsAt: end,
           },
+          ...["provider_credits", "narration_ms", "render_ms"].map(
+            (resource) => {
+              const b = mediaBuckets.find((b) => b.resource === resource);
+              const limit = Number(
+                b?.limit_units ??
+                  (resource === "provider_credits"
+                    ? mediaLimits.workspace_characters
+                    : resource === "narration_ms"
+                      ? mediaLimits.workspace_narration_ms
+                      : mediaLimits.workspace_render_ms),
+              );
+              const used = Number(b?.used_units ?? 0),
+                reserved = Number(b?.reserved_units ?? 0);
+              return {
+                resource,
+                limit,
+                used,
+                reserved,
+                remaining: Math.max(0, limit - used - reserved),
+                periodStart: start,
+                resetsAt: end,
+              };
+            },
+          ),
         ],
       },
     };

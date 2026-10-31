@@ -905,13 +905,17 @@ export const contractSchema = {
         },
         "acknowledgedUsageTerms": {
           "type": "boolean"
+        },
+        "acknowledgedVoiceTerms": {
+          "type": "boolean",
+          "description": "Explicit non-commercial free-plan voice use, attribution and allowance acknowledgement for production."
         }
       },
       "required": [
         "kind",
         "acknowledgedUsageTerms"
       ],
-      "description": "Freezes the draft matched by If-Match. Guided produce requires scriptApproved=true, valid scenes/evidence and a selected eligible voice. Automatic produce does not require script approval. Consent binds the returned version and selected provider terms; it is not permission for unbounded paid usage."
+      "description": "Submission matched by If-Match. Plan freezes the current draft. Produce pins the exact approved storyboard; guided mode requires scriptApproved=true, while automatic mode performs the same evidence and content checks. Produce requires acknowledgedVoiceTerms=true. Bounded reservations and explicit provider-use consent are required."
     },
     "Job": {
       "type": "object",
@@ -1356,7 +1360,8 @@ export const contractSchema = {
             "narration_ms",
             "render_ms",
             "storage_bytes",
-            "provider_credits"
+            "provider_credits",
+            "planning_requests"
           ]
         },
         "limit": {
@@ -1399,7 +1404,8 @@ export const contractSchema = {
         "remaining",
         "periodStart",
         "resetsAt"
-      ]
+      ],
+      "description": "Resource units: generation_count and planning_requests are requests; provider_credits are submitted speech characters; narration_ms and render_ms are milliseconds; storage_bytes are bytes. Used and reserved amounts are reported separately."
     },
     "Usage": {
       "type": "object",
@@ -2255,4 +2261,4 @@ export const contractSchema = {
       ]
     }
   }
-};
+} as const;

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-30T13:14:49.261Z",
+  "submittedCharacters": 38,
+  "tier": "free",
+  "model": "eleven_multilingual_v2",
+  "commercialUse": "not_permitted",
+  "attributionRequired": true,
+  "validation": {
+    "passed": true,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "narrationDurationMs": 2320,
+    "videoDurationMs": 2330,
+    "decoded": true,
+    "maxCaptionLines": 2,
+    "renderer": "newbert-ass-v1"
+  }
+}

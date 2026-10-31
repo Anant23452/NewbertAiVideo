@@ -22,7 +22,7 @@ import { emit, reserve } from "../processing/queue.js";
 import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
 import { checkScenes } from "./validation.js";
 type Auth = NonNullable<Awaited<ReturnType<typeof current>>>;
-type Register = (
+export type Register = (
   method: "GET" | "POST" | "PATCH",
   path: string,
   work: (c: PoolClient, r: FastifyRequest, a: Auth) => Promise<Result>,
@@ -305,192 +305,39 @@ export function registerPlanningRoutes(
         active(p);
         const d = await findDraft(c, p.id);
         match(r.headers["if-match"], tag("draft", d));
-        checkScenes(d.content);
-        const body = r.body as {
-          reviewedClaimIds?: unknown;
-          acknowledgedVoiceTerms?: unknown;
-        };
-        if (
-          !body ||
-          Object.keys(body).some(
-            (k) => !["reviewedClaimIds", "acknowledgedVoiceTerms"].includes(k),
-          ) ||
-          !Array.isArray(body.reviewedClaimIds) ||
-          body.reviewedClaimIds.length > 200 ||
-          body.reviewedClaimIds.some((v) => typeof v !== "string")
-        )
-          throw new DomainError(
-            422,
-            "INVALID_REVIEW",
-            "Provide reviewed claim IDs.",
-          );
-        if (!d.planning_version_id)
-          throw new DomainError(
-            409,
-            "EVIDENCE_REQUIRED",
-            "Apply a generated storyboard before approving.",
-          );
-        const claims = (
-          await c.query(
-            "SELECT c.*,ARRAY(SELECT source_id FROM newbert.claim_sources WHERE claim_id=c.id) AS sources FROM newbert.claims c WHERE version_id=$1",
-            [d.planning_version_id],
-          )
-        ).rows.filter((c) =>
-          d.content.scenes.some((s: any) => s.claimIds.includes(c.id)),
+        return approveCurrent(
+          c,
+          p,
+          d,
+          a,
+          r.body as {
+            reviewedClaimIds?: unknown;
+            acknowledgedVoiceTerms?: unknown;
+          },
+          media,
         );
-        const known = new Set(claims.map((c) => c.id));
-        const reviewed = new Set(body.reviewedClaimIds);
-        if ([...reviewed].some((v) => !known.has(v)))
-          throw new DomainError(
-            422,
-            "INVALID_REVIEW",
-            "A reviewed claim does not belong to this storyboard.",
-          );
-        const original = (
-          await c.query(
-            "SELECT a.storage_key,a.content_hash FROM newbert.artifacts a WHERE id=$1 AND kind='storyboard' AND storage_status='available' AND validation_status='passed'",
-            [d.planning_artifact_id],
-          )
-        ).rows[0];
-        if (!original)
-          throw new DomainError(
-            409,
-            "EVIDENCE_REQUIRED",
-            "The original storyboard is unavailable.",
-          );
-        const originalBytes = await media.get(original.storage_key);
-        if (
-          createHash("sha256").update(originalBytes).digest("hex") !==
-          original.content_hash
-        )
-          throw new DomainError(
-            422,
-            "INVALID_ARTIFACT",
-            "Original storyboard integrity check failed.",
-          );
-        const plan = JSON.parse(originalBytes.toString());
-        for (const scene of d.content.scenes) {
-          const before = plan.content.scenes.find(
-            (s: any) => s.id === scene.id,
-          );
-          if (
-            !before ||
-            before.spokenNarration !== scene.spokenNarration ||
-            before.displayNarration !== scene.displayNarration ||
-            hash(before.claimIds) !== hash(scene.claimIds)
-          )
-            throw new DomainError(
-              409,
-              "SCRIPT_CHANGED",
-              "Narration changed. Generate and review fresh evidence before approval.",
-            );
-          for (const cid of scene.claimIds)
-            if (!known.has(cid))
-              throw new DomainError(
-                422,
-                "INVALID_CLAIM",
-                "Scene claim references are invalid.",
-              );
-        }
-        if (d.content.scenes.length !== plan.content.scenes.length)
-          throw new DomainError(
-            409,
-            "SCRIPT_CHANGED",
-            "Scene coverage changed. Generate a fresh plan.",
-          );
-        if (
-          claims.some(
-            (c) =>
-              c.blocking &&
-              (c.status === "unsupported" ||
-                !c.sources.length ||
-                (d.content.brief.mode === "automatic" &&
-                  c.status !== "supported") ||
-                (c.status !== "supported" && !reviewed.has(c.id))),
-          )
-        )
-          throw new DomainError(
-            409,
-            "EVIDENCE_REVIEW_REQUIRED",
-            "Unsupported claims block approval. Review factual source support; automatic mode cannot bypass review flags.",
-          );
-        if (
-          !d.content.voice ||
-          d.content.voice.providerConnectionId !== null ||
-          body.acknowledgedVoiceTerms !== true
-        )
-          throw new DomainError(
-            409,
-            "VOICE_REQUIRED",
-            "Select a voice and acknowledge provider terms. Narration generation remains a later step.",
-          );
-        const configured = await voiceCatalog();
-        if (
-          !configured.items.some(
-            (v) => v.catalogVoiceId === d.content.voice.catalogVoiceId,
-          )
-        )
-          throw new DomainError(
-            409,
-            "VOICE_UNAVAILABLE",
-            "Select a voice from the available catalog.",
-          );
-        const approvalId = randomUUID();
-        const previous = (
-          await c.query(
-            "SELECT id,version_id,draft_revision,content_hash FROM newbert.storyboard_approvals WHERE project_id=$1 AND draft_revision=$2",
-            [p.id, d.revision],
-          )
-        ).rows[0];
-        if (previous)
-          return { body: { approval: previous, productionAvailable: false } };
-        const approvedVersion = randomUUID();
-        await c.query(
-          `INSERT INTO newbert.project_versions(id,workspace_id,project_id,version_number,source_draft_revision,schema_version,input_snapshot,input_hash,mode,approval_actor_id,approved_at) VALUES($1,$2,$3,$4,$5,1,$6,$7,$8,$9,now())`,
-          [
-            approvedVersion,
-            a.domain.workspace_id,
-            p.id,
-            p.next_version_number,
-            d.revision,
-            JSON.stringify(d.content),
-            hash(d.content),
-            d.content.brief.mode,
-            a.domain.user_id,
-          ],
-        );
-        await c.query(
-          "UPDATE newbert.projects SET next_version_number=next_version_number+1,revision=revision+1,updated_at=now() WHERE id=$1",
-          [p.id],
-        );
-        await c.query(
-          "INSERT INTO newbert.storyboard_approvals(id,workspace_id,project_id,draft_revision,content_hash,actor_id,reviewed_claim_ids,version_id,planning_version_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",
-          [
-            approvalId,
-            a.domain.workspace_id,
-            p.id,
-            d.revision,
-            hash(d.content),
-            a.domain.user_id,
-            [...reviewed],
-            approvedVersion,
-            d.planning_version_id,
-          ],
-        );
-        const saved = (
-          await c.query(
-            "SELECT id,version_id,draft_revision,content_hash FROM newbert.storyboard_approvals WHERE project_id=$1 AND draft_revision=$2",
-            [p.id, d.revision],
-          )
-        ).rows[0];
-        return {
-          body: { approval: saved, productionAvailable: false },
-          status: 200,
-        };
       },
     ),
   );
-  route("GET", "/voices", async (_c,r) => {const q=r.query as Record<string,unknown>;if(q.providerConnectionId!==undefined)throw new DomainError(409,'PERSONAL_VOICES_NOT_READY','Personal provider connections are not available yet; no fallback connection was used.');if(q.language!==undefined&&!['Hindi','Hinglish'].includes(String(q.language)))throw new DomainError(422,'UNSUPPORTED_LANGUAGE','Choose Hindi or Hinglish.');return {body:await voiceCatalog()};});
+  route("GET", "/voices", async (_c, r) => {
+    const q = r.query as Record<string, unknown>;
+    if (q.providerConnectionId !== undefined)
+      throw new DomainError(
+        409,
+        "PERSONAL_VOICES_NOT_READY",
+        "Personal provider connections are not available yet; no fallback connection was used.",
+      );
+    if (
+      q.language !== undefined &&
+      !["Hindi", "Hinglish"].includes(String(q.language))
+    )
+      throw new DomainError(
+        422,
+        "UNSUPPORTED_LANGUAGE",
+        "Choose Hindi or Hinglish.",
+      );
+    return { body: await voiceCatalog() };
+  });
 }
 // Catalog reads do not synthesize speech. Only the operator's existing voice is
 // selectable here; entitlement/commercial rights remain explicit and unverified.
@@ -518,5 +365,187 @@ export async function voiceCatalog() {
         ]
       : [],
     nextCursor: null,
+  };
+}
+
+export async function approveCurrent(
+  c: PoolClient,
+  p: any,
+  d: any,
+  a: Auth,
+  body: { reviewedClaimIds?: unknown; acknowledgedVoiceTerms?: unknown },
+  media = new LocalMediaStore(),
+): Promise<Result> {
+  checkScenes(d.content);
+
+  if (
+    !body ||
+    Object.keys(body).some(
+      (k) => !["reviewedClaimIds", "acknowledgedVoiceTerms"].includes(k),
+    ) ||
+    !Array.isArray(body.reviewedClaimIds) ||
+    body.reviewedClaimIds.length > 200 ||
+    body.reviewedClaimIds.some((v) => typeof v !== "string")
+  )
+    throw new DomainError(422, "INVALID_REVIEW", "Provide reviewed claim IDs.");
+  if (!d.planning_version_id)
+    throw new DomainError(
+      409,
+      "EVIDENCE_REQUIRED",
+      "Apply a generated storyboard before approving.",
+    );
+  const claims = (
+    await c.query(
+      "SELECT c.*,ARRAY(SELECT source_id FROM newbert.claim_sources WHERE claim_id=c.id) AS sources FROM newbert.claims c WHERE version_id=$1",
+      [d.planning_version_id],
+    )
+  ).rows.filter((c) =>
+    d.content.scenes.some((s: any) => s.claimIds.includes(c.id)),
+  );
+  const known = new Set(claims.map((c) => c.id));
+  const reviewed = new Set(body.reviewedClaimIds);
+  if ([...reviewed].some((v) => !known.has(v)))
+    throw new DomainError(
+      422,
+      "INVALID_REVIEW",
+      "A reviewed claim does not belong to this storyboard.",
+    );
+  const original = (
+    await c.query(
+      "SELECT a.storage_key,a.content_hash FROM newbert.artifacts a WHERE id=$1 AND kind='storyboard' AND storage_status='available' AND validation_status='passed'",
+      [d.planning_artifact_id],
+    )
+  ).rows[0];
+  if (!original)
+    throw new DomainError(
+      409,
+      "EVIDENCE_REQUIRED",
+      "The original storyboard is unavailable.",
+    );
+  const originalBytes = await media.get(original.storage_key);
+  if (
+    createHash("sha256").update(originalBytes).digest("hex") !==
+    original.content_hash
+  )
+    throw new DomainError(
+      422,
+      "INVALID_ARTIFACT",
+      "Original storyboard integrity check failed.",
+    );
+  const plan = JSON.parse(originalBytes.toString());
+  for (const scene of d.content.scenes) {
+    const before = plan.content.scenes.find((s: any) => s.id === scene.id);
+    if (
+      !before ||
+      before.spokenNarration !== scene.spokenNarration ||
+      before.displayNarration !== scene.displayNarration ||
+      hash(before.claimIds) !== hash(scene.claimIds)
+    )
+      throw new DomainError(
+        409,
+        "SCRIPT_CHANGED",
+        "Narration changed. Generate and review fresh evidence before approval.",
+      );
+    for (const cid of scene.claimIds)
+      if (!known.has(cid))
+        throw new DomainError(
+          422,
+          "INVALID_CLAIM",
+          "Scene claim references are invalid.",
+        );
+  }
+  if (d.content.scenes.length !== plan.content.scenes.length)
+    throw new DomainError(
+      409,
+      "SCRIPT_CHANGED",
+      "Scene coverage changed. Generate a fresh plan.",
+    );
+  if (
+    claims.some(
+      (c) =>
+        c.blocking &&
+        (c.status === "unsupported" ||
+          !c.sources.length ||
+          (d.content.brief.mode === "automatic" && c.status !== "supported") ||
+          (c.status !== "supported" && !reviewed.has(c.id))),
+    )
+  )
+    throw new DomainError(
+      409,
+      "EVIDENCE_REVIEW_REQUIRED",
+      "Unsupported claims block approval. Review factual source support; automatic mode cannot bypass review flags.",
+    );
+  if (
+    !d.content.voice ||
+    d.content.voice.providerConnectionId !== null ||
+    body.acknowledgedVoiceTerms !== true
+  )
+    throw new DomainError(
+      409,
+      "VOICE_REQUIRED",
+      "Select a voice and acknowledge provider terms. Narration generation remains a later step.",
+    );
+  const configured = await voiceCatalog();
+  if (
+    !configured.items.some(
+      (v) => v.catalogVoiceId === d.content.voice.catalogVoiceId,
+    )
+  )
+    throw new DomainError(
+      409,
+      "VOICE_UNAVAILABLE",
+      "Select a voice from the available catalog.",
+    );
+  const approvalId = randomUUID();
+  const previous = (
+    await c.query(
+      "SELECT id,version_id,draft_revision,content_hash FROM newbert.storyboard_approvals WHERE project_id=$1 AND draft_revision=$2",
+      [p.id, d.revision],
+    )
+  ).rows[0];
+  if (previous)
+    return { body: { approval: previous, productionAvailable: true } };
+  const approvedVersion = randomUUID();
+  await c.query(
+    `INSERT INTO newbert.project_versions(id,workspace_id,project_id,version_number,source_draft_revision,schema_version,input_snapshot,input_hash,mode,approval_actor_id,approved_at) VALUES($1,$2,$3,$4,$5,1,$6,$7,$8,$9,now())`,
+    [
+      approvedVersion,
+      a.domain.workspace_id,
+      p.id,
+      p.next_version_number,
+      d.revision,
+      JSON.stringify(d.content),
+      hash(d.content),
+      d.content.brief.mode,
+      a.domain.user_id,
+    ],
+  );
+  await c.query(
+    "UPDATE newbert.projects SET next_version_number=next_version_number+1,revision=revision+1,updated_at=now() WHERE id=$1",
+    [p.id],
+  );
+  await c.query(
+    "INSERT INTO newbert.storyboard_approvals(id,workspace_id,project_id,draft_revision,content_hash,actor_id,reviewed_claim_ids,version_id,planning_version_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)",
+    [
+      approvalId,
+      a.domain.workspace_id,
+      p.id,
+      d.revision,
+      hash(d.content),
+      a.domain.user_id,
+      [...reviewed],
+      approvedVersion,
+      d.planning_version_id,
+    ],
+  );
+  const saved = (
+    await c.query(
+      "SELECT id,version_id,draft_revision,content_hash FROM newbert.storyboard_approvals WHERE project_id=$1 AND draft_revision=$2",
+      [p.id, d.revision],
+    )
+  ).rows[0];
+  return {
+    body: { approval: saved, productionAvailable: true },
+    status: 200,
   };
 }

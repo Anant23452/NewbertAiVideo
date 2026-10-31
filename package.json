@@ -47,7 +47,12 @@
     "test:f7": "tsx --test --test-concurrency=1 tests/f7/*.test.ts",
     "test:f8": "npm run test:f7",
     "test:f7:browser": "tsx tests/f7/browser.ts",
-    "test:f8:browser": "npm run test:f7:browser"
+    "test:f8:browser": "npm run test:f7:browser",
+    "test:f9": "tsx --test --test-concurrency=1 tests/f9/*.test.ts",
+    "test:f10": "npm run test:f9",
+    "test:f9:browser": "tsx tests/f9/browser.ts",
+    "test:f10:browser": "npm run test:f9:browser",
+    "speech:preflight": "tsx scripts/speech-preflight.ts"
   },
   "dependencies": {
     "better-auth": "1.7.14",

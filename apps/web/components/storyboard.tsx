@@ -1,4 +1,5 @@
 "use client";
+import { ProductionPanel } from "./production";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "../lib/api";
@@ -213,6 +214,7 @@ export function Storyboard({ projectId }: { projectId: string }) {
           {notice}
         </p>
       )}
+      <ProductionPanel projectId={projectId} saved={saved} dirty={!!dirty} />
       <div className="story-actions">
         <button
           className="secondary"
@@ -415,6 +417,84 @@ export function Storyboard({ projectId }: { projectId: string }) {
                   }
                 />
               </label>
+              <section className="pronunciation-editor">
+                <h3>Pronunciation</h3>
+                <p className="fine">
+                  Keep caption spelling while changing how a name or
+                  abbreviation is spoken. Save and re-approve changes.
+                </p>
+                {content.pronunciationOverrides.map((o: any, i: number) => (
+                  <div key={i}>
+                    <label>
+                      Display text
+                      <input
+                        maxLength={200}
+                        value={o.displayText}
+                        onChange={(e) =>
+                          setContent({
+                            ...content,
+                            pronunciationOverrides:
+                              content.pronunciationOverrides.map(
+                                (x: any, n: number) =>
+                                  n === i
+                                    ? { ...x, displayText: e.target.value }
+                                    : x,
+                              ),
+                          })
+                        }
+                      />
+                    </label>
+                    <label>
+                      Spoken form
+                      <input
+                        maxLength={200}
+                        value={o.spokenText}
+                        onChange={(e) =>
+                          setContent({
+                            ...content,
+                            pronunciationOverrides:
+                              content.pronunciationOverrides.map(
+                                (x: any, n: number) =>
+                                  n === i
+                                    ? { ...x, spokenText: e.target.value }
+                                    : x,
+                              ),
+                          })
+                        }
+                      />
+                    </label>
+                    <button
+                      className="secondary small"
+                      onClick={() =>
+                        setContent({
+                          ...content,
+                          pronunciationOverrides:
+                            content.pronunciationOverrides.filter(
+                              (_: any, n: number) => n !== i,
+                            ),
+                        })
+                      }
+                    >
+                      Remove pronunciation
+                    </button>
+                  </div>
+                ))}
+                <button
+                  className="secondary small"
+                  disabled={content.pronunciationOverrides.length >= 10}
+                  onClick={() =>
+                    setContent({
+                      ...content,
+                      pronunciationOverrides: [
+                        ...content.pronunciationOverrides,
+                        { displayText: "", spokenText: "" },
+                      ],
+                    })
+                  }
+                >
+                  Add pronunciation override
+                </button>
+              </section>
               <button
                 className="full"
                 disabled={busy || !dirty}

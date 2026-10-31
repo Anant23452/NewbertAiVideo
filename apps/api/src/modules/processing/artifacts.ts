@@ -24,6 +24,8 @@ export async function saveArtifact(
     mimeType: string;
     bytes: Buffer;
     inputFingerprint: string;
+    durationMs?:number;
+    metadata?:Record<string,unknown>;
   },
   afterInsert?: (client: PoolClient, artifactId: string) => Promise<void>,
 ) {
@@ -65,7 +67,7 @@ export async function saveArtifact(
     )
       throw new Error("STORAGE_CAPACITY");
     await c.query(
-      `INSERT INTO newbert.artifacts(id,workspace_id,project_id,version_id,job_id,kind,storage_key,content_hash,input_fingerprint,mime_type,byte_size,validation_status) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'passed')`,
+      `INSERT INTO newbert.artifacts(id,workspace_id,project_id,version_id,job_id,kind,storage_key,content_hash,input_fingerprint,mime_type,byte_size,validation_status,duration_ms,metadata) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,'passed',$12,$13)`,
       [
         artifactId,
         lease.workspace_id,
@@ -78,6 +80,8 @@ export async function saveArtifact(
         input.inputFingerprint,
         input.mimeType,
         object.byteSize,
+        input.durationMs??null,
+        JSON.stringify(input.metadata??{}),
       ],
     );
     await c.query("SELECT newbert.charge_storage($1)", [artifactId]);

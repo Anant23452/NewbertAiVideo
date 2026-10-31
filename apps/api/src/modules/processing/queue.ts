@@ -84,7 +84,7 @@ export async function settle(
 ) {
   const reservations = (
     await c.query(
-      "SELECT * FROM newbert.usage_reservations WHERE job_id=$1 AND status='reserved' ORDER BY id FOR UPDATE",
+      "SELECT r.* FROM newbert.usage_reservations r JOIN newbert.usage_buckets b ON b.id=r.bucket_id WHERE r.job_id=$1 AND r.status='reserved' AND b.resource='generation_count' ORDER BY r.id FOR UPDATE OF r",
       [row.id],
     )
   ).rows;
@@ -104,6 +104,7 @@ export async function settle(
       );
   }
   await c.query("SELECT newbert.settle_platform($1,$2)", [row.id, actual]);
+  if(row.kind==='produce')for(const resource of ['provider_credits','narration_ms','render_ms'])await c.query('SELECT newbert.settle_media_resource($1,$2,0)',[row.id,resource]);
 }
 async function transaction<T>(pool: Pool, work: (c: PoolClient) => Promise<T>) {
   const c = await pool.connect();

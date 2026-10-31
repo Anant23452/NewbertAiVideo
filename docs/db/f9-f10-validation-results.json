@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-30T13:43:50.215Z",
+  "milestones": [
+    "F9",
+    "F10"
+  ],
+  "automated": {
+    "f9": 14,
+    "f7": 9,
+    "f6": 15,
+    "f5": 7,
+    "f2": 7,
+    "total": 52,
+    "failures": 0
+  },
+  "browser": {
+    "checks": 10,
+    "failures": 0,
+    "externalProviderCalls": 0,
+    "evidence": "docs/ui/f9-f10/validation-results.json"
+  },
+  "liveSpeech": {
+    "submittedCharacters": 38,
+    "evidence": "docs/db/f9-live-smoke.json"
+  },
+  "checks": {
+    "backendBuild": "passed",
+    "webBuild": "passed",
+    "webTypecheck": "passed",
+    "openApi": "valid",
+    "localReadiness": "200: database, private media, worker and identity connected",
+    "dummyLogin": "passed",
+    "usageResources": "generation_count, storage_bytes, planning_requests, provider_credits, narration_ms, render_ms"
+  },
+  "commitReview": {
+    "date": "2026-10-31",
+    "coverage": "Complete 14-case speech/render suite, including custom-storage migration regression",
+    "fixes": ["Submission-time duplicate speech guard", "Persisted reuse-only speech authorization", "Preserve custom storage policy limits"],
+    "liveProviderCalls": 0
+  },
+  "scope": "Local review; representative listening, educational quality and deployment gates remain pending"
+}
