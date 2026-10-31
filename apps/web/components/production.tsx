@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { api } from "../lib/api";
 import { mutate, draftTag, jobTag, errorText } from "../lib/projects";
 import { useWorkspace } from "./workspace";
@@ -145,6 +146,12 @@ export function ProductionPanel({
         <div>
           <span className="tag">VOICE → MOTION → VALIDATED VIDEO</span>
           <h3>Produce this storyboard</h3>
+          <Link
+            className="button secondary"
+            href={"/app/projects/" + projectId + "/preview"}
+          >
+            Saved videos & history
+          </Link>
         </div>
         {status?.ready && <span className="pill ready-badge">Ready</span>}
       </div>

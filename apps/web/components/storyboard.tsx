@@ -165,6 +165,13 @@ export function Storyboard({ projectId }: { projectId: string }) {
   function updateScene(index: number, field: string, value: unknown) {
     setContent((old: any) => ({
       ...old,
+      ...(field === "spokenNarration"
+        ? {
+            captionOverrides: old.captionOverrides.filter(
+              (o: any) => o.sceneId !== old.scenes[index].id,
+            ),
+          }
+        : {}),
       scenes: old.scenes.map((s: any, i: number) =>
         i !== index
           ? s
@@ -300,6 +307,46 @@ export function Storyboard({ projectId }: { projectId: string }) {
                     }
                   />
                 </label>
+                <label>
+                  Scene {index + 1} caption presentation
+                  <textarea
+                    rows={2}
+                    maxLength={200}
+                    value={
+                      content.captionOverrides.find(
+                        (o: any) => o.sceneId === scene.id,
+                      )?.displayText ?? scene.displayNarration
+                    }
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      setContent((c: any) => ({
+                        ...c,
+                        captionOverrides: [
+                          ...c.captionOverrides.filter(
+                            (o: any) => o.sceneId !== scene.id,
+                          ),
+                          ...(text === scene.displayNarration
+                            ? []
+                            : [
+                                {
+                                  sceneId: scene.id,
+                                  spokenSpan: {
+                                    start: 0,
+                                    end: [...scene.spokenNarration].length,
+                                  },
+                                  displayText: text,
+                                },
+                              ]),
+                        ],
+                      }));
+                    }}
+                  />
+                </label>
+                <p className="fine">
+                  Caption-only changes support punctuation and capitalization.
+                  Keep the same words and spacing between words; change
+                  narration for wording or pronunciation.
+                </p>
                 <p className="fine">
                   Narration edits require a fresh evidence plan before approval.
                   No audio timing is claimed in this preview.

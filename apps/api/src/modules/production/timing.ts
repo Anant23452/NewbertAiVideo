@@ -20,8 +20,36 @@ export function speechManifest(
   identity: { voiceId: string; model: string; credentialVersion: string },
 ): Manifest {
   checkScenes(content);
-  if (content.captionOverrides.length)
-    throw new ProductionError("CAPTION_OVERRIDE_NOT_SUPPORTED");
+  const captionEdits = new Map<string, string>();
+  const normalized = (text: string) => {
+    const word = text.normalize("NFC").toLocaleLowerCase("hi");
+    // Decimal/grouping punctuation can change a number's value. Interior
+    // punctuation also distinguishes words such as "we're" and "were".
+    if (/\p{N}/u.test(word)) return word;
+    return word.replace(/^[.,!?।॥“”‘’"'():;]+|[.,!?।॥“”‘’"'():;]+$/gu, "");
+  };
+  for (const edit of content.captionOverrides) {
+    const scene = content.scenes.find((x: any) => x.id === edit.sceneId);
+    if (
+      !scene ||
+      captionEdits.has(edit.sceneId) ||
+      edit.spokenSpan.start !== 0 ||
+      edit.spokenSpan.end !== [...scene.spokenNarration].length ||
+      !edit.displayText.trim()
+    )
+      throw new ProductionError("INVALID_CAPTION_OVERRIDE");
+    const original = scene.displayNarration.trim().split(/\s+/u),
+      corrected = edit.displayText.trim().split(/\s+/u);
+    if (
+      original.length !== corrected.length ||
+      original.some(
+        (w: string, i: number) => normalized(w) !== normalized(corrected[i]!),
+      )
+    )
+      throw new ProductionError("CAPTION_MEANING_CHANGED");
+    for (const word of corrected) wrapText(word, 624, 32, 2);
+    captionEdits.set(scene.id, edit.displayText.trim());
+  }
   const overrides = content.pronunciationOverrides;
   if (
     overrides.length > 10 ||
@@ -89,7 +117,13 @@ export function speechManifest(
       i += n;
     }
     const spoken = chars.join("");
-    const result = { ...scene, spoken, offset, map };
+    const result = {
+      ...scene,
+      captionDisplay: captionEdits.get(scene.id),
+      spoken,
+      offset,
+      map,
+    };
     offset += chars.length + (index < content.scenes.length - 1 ? 2 : 0);
     return result;
   });
@@ -184,6 +218,12 @@ export function align(manifest: Manifest, alignment: any, duration: number) {
         end: ends[scene.offset + indices.at(-1)]!,
       };
     };
+    if (scene.captionDisplay) {
+      const corrected = scene.captionDisplay.split(/\s+/u);
+      words.forEach((word: any, i: number) => {
+        word.text = corrected[i];
+      });
+    }
     const captions: any[] = [];
     for (let i = 0; i < words.length; ) {
       const group = [words[i++]];

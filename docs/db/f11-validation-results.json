@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-31T04:40:28.684Z",
+  "milestone": "F11",
+  "integrationCases": {
+    "f11": 4,
+    "f9f10Regression": 14,
+    "total": 18,
+    "failed": 0
+  },
+  "browser": {
+    "passed": 16,
+    "failed": 0,
+    "evidence": "docs/ui/f11/validation-results.json",
+    "externalProviderCalls": 0
+  },
+  "checks": {
+    "backendBuild": "passed",
+    "webBuild": "passed",
+    "webTypecheck": "passed",
+    "openApi": "valid",
+    "localReadiness": "200",
+    "dummyLogin": "200",
+    "outputHistoryApi": "200",
+    "historyPage": "200"
+  },
+  "newMigrations": 0,
+  "commitReview": "Caption-only changes preserve numeric tokens and interior punctuation; decimal-value and contraction changes are rejected by regression tests.",
+  "limitations": "Caption-only presentation edits are limited to punctuation and capitalization; spelling/wording revisions require the narration/evidence approval flow. Local review only."
+}

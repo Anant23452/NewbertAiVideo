@@ -14,7 +14,7 @@ Turn a topic into a Hindi or Hinglish educational video—with reviewed scripts,
 
 ![Newbert project library with its dark interface, violet accents, and private project cards](docs/ui/f5-f6/library-desktop.png)
 
-> **Current stage: F9/F10 — narration and motion rendering.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
+> **Current stage: F11 — saved videos, downloads, and safe revisions.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
 
 ## How it works
 
@@ -62,8 +62,9 @@ These are screenshots from the local application’s browser checks. Test accoun
 | Rendering | Shared scene operations for browser SVG preview and FFmpeg/libass export; 720 × 1280 H.264/AAC at 24 fps |
 | Processing | Durable PostgreSQL jobs, leases, fencing, cancellation, reservations, request caps, and safe narration reuse |
 | Media | Private storage, integrity checks, session-bound access links, and authenticated ranged playback |
+| Saved videos | Exact-version history, MP4/VTT downloads, playback-link refresh, and conflict-aware draft restoration |
 
-**Next:** output history/download and revision workflows, personal provider connections, then Instagram authorization and publishing. See the [complete delivery backlog](docs/PROJECT-STATUS.md).
+**Next:** personal provider connections, then Instagram authorization and publishing. See the [complete delivery backlog](docs/PROJECT-STATUS.md).
 
 ## Run locally
 
@@ -169,7 +170,7 @@ Additional suites: `test:f2`, `test:f3`, `test:f4`, `test:f5`, `test:f6`, and `t
 - This is a local pilot, with no public deployment or Instagram posting.
 - Rendering currently caps narration at 120 seconds and spoken text at 1,600 characters. Daily workspace/global limits also apply.
 - The initial research adapter retrieves bounded English/Hindi Wikipedia introductions; it is not an expert fact-checker.
-- Caption overrides, richer output history/download workflows, and personal provider connections remain later milestones.
+- Caption-only edits support limited punctuation/capitalization corrections. Numeric or wording changes need the narration/evidence approval flow; personal provider connections remain a later milestone.
 - Representative listening, educational accuracy, accessibility/device testing, retention/backups, and production operations remain release gates.
 
 ## Project documents
@@ -197,3 +198,5 @@ npm test
 Choose **Explore a sample workspace** for an estimated-timing preview without provider keys. Reproducing live samples with `npm run prototype` requires root `.env` configuration and can consume provider allowance. Earlier samples include a roughly 21-second binary explanation and a 39-second spotlight-effect video; these establish feasibility, not broad educational or voice-quality validation.
 
 </details>
+
+Open **Saved videos & history** from a project or storyboard. Run `npm run test:f11` and `npm run test:f11:browser` for isolated verification. [Delivery and caption limits](docs/milestones/F11-OUTPUT-HISTORY-REVISIONS.md).

@@ -3,7 +3,7 @@
   "info": {
     "title": "Newbert AI Video — V1 proposed API",
     "version": "1.0.0-draft",
-    "description": "V1 design contract with implemented F3–F10 local endpoints. See milestone handoffs for working boundaries. Publishing remains a later milestone."
+    "description": "V1 design contract with implemented F3–F11 local endpoints. See milestone handoffs for working boundaries. Publishing remains a later milestone."
   },
   "servers": [
     {
@@ -4196,6 +4196,137 @@
           }
         }
       }
+    },
+    "/projects/{projectId}/outputs": {
+      "get": {
+        "tags": [
+          "Media"
+        ],
+        "operationId": "listProducedOutputs",
+        "summary": "List owned validated successful video outputs, newest first",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Exact-version private output references; access grants requested separately",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutputPage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "Project unavailable"
+          }
+        }
+      }
+    },
+    "/versions/{versionId}/restore": {
+      "post": {
+        "tags": [
+          "Creation"
+        ],
+        "operationId": "restoreVersionDraft",
+        "summary": "Copy an owned immutable version into its project draft without changing saved outputs",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "versionId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "header",
+            "name": "If-Match",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Current draft ETag"
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VersionRestore"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated draft; fresh approval required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Draft"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Version unavailable"
+          },
+          "409": {
+            "description": "Archived project or idempotency conflict"
+          },
+          "412": {
+            "description": "Current draft changed"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6777,6 +6908,112 @@
         "required": [
           "reviewedClaimIds",
           "acknowledgedVoiceTerms"
+        ]
+      },
+      "VersionRestore": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acknowledgedDraftReplacement": {
+            "const": true
+          }
+        },
+        "required": [
+          "acknowledgedDraftReplacement"
+        ]
+      },
+      "ProducedOutput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versionNumber": {
+            "type": "integer"
+          },
+          "jobId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "jobState": {
+            "const": "succeeded"
+          },
+          "durationMs": {
+            "type": "integer"
+          },
+          "bytes": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "captionsId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "latestGood": {
+            "type": "boolean"
+          },
+          "nonCommercial": {
+            "const": true
+          },
+          "attributionRequired": {
+            "const": true
+          }
+        },
+        "required": [
+          "id",
+          "versionId",
+          "versionNumber",
+          "jobId",
+          "jobState",
+          "durationMs",
+          "bytes",
+          "createdAt",
+          "captionsId",
+          "latestGood",
+          "nonCommercial",
+          "attributionRequired"
+        ]
+      },
+      "OutputPage": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProducedOutput"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "latestOutputArtifactId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "latestOutputArtifactId"
         ]
       }
     }

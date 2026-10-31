@@ -193,7 +193,7 @@ export function registerMediaRoutes(
         .header("Accept-Ranges", "bytes")
         .header(
           "Content-Disposition",
-          `${q.purpose === "download" ? "attachment" : "inline"}; filename="${artifactId}.${a.mime_type === "video/mp4" ? "mp4" : a.mime_type === "audio/mpeg" ? "mp3" : "bin"}"`,
+          `${q.purpose === "download" ? "attachment" : "inline"}; filename="${artifactId}.${a.mime_type === "video/mp4" ? "mp4" : a.mime_type === "audio/mpeg" ? "mp3" : a.mime_type === "text/vtt" ? "vtt" : a.mime_type === "application/json" ? "json" : "bin"}"`,
         );
       if (r.headers.range) {
         const m = /^bytes=(\d+)-(\d*)$/.exec(r.headers.range);

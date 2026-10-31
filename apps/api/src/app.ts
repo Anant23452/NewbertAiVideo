@@ -14,7 +14,7 @@ export function buildApi(options: { database?: pg.Pool; identity?: IdentityRunti
   app.addHook('onRequest', async (request, reply) => {
     reply.header('X-Request-Id', request.id).header('Cache-Control', 'no-store').header('X-Content-Type-Options', 'nosniff');
   });
-  app.get('/health/live', async () => ({ service: 'newbert-api', milestone: options.identity ? 'F10' : 'F2', status: 'alive' }));
+  app.get('/health/live', async () => ({ service: 'newbert-api', milestone: options.identity ? 'F11' : 'F2', status: 'alive' }));
   app.get('/health/ready', async (_request, reply) => {
     const database = await databaseState(options.database);
     let worker=false;try{worker=Boolean((await options.database?.query("SELECT EXISTS(SELECT 1 FROM newbert.worker_heartbeats WHERE online AND last_seen>now()-interval '10 seconds') AS connected"))?.rows[0]?.connected);}catch{}

@@ -2259,6 +2259,112 @@ export const contractSchema = {
         "reviewedClaimIds",
         "acknowledgedVoiceTerms"
       ]
+    },
+    "VersionRestore": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "acknowledgedDraftReplacement": {
+          "const": true
+        }
+      },
+      "required": [
+        "acknowledgedDraftReplacement"
+      ]
+    },
+    "ProducedOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "versionId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "versionNumber": {
+          "type": "integer"
+        },
+        "jobId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "jobState": {
+          "const": "succeeded"
+        },
+        "durationMs": {
+          "type": "integer"
+        },
+        "bytes": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "captionsId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uuid"
+        },
+        "latestGood": {
+          "type": "boolean"
+        },
+        "nonCommercial": {
+          "const": true
+        },
+        "attributionRequired": {
+          "const": true
+        }
+      },
+      "required": [
+        "id",
+        "versionId",
+        "versionNumber",
+        "jobId",
+        "jobState",
+        "durationMs",
+        "bytes",
+        "createdAt",
+        "captionsId",
+        "latestGood",
+        "nonCommercial",
+        "attributionRequired"
+      ]
+    },
+    "OutputPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ProducedOutput"
+          }
+        },
+        "nextCursor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "latestOutputArtifactId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uuid"
+        }
+      },
+      "required": [
+        "items",
+        "nextCursor",
+        "latestOutputArtifactId"
+      ]
     }
   }
 } as const;

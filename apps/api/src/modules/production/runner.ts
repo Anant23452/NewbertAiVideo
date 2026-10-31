@@ -180,10 +180,14 @@ export async function runProduction(
           await c.query("SELECT pg_advisory_xact_lock(1793318409)");
           // Another queued job may have submitted identical speech since this
           // job was admitted. Recheck under the submission lock before charging.
-          if ((await c.query(
-            "SELECT 1 FROM newbert.job_attempts WHERE workspace_id=$1 AND stage='generating_voice' AND request_fingerprint=$2 AND state IN ('prepared','submitted','unknown') LIMIT 1",
-            [lease.workspace_id, manifest.fingerprint],
-          )).rowCount)
+          if (
+            (
+              await c.query(
+                "SELECT 1 FROM newbert.job_attempts WHERE workspace_id=$1 AND stage='generating_voice' AND request_fingerprint=$2 AND state IN ('prepared','submitted','unknown') LIMIT 1",
+                [lease.workspace_id, manifest.fingerprint],
+              )
+            ).rowCount
+          )
             throw new ProductionError("NARRATION_REQUEST_UNRESOLVED");
           const calls = (
             await c.query(
@@ -386,7 +390,7 @@ export async function runProduction(
       captions
         .map(
           (c: any, i: number) =>
-            `${i + 1}\n${timestamp(c.start)} --> ${timestamp(c.end)}\n${c.text.replaceAll("-->", "→")}\n`,
+            `${i + 1}\n${timestamp(c.start)} --> ${timestamp(c.end)}\n${c.text.replaceAll("-->", "→").replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")}\n`,
         )
         .join("\n");
     const captionsId = await saveArtifact(pool, media, lease, {

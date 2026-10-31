@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-31T04:46:04.751Z",
+  "checks": [
+    "Generated result applies to the real editable storyboard",
+    "Voice and style selection persist with the saved revision",
+    "Approval blocks factual claims that have not been reviewed",
+    "Reviewed evidence produces an exact immutable approval snapshot",
+    "Approved storyboard produces a real validated private video",
+    "Signed native playback exposes the measured validated MP4",
+    "Shared timed composition preview loads with saved narration",
+    "Production controls and previews fit desktop/tablet/mobile",
+    "Copied media URLs still require the owning authenticated session",
+    "No real speech request was used by the browser suite",
+    "Saved output opens with its exact version and measured video",
+    "Private MP4 and VTT downloads use the correct file formats",
+    "Refreshing playback does not make another speech request",
+    "Selected output plays a decoded video frame",
+    "History and playback fit desktop, tablet and mobile",
+    "Restoring a snapshot creates a draft requiring review while preserving saved output"
+  ],
+  "providerMode": "Deterministic test adapters; real database, APIs, worker handler and browser; isolated dynamic ports and copied source app",
+  "externalProviderCalls": 0
+}

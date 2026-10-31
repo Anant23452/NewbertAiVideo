@@ -712,6 +712,12 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
           </form>
           <section className="panel version-panel">
             <h3>Submitted versions</h3>
+            <Link
+              className="button secondary"
+              href={"/app/projects/" + projectId + "/preview"}
+            >
+              Saved videos & history
+            </Link>
             <p className="muted">
               Each queue submission freezes its own exact input. Editing the
               draft never changes an earlier version.

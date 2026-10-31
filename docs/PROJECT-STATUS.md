@@ -1,6 +1,6 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 30 October 2026. Current milestone: **F9/F10 — narration and motion rendering complete for local review**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 31 October 2026. Current milestone: **F11 — output history, downloads and revisions complete for local review**. Product stage: feature-by-feature development. Production release: not deployed.
 
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
@@ -22,7 +22,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Product requirements | Working baseline | [PRD V1](PRD-V1.md); refine only through recorded scope decisions |
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
-| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F10 subset in milestone/API handoffs |
+| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F11 subset in milestone/API handoffs |
 | Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 34 current domain tables on local PostgreSQL, no hosted DB |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
@@ -31,7 +31,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Production implementation | F1–F10 foundations, projects, planning and media pipeline complete for local review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; bounded planning/discussion handlers and reviewed storyboard approval; bounded narration and validated private motion rendering; external email delivery and Instagram integration remain pending |
+| Production implementation | F1–F11 foundations, projects, planning and media pipeline complete for local review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; bounded planning/discussion handlers and reviewed storyboard approval; bounded narration and validated private motion rendering; external email delivery and Instagram integration remain pending |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
@@ -55,7 +55,7 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 | F8 | Storyboard review, controlled visuals, voice/style selection and approval | F7 | Complete for local review | Controlled editable scenes, voice/style choice, evidence review and immutable approved snapshot; automatic application only without unresolved factual flags; narration edits require fresh evidence |
 | F9 | Generated narration, pronunciation mapping and validated alignment | F6,F8 | Complete for local review | Eligible voice/allowance; saved audio and provider identity; Hindi/Hinglish evaluation; actual timing; no blind repeat after uncertain chargeable request |
 | F10 | Motion graphics, captions, rendering and validation | F9 | Complete for local review | Application-owned components, same preview/export scene definitions; cap enforcement; two-line captions; no clipping or arbitrary model code; validated private MP4 |
-| F11 | Ready-video preview/download, version history and revision reuse | F10 | Not started | Exact output/version; signed access; caption export; safe audio reuse fingerprints; last good output survives failed replacement |
+| F11 | Ready-video preview/download, version history and revision reuse | F10 | Complete for local review | Exact output/version; signed access; caption export; safe audio reuse fingerprints; last good output survives failed replacement |
 | F12 | Personal speech-provider connections and usage/settings UI | F3,F6,F9 | Not started | Encrypted secret references, masked reads, permission checks, revoke/replace, no silent fallback; real used/reserved/remaining allowance |
 | F13 | Official Instagram authorization and account lifecycle | F3,F6 | Not started | Developer-app requirements verified; single account; session-bound one-use OAuth state; encrypted tokens; reconnect/disconnect pauses deliveries |
 | F14 | Exact-version publishing, scheduling, cancellation and reconciliation | F11,F13 | Not started | Explicit authorization; timezone validation; durable due scan; bounded late policy; no blind duplicate post on unknown outcome |
@@ -148,3 +148,6 @@ F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 
 - F9/F10 delivered: [implementation and limits](milestones/F9-F10-NARRATION-RENDERING.md). Fourteen applied migrations, 34 domain tables. Next after review: F11 preview/history and revision workflows. Live account output evaluation and educational-quality gates remain required before pilot; source matching is not semantic fact verification.
 
 - F9/F10 verification: 52 automated cases and 10 connected browser checks passed after commit review; backend/web builds passed. Earlier delivery verification included OpenAPI validation, a 38-character free-tier sample, and local readiness/login checks. Commit review used mocked providers and fixed duplicate speech, reuse-only authorization and custom storage limits. [Verification record](db/f9-f10-validation-results.json). Free speech output requires noncommercial use and attribution; broader Hindi/Hinglish listening and educational evaluation remain pilot gates.
+
+- 31 October 2026: F11 delivered for local review. [Output history and revisions](milestones/F11-OUTPUT-HISTORY-REVISIONS.md): exact-version playback, private MP4/VTT downloads, paginated saved outputs, conflict-aware snapshot restoration and bounded caption presentation corrections. Last good output survives failed replacement; verified narration reuse avoids new speech. No migration or live API-credit spending. Next after review: F12 personal provider connections and settings.
+- F11 verification: 18 integration/regression cases and 16 connected browser checks passed; API/web builds, OpenAPI validation, live readiness, dummy login and history endpoints passed. [Results](db/f11-validation-results.json). Local app is running on port 3001.
