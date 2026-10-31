@@ -1,95 +1,199 @@
+<div align="center">
+
 # Newbert AI Video
 
-Current stage: **F9/F10 — generated narration and validated motion videos**. [Project status and complete backlog](docs/PROJECT-STATUS.md) · [F5 projects](docs/milestones/F5-PROJECTS.md) · [F6 processing](docs/milestones/F6-PROCESSING.md) · [Database setup](packages/database/README.md).
+**A little curiosity. A clearer explanation.**
 
-Start the local database with `npm run db:local` only if it is not already running. Apply setup with `npm run db:migrate`, `npm run auth:setup` and `npm run worker:setup`. In `apps/api/.env`, set `AUTH_BASE_URL` and `APP_ORIGIN` to `http://127.0.0.1:3001`. Keep all credentials in ignored local files. Run `npm run dev:api`, `npm run dev:worker` and `npm run dev:web` in separate terminals. Open **http://127.0.0.1:3001**. API: port 3100. Production-style local web startup: `npm run build:web`, then `npm run start:web`.
+Turn a topic into a Hindi or Hinglish educational video—with reviewed scripts, generated narration, and meaningful motion graphics.
 
-Development email is local-only. After registration: `npm run auth:mail -- your@email.example --open`. After requesting password recovery: add `--reset`. This opens the latest matching local link without printing its token. Omit `--open` to locate its private JSON file. SMTP is required for real external delivery.
+[See the studio](#see-the-studio) · [Run locally](#run-locally) · [How it works](#how-it-works) · [Project roadmap](docs/PROJECT-STATUS.md)
 
-Verify with `npm run check:web`, `npm run build:web`, `npm run test:f4` and, with the local servers running, `npm run test:f4:browser`. Browser checks create a unique local test account; no provider calls or external email. On Windows, installed Edge is used. Else install Playwright Chromium or set `PLAYWRIGHT_EXECUTABLE_PATH`.
+**Hindi + Hinglish** · **Private workspaces** · **Narration-driven motion**
 
-Project creation, search, archive/restore, drafts, version snapshots and queue controls are connected. Planning/discussion now use the configured Gemini account behind capped requests. Use the project’s storyboard review screen to apply results, review evidence, choose a voice/style and approve the exact saved snapshot. Speech/video generation remain later features. Account quotas and billing apply; no paid search or model fallback is used. `npm run processing -- status/pause/resume` controls local admission/workers. `npm run media:audit` inspects aged orphan objects without deleting anything by default.
+</div>
 
-F7/F8 checks: `npm run test:f7` and `npm run test:f7:browser` use isolated databases and deterministic provider adapters, without live AI credits. See [delivery record](docs/milestones/F7-F8-PLANNING-STORYBOARD.md).
+![Newbert project library with its dark interface, violet accents, and private project cards](docs/ui/f5-f6/library-desktop.png)
 
-F5/F6 checks: `npm run test:f5`, `npm run test:f6` and, with the three servers running, `npm run test:f5:browser`. The older feasibility prototype and its commands below remain separate.
+> **Current stage: F9/F10 — narration and motion rendering.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
 
-Run the new, separate foundation with `npm run dev:f1` (port 3100); `npm run check:f1` checks its syntax. It currently exposes health endpoints only. The instructions below refer to the earlier feasibility prototype, whose startup remains unchanged. Production features will be implemented one milestone at a time.
+## How it works
 
-A working local development foundation for a Hindi/Hinglish educational motion graphic video studio.
+1. **Start with an idea.** Save your topic, language, audience, and preferred style in a private project.
+2. **Explore and plan.** Discuss an angle or queue a source-backed storyboard using Gemini.
+3. **Review the explanation.** Edit scenes, inspect source excerpts, choose a voice, and approve the exact saved revision.
+4. **Give it a voice.** Generate timestamped ElevenLabs narration after explicit allowance and usage acknowledgement.
+5. **Bring it into motion.** Preview an audio-timed composition and play a validated, private MP4.
 
-## Run
+Source quotations establish provenance, not automatic factual correctness. Unsupported claims block approval, and factual explanations still need human review.
 
-Requires Node.js 22 or later.
+## See the studio
+
+These are screenshots from the local application’s browser checks. Test accounts and deterministic provider responses are used for verification; the video checks use the real local encoder.
+
+| Shape the explanation | Voice, motion, and playback |
+| --- | --- |
+| [![Storyboard editing, voice selection, and evidence review](docs/ui/f7-f8/storyboard-desktop.png)](docs/ui/f7-f8/storyboard-desktop.png) | [![Validated video playback beside the narration-timed composition preview](docs/ui/f9-f10/production-desktop.png)](docs/ui/f9-f10/production-desktop.png) |
+| Review scenes, narration, visual labels, and evidence. | Generate narration, render motion, and preview private media. |
+
+<details>
+<summary><strong>Explore the homepage and mobile views</strong></summary>
+
+### Homepage
+
+![Newbert homepage with topic entry and early educational video examples](docs/ui/f4/home-desktop.png)
+
+### Mobile experience
+
+| Project library | Storyboard review |
+| --- | --- |
+| [![Mobile project library](docs/ui/f5-f6/library-mobile.png)](docs/ui/f5-f6/library-mobile.png) | [![Mobile storyboard and evidence review](docs/ui/f7-f8/storyboard-mobile.png)](docs/ui/f7-f8/storyboard-mobile.png) |
+
+</details>
+
+## What works today
+
+| Area | Local implementation |
+| --- | --- |
+| Accounts | Registration, email verification, sign-in, recovery, logout, and one private workspace per account |
+| Projects | Creation, title search, archive/restore, structured drafts, revision checks, and immutable submitted versions |
+| Planning | Queued idea discussion, bounded Gemini requests, retrieved Wikipedia excerpts, and claim/source references |
+| Storyboards | Controlled scenes, Hindi/Hinglish narration, voice/style selection, and exact-revision approval |
+| Narration | Free-plan eligibility checks, explicit speech consent, pronunciation mapping, and validated timestamps |
+| Rendering | Shared scene operations for browser SVG preview and FFmpeg/libass export; 720 × 1280 H.264/AAC at 24 fps |
+| Processing | Durable PostgreSQL jobs, leases, fencing, cancellation, reservations, request caps, and safe narration reuse |
+| Media | Private storage, integrity checks, session-bound access links, and authenticated ranged playback |
+
+**Next:** output history/download and revision workflows, personal provider connections, then Instagram authorization and publishing. See the [complete delivery backlog](docs/PROJECT-STATUS.md).
+
+## Run locally
+
+### Requirements
+
+- Node.js **22+** and npm.
+- Windows includes a local PostgreSQL launcher; no Docker or system PostgreSQL installation is required for that path.
+- FFmpeg is supplied by `ffmpeg-static`. Hindi rendering on Windows requires `C:/Windows/Fonts/Nirmala.ttc`.
+- Other environments need compatible PostgreSQL tooling and an installed Devanagari font; see the [database guide](packages/database/README.md) and [rendering requirements](docs/milestones/F9-F10-NARRATION-RENDERING.md).
+
+### 1. Install and start PostgreSQL
 
 ```powershell
 npm install
-npm run dev
+npm run db:local
 ```
 
-Open [http://127.0.0.1:3000](http://127.0.0.1:3000). Choose **Explore a sample workspace** to try the storyboard and motion preview without keys. Sample previews contain no generated speech and use estimated timing; they are not finished videos.
+Keep that terminal open. If the local database is already running, use it instead of starting another instance on the same port.
 
-## What works
+### 2. Prepare the database and local logins
 
-- Local account creation/sign-in and individual project ownership.
-- Persistent projects, storyboard editing, autosave, stale-edit conflict rejection, and JSON export.
-- Shared scene definitions for browser motion previews and CPU-rendered MP4 compositions.
-- Server-side Gemini storyboard adapter and ElevenLabs narration-with-timestamps adapter.
-- Audio measurement, alignment validation, phrase captions, and 1080 × 1920 H.264/AAC MP4 rendering.
-- Persisted job state, duplicate active-job prevention, cancellation at stage boundaries, and restart failure reporting.
-- Reuse of saved narration when retrying an unchanged project with the same voice.
-- Private audio/video endpoints with ownership checks and range requests.
+In another terminal, from the repository root:
 
-Live Gemini script generation and ElevenLabs timestamped narration have been exercised with account credentials. A 20.61-second Hinglish prototype was rendered locally. Voice pronunciation and educational quality still need human review.
+```powershell
+npm run db:migrate
+npm run auth:setup
+npm run worker:setup
+```
 
-## Reproduce the first prototype
+Setup generates local credentials in ignored files. Confirm these values in `apps/api/.env`:
 
-Run `npm run prototype` after configuring `.env`. This saves the storyboard, narration, speech timestamps, timeline, and MP4 in `artifacts/first-prototype/`. It reuses saved narration on a render retry. Start with a new output folder for a different script. ElevenLabs keys need Voices: Read and Text to Speech permissions. Default account voices are preferred; a successful request confirms access, while usage consumes the account's allowance. Free-plan publishing and commercial-use terms still apply.
+```dotenv
+AUTH_BASE_URL=http://127.0.0.1:3001
+APP_ORIGIN=http://127.0.0.1:3001
+```
 
-The prototype uses Gemini 3.1 Flash-Lite. Its first live run used the default Roger voice with Eleven Multilingual v2; this is a technical sample, and Hinglish pronunciation needs listening review.
+### 3. Start the studio
 
-## Connect providers
+Run each command in its own terminal:
 
-Copy `.env.example` to `.env`, then set:
+```powershell
+npm run dev:api
+npm run dev:worker
+npm run dev:web
+```
 
-- `GEMINI_API_KEY` and optionally `GEMINI_MODEL`.
-- `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, and optionally `ELEVENLABS_MODEL`.
+Open **[http://127.0.0.1:3001](http://127.0.0.1:3001)**. The API listens on port **3100**.
 
-Restart the server. Create a registered account to run live requests; anonymous sample accounts cannot consume provider credits. Generated storyboards require factual review because source retrieval is not implemented. Review the script, choose a voice, and confirm it before generating narration and video.
+For local registration and recovery, email is saved privately on disk. After requesting a link:
 
-The installed `ffmpeg-static` dependency supplies the encoder. Alternatively, set `FFMPEG_PATH` to a compatible executable with the `ass` subtitle filter and H.264/AAC support. Hindi typography depends on an installed Devanagari-capable font; the current renderer requests Nirmala UI, available on typical Windows installations. Other deployment environments need an appropriate bundled licensed font and visual verification.
+```powershell
+npm run auth:mail -- your@email.example --open
+# Password recovery:
+npm run auth:mail -- your@email.example --reset --open
+```
 
-No provider key is sent to browser code. Do not paste secrets into topics or narration. API calls may incur charges under your provider plan; free ElevenLabs output should not be assumed to have commercial-use rights.
+This opens the matching local link without printing its token. External inbox delivery requires SMTP configuration.
+
+### 4. Connect generation providers
+
+Configure named server-side settings in `apps/api/.env`; the generation adapters also support their named values in the ignored root `.env`:
+
+```dotenv
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.1-flash-lite
+ELEVENLABS_API_KEY=
+ELEVENLABS_VOICE_ID=
+ELEVENLABS_MODEL=eleven_multilingual_v2
+```
+
+Restart the API and worker after changing configuration. Keep keys out of source control, topics, and narration. Without provider configuration, account/project work still runs and generation pauses safely.
+
+Provider quotas and billing apply. The current speech path checks free-plan eligibility, rejects paid overages, and requires noncommercial-use/attribution acknowledgement. It does not silently switch providers or repeat an uncertain chargeable request.
+
+## Stack and layout
+
+| Layer | Technology / location |
+| --- | --- |
+| Web | Next.js, React, TypeScript — `apps/web/` |
+| API and identity | Fastify, Better Auth — `apps/api/` |
+| Worker | Durable polling and stage handlers — `apps/worker/` |
+| Data | PostgreSQL, `pg`, ordered SQL migrations — `packages/database/` |
+| Shared composition | Controlled scene operations — `packages/contracts/src/composition.ts` |
+| Video | FFmpeg/libass, H.264/AAC, measured speech alignment |
+
+## Verification
+
+```powershell
+npm run check:f5
+npm run check:web
+npm run build:api
+npm run build:web
+npm run test:f9
+npm run test:f9:browser
+```
+
+The speech/render test suite uses disposable local databases, mocked speech, and the real encoder. The isolated browser suite also uses deterministic provider responses. The latest [F9/F10 review](docs/db/f9-f10-validation-results.json) records **52 automated cases and 10 browser checks** across narration/rendering and related regressions.
+
+Additional suites: `test:f2`, `test:f3`, `test:f4`, `test:f5`, `test:f6`, and `test:f7`. `npm test` covers the earlier feasibility prototype. The opt-in `tests/f9/live-smoke.ts` consumes speech credits and is excluded from routine test commands.
 
 ## Current boundaries
 
-This is **not the completed public V1**:
+- This is a local pilot, with no public deployment or Instagram posting.
+- Rendering currently caps narration at 120 seconds and spoken text at 1,600 characters. Daily workspace/global limits also apply.
+- The initial research adapter retrieves bounded English/Hindi Wikipedia introductions; it is not an expert fact-checker.
+- Caption overrides, richer output history/download workflows, and personal provider connections remain later milestones.
+- Representative listening, educational accuracy, accessibility/device testing, retention/backups, and production operations remain release gates.
 
-- Local JSON persistence is single-process and not a replacement for a deployed transactional database.
-- Authentication is a development implementation with password hashing and HTTP-only sessions; email verification, password recovery, managed authentication, and deployment hardening remain pending.
-- Instagram connection, publishing, and scheduling are not implemented; the interface states this explicitly.
-- Research/source retrieval, free built-in narration, conversational revisions, a complete animation vocabulary, automatic publishing mode, and personal provider-key settings remain pending.
-- The present reviewed generation path is the first pipeline slice. It does not yet provide the PRD's unattended mode.
-- Job processing is single-worker FIFO. It survives browser closure, but server interruption marks in-flight jobs failed rather than automatically repeating potentially charged provider work.
-- The pilot uses a simple daily cap per operation (three storyboard jobs and three video jobs by default), not the final duration-based reservation ledger, fairness policy, or platform-wide spending control. Failed attempts currently count toward the request cap. Limits reset at UTC midnight.
-- This renderer is an initial FFmpeg-based feasibility implementation, not the proposed Remotion stack. Browser and export consume shared scene data; exact font rasterization and caption baseline parity still need visual tuning.
-- Output checks decode the result and check basic integrity. Full automated layout checks, word-level speech completeness evaluation, provider alignment fallback, and 20-topic quality review remain pending.
-- Store artifacts under `.data/`; keep the application bound to localhost for development. Cloud hosting has not been configured.
+## Project documents
 
-## Validation
+- [Status and feature backlog](docs/PROJECT-STATUS.md)
+- [Product requirements](docs/PRD-V1.md)
+- [Stack decision](docs/decisions/ADR-001-IMPLEMENTATION-STACK.md)
+- [Database setup and migrations](packages/database/README.md)
+- [Planning and storyboard delivery](docs/milestones/F7-F8-PLANNING-STORYBOARD.md)
+- [Narration, rendering, limits, and verification](docs/milestones/F9-F10-NARRATION-RENDERING.md)
+- [API contract](docs/api/openapi-v1.json)
+
+<details>
+<summary><strong>Earlier feasibility prototype</strong></summary>
+
+The original `server.mjs`, `lib/`, and `public/` implementation remains a separate reference. Its local JSON store and development authentication are not the PostgreSQL/Better Auth studio described above.
 
 ```powershell
+npm run dev
+# Opens the older prototype on http://127.0.0.1:3000
 npm run check
 npm test
 ```
 
-Tests cover language/schema validation, Unicode alignment, invalid timestamps, ASS text escaping, account isolation, CSRF checks, stale revisions, persistence, logout, duplicate active jobs, and a real FFmpeg encode/decode. No live paid API call is required by tests.
+Choose **Explore a sample workspace** for an estimated-timing preview without provider keys. Reproducing live samples with `npm run prototype` requires root `.env` configuration and can consume provider allowance. Earlier samples include a roughly 21-second binary explanation and a 39-second spotlight-effect video; these establish feasibility, not broad educational or voice-quality validation.
 
-## Documents
-
-- [Product requirements](docs/PRD-V1.md)
-- [Processing pipeline](docs/VIDEO-PIPELINE-V1.md)
-- [Architecture and implementation status](docs/SYSTEM-ARCHITECTURE-V1.md)
-- [Requirements comparison](docs/PRD-COMPARISON.md)
-
-F9/F10: `npm run speech:preflight` checks free-plan voice access without generating speech. `npm run test:f9` and `npm run test:f9:browser` use isolated accounts and mocked speech. See [pipeline, limits and verification](docs/milestones/F9-F10-NARRATION-RENDERING.md).
+</details>
