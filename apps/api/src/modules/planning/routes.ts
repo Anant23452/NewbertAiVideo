@@ -19,7 +19,7 @@ import {
   type Result,
 } from "../projects/core.js";
 import { emit, reserve } from "../processing/queue.js";
-import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import { LocalMediaStore, type MediaStore } from "../../../../../packages/database/src/media.js";
 import { checkScenes } from "./validation.js";
 type Auth = NonNullable<Awaited<ReturnType<typeof current>>>;
 export type Register = (
@@ -30,7 +30,7 @@ export type Register = (
 ) => void;
 export function registerPlanningRoutes(
   route: Register,
-  media = new LocalMediaStore(),
+  media: MediaStore = new LocalMediaStore(),
 ) {
   const param = (r: FastifyRequest) => r.params as Record<string, string>;
   route("GET", "/projects/:projectId/messages", async (c, r) => {
@@ -374,7 +374,7 @@ export async function approveCurrent(
   d: any,
   a: Auth,
   body: { reviewedClaimIds?: unknown; acknowledgedVoiceTerms?: unknown },
-  media = new LocalMediaStore(),
+  media: MediaStore = new LocalMediaStore(),
 ): Promise<Result> {
   checkScenes(d.content);
 

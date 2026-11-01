@@ -33,14 +33,14 @@ import {
 } from "./core.js";
 import { emit, policy, reserve, settle } from "../processing/queue.js";
 import { registerPlanningRoutes } from "../planning/routes.js";
-import type { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../../../packages/database/src/media.js";
 
 type Auth = NonNullable<Awaited<ReturnType<typeof current>>>;
 export function registerProjectRoutes(
   app: FastifyInstance,
   database: Pool,
   identity: IdentityRuntime,
-  media?: LocalMediaStore,
+  media?: MediaStore,
 ) {
   app.addSchema(contractSchema);
   function route(

@@ -60,7 +60,9 @@
     "test:f13": "tsx --test --test-concurrency=1 tests/f13/*.test.ts",
     "test:f13:browser": "tsx tests/f13/browser.ts",
     "instagram:setup": "node scripts/instagram/setup.mjs",
-    "instagram:check": "tsx --env-file-if-exists=apps/api/.env scripts/instagram/check.ts"
+    "instagram:check": "tsx --env-file-if-exists=apps/api/.env scripts/instagram/check.ts",
+    "test:studio:browser": "tsx tests/studio/browser.ts",
+    "test:storage": "tsx --test tests/storage/supabase.test.ts"
   },
   "dependencies": {
     "better-auth": "1.7.14",

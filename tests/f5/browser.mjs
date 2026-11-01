@@ -109,7 +109,7 @@ try {
     "Conflict keeps second-tab edits and never overwrites the saved winner",
   );
   await page.getByRole("checkbox").check();
-  await page.getByRole("button", { name: "Submit saved brief" }).click();
+  await page.getByRole("button", { name: "Generate storyboard" }).click();
   await page.locator(".job-item .pill").filter({ hasText: "paused" }).waitFor();
   await page
     .getByText("Waiting for the scripting stage to be connected.", {

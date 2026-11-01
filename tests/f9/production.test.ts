@@ -603,3 +603,5 @@ test("stale approval and exhausted media admission cannot create an orphan job o
   s.etag = String(changed.headers.etag);
   assert.equal((await submit(s)).statusCode, 409);
 });
+
+test('caption emphasis is centered, enlarged and tied to measured words; light scenes preserve contrast',()=>{const c=content(),m=speechManifest(c,speechConfig()),timed=align(m,response(m.text).alignment,3.03);const ops=sceneOps(timed.timeline[0],0,'#A18BFF','dark_light');const caption=ops.find(o=>o.centered);assert(caption);assert.equal(caption.x+caption.w/2,360);assert.equal(caption.size,40);assert(caption.words?.length);assert(caption.words![0]!.end>caption.words![0]!.start);const dark=ops.find(o=>o.w===720&&o.h===1280),light=sceneOps(timed.timeline[0],1,'#A18BFF','dark_light').find(o=>o.w===720&&o.h===1280);assert.notEqual(dark?.color,light?.color);const svg=frameSvg(timed.timeline,caption.words![0]!.start+0.01,'#A18BFF','dark_light');assert(svg.includes('text-anchor="middle"'));assert(svg.includes('#7DE5E0'));});

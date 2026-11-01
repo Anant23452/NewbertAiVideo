@@ -11,18 +11,19 @@ import {
 import { identityDatabaseState } from "./modules/identity/service.js";
 import { registerProjectRoutes } from "./modules/projects/routes.js";
 import { registerMediaRoutes } from "./modules/processing/media-routes.js";
-import { LocalMediaStore } from "../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../packages/database/src/media.js";
+import { createMediaStore } from "../../../packages/database/src/supabase-media.js";
 
 export function buildApi(
   options: {
     database?: pg.Pool;
     identity?: IdentityRuntime;
-    media?: LocalMediaStore;
+    media?: MediaStore;
     instagramProvider?: InstagramProvider;
   } = {},
 ) {
   const media = options.identity
-    ? (options.media ?? new LocalMediaStore())
+    ? (options.media ?? createMediaStore())
     : undefined;
   const app = Fastify({
     logger: false,

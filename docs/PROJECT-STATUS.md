@@ -2,6 +2,43 @@
 
 Updated: 1 November 2026. Current focus: **core topic-to-video workflow; Instagram deferred until generation is working for the user**. Product stage: feature-by-feature development. Production release: not deployed.
 
+## Start here — current work and completion order
+
+This document is the delivery tracker. Update the milestone status, open checklist and verification evidence after each feature or scope change. A locally tested feature is not the same as a deployed, user-accepted feature.
+
+**Completed locally:** F1–F12, the F13 connection lifecycle with mocked Meta responses, the simplified signed-in project/video homepage, and renderer v2 with larger centered highlighted subtitles and dark/light scenes. The real Gemini repair produced a saved three-scene Hinglish storyboard. It has not yet been applied and approved for a new end-to-end user video. Earlier feasibility videos and automated test outputs do not complete that acceptance step.
+
+Follow this order; do not start Instagram publishing ahead of the video workflow:
+
+| Order | Remaining work | Completion evidence |
+|---|---|---|
+| 1 — next | Review the saved Gemini result, choose **Use generated storyboard**, inspect the explanation/evidence, select the voice, save and approve the revision | User-reviewed narration and an approved exact storyboard version |
+| 2 | Generate a real ElevenLabs narration and a validated video from that revision, within the available allowance | Saved audio/alignment and playable private MP4; record actual duration, usage and any pause/error |
+| 3 | Review the result on Home and in project history, including reload, subtitles, downloads, dark/light contrast and highlighted-word timing | User accepts the real video and can find/play it after signing in again; fix issues before cloud work |
+| 4 | Choose the pilot storage/hosting plan and implement a private object-storage adapter, hosted PostgreSQL, reachable API and separate CPU rendering worker | Agreed budget/limits; private playback, migration and restart/persistence checks pass on the selected hosts |
+| 5 | Deploy the frontend with the hosted services and complete generation-pilot release checks below | A fresh account can complete the workflow without depending on this laptop; monitoring, cleanup and restore checks pass |
+| 6 — deferred | Complete live Meta configuration and single-account authorization (F13), then build scheduling/publishing/reconciliation (F14) | Real connection acceptance first; explicit posting authorization and duplicate-safe delivery tests before release |
+
+### Open checklist for the next sessions
+
+- [ ] Complete the real reviewed topic → storyboard → voice → video acceptance run; record the result here.
+- [ ] Collect feedback on narration, motion relevance, centered highlighted subtitles and the dark/light style; fix observed problems.
+- [ ] Check that provider failures, exhausted allowances and paused jobs give clear recovery steps without duplicate speech charges.
+- [ ] Evaluate at least 20 Hindi/Hinglish educational topics and assess explanation, pronunciation, timing and visual quality.
+- [ ] Select storage and compute using measured render time, file size, retention and monthly budget; free storage does not supply free rendering compute.
+- [x] Connect private Supabase media storage and verify live upload/authenticated full and ranged playback.
+- [ ] Complete cloud retention/cleanup, any legacy-media migration, hosted database/API/worker, secrets, fonts and frontend configuration.
+- [ ] Complete the security, accessibility, cleanup, backup/restore and operational gates in section 6 before a public pilot.
+- [ ] Resume live Instagram setup and F14 only after the generation workflow is accepted.
+
+**Current hosting boundary:** web/API/PostgreSQL/rendering remain local; new private media uses Supabase, with local fallback for older objects. No hosted API or worker is connected. Deploying only the frontend to Vercel does not deploy these dependencies. See [workflow and hosting](SIMPLE-WORKFLOW-AND-HOSTING.md) and [current generation steps](CORE-VIDEO-WORKFLOW.md).
+
+**Supabase preparation (1 November):** user requested connection to their existing project. Dashboard control is blocked by a window-capture/helper failure; no remote connection or migration completed. The local Better Auth `auth` schema must be separated from Supabase's managed schema, the loopback-only migration tooling needs a reviewed hosted path, and private media needs a storage adapter. Track these gates in the [Supabase connection plan](SUPABASE-CONNECTION-PLAN.md).
+
+**Supabase storage verification (1 November):** saved server credentials passed a read-only bucket check (HTTP 200); the configured bucket exists and is private. No secrets were displayed. Application uploads still use local storage; adapter implementation and upload/playback tests are next. No database migration or data upload occurred.
+
+**Supabase integration (1 November, supersedes preparation notes):** API and worker now write new artifacts to the actual configured private bucket `NewbertAiVideo`. A synthetic MP4 passed live fenced upload, byte-identical download, HTTP 206 playback and anonymous/cross-workspace rejection in an isolated test DB. Local services restarted; API readiness HTTP 200. No AI credits spent, user projects changed, old files deleted or DB migrated. [Integration and remaining gates](SUPABASE-CONNECTION-PLAN.md), [live evidence](storage/supabase-validation.json).
+
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
 ## 1. Confirmed product scope
@@ -23,7 +60,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
 | API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F12 subset in milestone/API handoffs |
-| Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 34 current domain tables on local PostgreSQL, no hosted DB |
+| Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 15 applied migrations and 35 domain tables on local PostgreSQL, no hosted DB |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
 | Video feasibility | Two local examples | Binary ~21s and psychology spotlight effect ~39s; listening/educational evaluation still required |
@@ -31,7 +68,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Production implementation | F1–F11 foundations, projects, planning and media pipeline complete for local review | TypeScript/Fastify, local PostgreSQL, auth and own-workspace endpoints; real projects/version history, durable worker, usage and private local media; bounded planning/discussion handlers and reviewed storyboard approval; bounded narration and validated private motion rendering; external email delivery and Instagram integration remain pending |
+| Application implementation | F1–F12 and studio refinements complete for local review; F13 local only | TypeScript/Fastify, PostgreSQL, identity/private workspaces, projects/history, durable jobs, usage/settings, Gemini planning and reviewed approval, generated narration and validated motion rendering; Home playback and saved subtitles. External email delivery, live Instagram acceptance and public hosting remain pending |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
@@ -57,11 +94,11 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 | F10 | Motion graphics, captions, rendering and validation | F9 | Complete for local review | Application-owned components, same preview/export scene definitions; cap enforcement; two-line captions; no clipping or arbitrary model code; validated private MP4 |
 | F11 | Ready-video preview/download, version history and revision reuse | F10 | Complete for local review | Exact output/version; signed access; caption export; safe audio reuse fingerprints; last good output survives failed replacement |
 | F12 | Platform-generated voice status and usage/settings UI | F3,F6,F9 | Complete for local review — scope revised by user | Configured voice needs no recording/key setup; real used/reserved/remaining allowance, UTC reset, recent usage and honest capacity/error states |
-| F13 | Official Instagram authorization and account lifecycle | F3,F6 | Local implementation; live acceptance pending | Developer-app requirements verified; single account; session-bound one-use OAuth state; encrypted tokens; reconnect/disconnect pauses deliveries |
-| F14 | Exact-version publishing, scheduling, cancellation and reconciliation | F11,F13 | Not started | Explicit authorization; timezone validation; durable due scan; bounded late policy; no blind duplicate post on unknown outcome |
-| F15 | Pilot readiness, deployment and monitored release | All release features | Not started | Security/failure/restore checks; budget-approved hosting; eval set; observability; external approvals and documented release boundaries |
+| F13 | Official Instagram authorization and account lifecycle | F3,F6 | Local implementation tested; live setup deferred by user | Mocked-provider checks pass; real app credentials/account authorization still required; single account, session-bound state, encrypted tokens and disconnect lifecycle |
+| F14 | Exact-version publishing, scheduling, cancellation and reconciliation | F11,F13 | Not started; deferred until video acceptance | Explicit authorization; timezone validation; durable due scan; bounded late policy; no blind duplicate post on unknown outcome |
+| F15 | Pilot readiness, deployment and monitored release | Generation pilot: F1–F12; full V1 also F13,F14 | Partial local verification; cloud/release work outstanding | Private cloud storage, hosted DB/API/worker, frontend deployment, security/failure/restore checks, budget-approved hosting, eval set and observability; distinguish generation pilot from full V1 |
 
-Operator-configured narration remains the V1 approach. On 31 October the user narrowed F12 to usage/settings; optional personal keys are deferred. F13 preparation may proceed earlier once developer-account choices are available, but publishing must not ship before its dependencies. F4/F5/F6 milestones may be subdivided into smaller reviewed changes without changing their acceptance gates.
+Operator-configured narration remains the V1 approach. On 31 October the user narrowed F12 to usage/settings; optional personal keys are deferred. On 1 November the user prioritized video generation and deferred live Instagram setup. Follow the completion order above; historical “next” entries in the change log describe the plan at that time. F4/F5/F6 milestones may be subdivided into smaller reviewed changes without changing their acceptance gates.
 
 ## 5. Remaining decisions, resolved just before their feature
 
@@ -73,12 +110,14 @@ Operator-configured narration remains the V1 approach. On 31 October the user na
 | Object storage, secret encryption/vault and email transport | F3/F6/F12 | Local adapters first; hosting selection later; no plaintext personal secrets in DB/browser |
 | Research adapter and evidence policy | F7 | Verify source retrieval/cost; unsupported material claims block or require revision |
 | Narration voice/model/plan rights | F9 | Evaluate Hindi/Hinglish, terms, actual account quota; no silent paid substitution |
-| Renderer, fonts, license suitability and CPU budget | F10 | Benchmark controlled compositions; prototype FFmpeg is proof, not final selection |
+| Renderer, fonts, license suitability and CPU budget | F10 implemented locally / before hosting | FFmpeg/libass renders controlled compositions on CPU; measure representative workloads and verify packaged fonts/licenses before choosing hosted compute |
 | Daily counts, narration/render/storage units, caps, retention | F6 local defaults / before pilot | Local conservative counts and byte limits in ADR 003; paid providers disabled; measured narration/render budgets and complete retention remain stage/release work |
 | Official Meta login flow, scopes, eligible account and app approval | F13 | Verify current official requirements using an integration test account |
 | Hosting/cloud (including Azure evaluation), region and budget | F15 | Choose using measured workloads before provisioning |
 
 ## 6. Release checklist
+
+Unchecked items below are **final pilot/release gates**, including revalidation on the target hosts. They do not imply that the corresponding local implementation is absent; see the milestone table and evidence for completed local work.
 
 ### Foundation and data
 
@@ -159,3 +198,8 @@ F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 
 - F13 verification: 11 mocked-provider integration cases, seven database regression cases and seven browser checks passed. Fifteenth migration applied locally, 35 domain tables. API build, web type check and OpenAPI validation passed. Local readiness/login pass; live status correctly reports connected=false and configured=false. [Verification](db/f13-validation-results.json). No real Meta requests or posts.
 
 - 1 November 2026: user deferred Instagram and prioritized topic → Gemini narration/storyboard → ElevenLabs voice → captions → local FFmpeg rendering. Diagnosed the real paused project as EVIDENCE_UNAVAILABLE for “Dopamin Detox how to do”. Added one bounded filler-word-cleaned keyword-prefix search retry, preserving retrieved source validation; tightened Gemini instructions to write complete narration within the pilot budget. All 10 planning tests and API build passed. Resumed the paused job: live Gemini produced three Hinglish scenes successfully. Result is saved for review; automated draft replacement was rejected by approval review, so no draft overwrite, speech purchase or new video render occurred in this repair.
+
+- 1 November 2026: simplified the signed-in home to a paginated project/video dashboard with private playback and saved subtitle text; new outputs refresh into Home automatically. Added renderer v2 centered 40px word-timed highlighted captions, restrained entry close-up and a dark/light video scene preset. [Simple workflow, actual file storage and Vercel/cloud boundaries](SIMPLE-WORKFLOW-AND-HOSTING.md). Existing videos remain immutable; no cloud deployment or provider credit spending in this refinement.
+- Studio refinement validation: 15 narration/render integration checks and 20 connected browser checks passed, plus dark/light real-encoder layout validation. API/web builds and web type check passed. [Results](ui/studio/delivery-validation.json). New project UI defaults to Dark & light; the website, backend and rendering worker remain local.
+
+- 1 November 2026: Supabase storage delivery verification passed: 6 adapter tests, 15 F6 processing tests, 15 F9 narration/render tests and 4 F11 history/revision tests (40 total), backend build, plus 6 live private-storage checks. Services restarted with Supabase enabled; readiness HTTP 200. [Live evidence](storage/supabase-validation.json). Test providers did not spend AI credits. Cloud orphan cleanup and hosted DB/API/worker remain release work.

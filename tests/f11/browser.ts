@@ -118,7 +118,7 @@ try {
     .catch(async () => {
       await p.locator(".planning-panel input[type=checkbox]").check();
     });
-  await p.getByRole("button", { name: "Submit saved brief" }).click();
+  await p.getByRole("button", { name: "Generate storyboard" }).click();
   await p.locator(".job-state-queued").waitFor();
   const lease = await claimNext(h.worker, "browser-fixture");
   assert(lease);

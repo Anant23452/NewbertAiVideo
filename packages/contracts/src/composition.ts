@@ -5,7 +5,7 @@ export const VIDEO = {
   height: 1280,
   fps: 24,
   font: "Nirmala UI",
-  version: 1,
+  version: 2,
 } as const;
 export type Box = { x: number; y: number; w: number; h: number };
 export type Op = {
@@ -22,6 +22,10 @@ export type Op = {
   highlight?: number;
   highlightEnd?: number;
   maxLines?: number;
+  centered?: boolean;
+  bold?: boolean;
+  focus?: boolean;
+  words?: { text: string; start: number; end: number }[];
 };
 export function wrapText(
   text: string,
@@ -64,7 +68,12 @@ export function wrapText(
   if (lines.length > maxLines) throw new Error("TEXT_TOO_TALL");
   return lines;
 }
-export function sceneOps(scene: any, index: number, accent = "#A18BFF"): Op[] {
+export function sceneOps(
+  scene: any,
+  index: number,
+  accent = "#A18BFF",
+  preset = "black_glow",
+): Op[] {
   const duration = scene.end - scene.start;
   const ops: Op[] = [];
   const add = (op: Omit<Op, "start" | "end">, delay = 0) =>
@@ -224,20 +233,52 @@ export function sceneOps(scene: any, index: number, accent = "#A18BFF"): Op[] {
       text: "ILLUSTRATIVE EXAMPLE · उदाहरण",
     });
   add({ type: "line", x: 48, y: 988, w: 624, h: 2, color: "#30283D" });
-  for (const c of scene.captions || [])
+  for (const c of scene.captions || []) {
+    if (!c.words) {
+      ops.push({
+        type: "text",
+        x: 48,
+        y: 1023,
+        w: 624,
+        h: 104,
+        size: 32,
+        color: "#F5F2FA",
+        text: c.text,
+        start: c.start,
+        end: c.end,
+        maxLines: 2,
+      });
+      continue;
+    }
+    ops.push({
+      type: "rect",
+      x: 48,
+      y: 942,
+      w: 624,
+      h: 156,
+      color: "#17121F",
+      start: c.start,
+      end: c.end,
+      focus: true,
+    });
     ops.push({
       type: "text",
-      x: 48,
-      y: 1023,
-      w: 624,
-      h: 104,
-      size: 32,
+      x: 72,
+      y: 966,
+      w: 576,
+      h: 118,
+      size: 40,
       color: "#F5F2FA",
       text: c.text,
       start: c.start,
       end: c.end,
       maxLines: 2,
+      centered: true,
+      bold: true,
+      focus: true,
+      words: c.words,
     });
+  }
   add({
     type: "text",
     x: 48,
@@ -248,6 +289,27 @@ export function sceneOps(scene: any, index: number, accent = "#A18BFF"): Op[] {
     color: "#A7A1B5",
     text: "AI voice · ElevenLabs attribution · Non-commercial pilot",
   });
+  if (preset === "dark_light") {
+    const light = index % 2 === 1;
+    ops.unshift({
+      type: "rect",
+      x: 0,
+      y: 0,
+      w: 720,
+      h: 1280,
+      color: light ? "#F4F1FA" : "#08080B",
+      start: scene.start,
+      end: scene.end,
+    });
+    if (light)
+      for (const op of ops) {
+        if (op.focus) continue;
+        if (op.color === "#F5F2FA") op.color = "#17121F";
+        else if (op.color === "#17121F") op.color = "#FFFFFF";
+        else if (op.color === "#A7A1B5") op.color = "#51495E";
+        else if (op.color === "#30283D") op.color = "#CCC5D9";
+      }
+  }
   for (const op of ops) {
     if (op.type === "text") {
       const lines = wrapText(op.text!, op.w, op.size!, op.maxLines ?? 3);
@@ -276,35 +338,79 @@ export function frameSvg(
     timeline.find((s: any) => time >= s.start && time < s.end) ||
     timeline.at(-1);
   if (!scene) return "";
-  const ops = sceneOps(scene, timeline.indexOf(scene), accent);
+  const ops = sceneOps(scene, timeline.indexOf(scene), accent, preset);
   const body = ops
     .filter((o) => time >= o.start && time < o.end)
     .map((o) => {
       const fade = Math.min(1, (time - o.start) / 0.3);
-      const dx = (1 - fade) * 22;
+      const dx = o.focus ? 0 : (1 - fade) * 22;
       const color =
         o.highlight !== undefined &&
         time >= o.highlight &&
         time < (o.highlightEnd ?? o.end)
           ? "#7DE5E0"
           : o.color;
-      if (o.type === "text")
-        return `<text x="${o.x + dx}" y="${o.y + o.size!}" fill="${color}" font-size="${o.size}" opacity="${fade}" font-family="Nirmala UI, Noto Sans Devanagari, sans-serif">${wrapText(
-          o.text!,
-          o.w,
-          o.size!,
-          o.maxLines,
-        )
-          .map(
-            (s, i) =>
-              `<tspan x="${o.x + dx}" dy="${i ? o.size! * 1.4 : 0}">${esc(s)}</tspan>`,
-          )
-          .join("")}</text>`;
+      if (o.type === "text") {
+        const lines = wrapText(o.text!, o.w, o.size!, o.maxLines);
+        let wordIndex = 0;
+        const spans = lines
+          .map((line, i) => {
+            const words = line
+              .split(/\s+/u)
+              .map((word) => {
+                const timing = o.words?.[wordIndex++];
+                const active =
+                  timing && time >= timing.start && time < timing.end;
+                return (
+                  '<tspan fill="' +
+                  (active ? "#7DE5E0" : color) +
+                  '">' +
+                  esc(word) +
+                  "</tspan>"
+                );
+              })
+              .join(" ");
+            return (
+              '<tspan x="' +
+              (o.centered ? o.x + o.w / 2 : o.x + dx) +
+              '" dy="' +
+              (i ? o.size! * 1.4 : 0) +
+              '">' +
+              words +
+              "</tspan>"
+            );
+          })
+          .join("");
+        const zoom = o.focus
+          ? 1 + 0.03 * Math.min(1, (time - o.start) / 0.2)
+          : 1;
+        return (
+          '<g transform="translate(360 1000) scale(' +
+          zoom +
+          ') translate(-360 -1000)"><text x="' +
+          (o.centered ? o.x + o.w / 2 : o.x + dx) +
+          '" y="' +
+          (o.y + o.size!) +
+          '" fill="' +
+          color +
+          '" font-size="' +
+          o.size +
+          '" font-weight="' +
+          (o.bold ? "700" : "400") +
+          '" text-anchor="' +
+          (o.centered ? "middle" : "start") +
+          '" opacity="' +
+          (o.focus ? 1 : fade) +
+          '" font-family="Nirmala UI, Noto Sans Devanagari, sans-serif">' +
+          spans +
+          "</text></g>"
+        );
+      }
       if (o.type === "circle")
         return `<ellipse cx="${o.x + o.w / 2 + dx}" cy="${o.y + o.h / 2}" rx="${o.w / 2}" ry="${o.h / 2}" fill="${color}" opacity="${fade}"/>`;
       if (o.type === "line")
         return `<line x1="${o.x}" y1="${o.y}" x2="${o.x + o.w}" y2="${o.y + o.h}" stroke="${color}" stroke-width="2" opacity="${fade}"/>`;
-      return `<rect x="${o.x + dx}" y="${o.y}" width="${o.w}" height="${o.h}" fill="${o.color}" stroke="${color === o.color ? accent : color}" opacity="${fade}"/>`;
+      return `<rect x="${o.x + dx}" y="${o.y}" width="${o.w}" height="${o.h}" fill="${o.color}" stroke="${color === o.color ? accent : color}" opacity="${o.focus ? 1 : fade}"/>`;
     })
     .join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1280" viewBox="0 0 720 1280"><rect width="720" height="1280" fill="${preset === "black_glow" ? "#000000" : "#08080B"}"/>${body}</svg>`;

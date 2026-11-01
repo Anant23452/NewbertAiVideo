@@ -11,6 +11,12 @@ import { resolve, join } from "node:path";
 import { randomUUID, createHash } from "node:crypto";
 const identifier =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+export interface MediaStore {
+  readonly maxBytes: number;
+  ready(): Promise<boolean>;
+  put(workspaceId: string, artifactId: string, bytes: Buffer): Promise<{key: string; byteSize: number; contentHash: string}>;
+  get(key: string): Promise<Buffer>;
+}
 /** Private local adapter. Keys are generated IDs, never caller filenames or URLs. */
 export class LocalMediaStore {
   readonly root: string;

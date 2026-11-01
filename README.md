@@ -14,7 +14,7 @@ Turn a topic into a Hindi or Hinglish educational video—with reviewed scripts,
 
 ![Newbert project library with its dark interface, violet accents, and private project cards](docs/ui/f5-f6/library-desktop.png)
 
-> **Current stage: F13 local Instagram connection lifecycle — live Meta setup pending.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
+> **Current focus: complete and review the real topic-to-video workflow.** F1–F12, the project/video homepage and highlighted dark/light captions are implemented for local review. Private Supabase storage is connected; hosted database/API/worker deployment is still ahead. Live Instagram setup and publishing are deferred. Follow the [project tracker and remaining checklist](docs/PROJECT-STATUS.md) or read the [simple workflow and hosting guide](docs/SIMPLE-WORKFLOW-AND-HOSTING.md).
 
 ## How it works
 

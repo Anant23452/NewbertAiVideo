@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { type Lease } from "./queue.js";
-import { type LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import { type MediaStore } from "../../../../../packages/database/src/media.js";
 
 const supported = [
   "video/mp4",
@@ -16,7 +16,7 @@ const supported = [
 /** Bytes remain private until the fenced metadata + usage commit succeeds. */
 export async function saveArtifact(
   pool: Pool,
-  media: LocalMediaStore,
+  media: MediaStore,
   lease: Lease,
   input: {
     id?: string;

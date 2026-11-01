@@ -3,7 +3,7 @@ import { createHash, randomUUID } from "node:crypto";
 import { mkdir, writeFile, readFile, rm } from "node:fs/promises";
 import { resolve, join, relative } from "node:path";
 import type { Pool, PoolClient } from "pg";
-import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../../../packages/database/src/media.js";
 import { hash } from "../projects/core.js";
 import { heartbeat, finish, type Lease } from "../processing/queue.js";
 import { saveArtifact } from "../processing/artifacts.js";
@@ -52,7 +52,7 @@ const defaults = { eligibility, synthesize, measureAudio, renderVideo };
 export async function runProduction(
   pool: Pool,
   lease: Lease,
-  media: LocalMediaStore,
+  media: MediaStore,
   deps = defaults,
 ) {
   const root = resolve(".local/production-work");
@@ -363,7 +363,7 @@ export async function runProduction(
       inputFingerprint: hash({
         input: row.input_hash,
         speech: manifest.fingerprint,
-        renderer: "newbert-ass-v1",
+        renderer: "newbert-ass-v2",
       }),
     });
     if (!compositionId) throw new ProductionError("LEASE_LOST");
@@ -415,7 +415,7 @@ export async function runProduction(
         inputFingerprint: hash({
           input: row.input_hash,
           speech: manifest.fingerprint,
-          renderer: "newbert-ass-v1",
+          renderer: "newbert-ass-v2",
         }),
         durationMs: Math.round(result.validation.videoDurationMs),
         metadata: {

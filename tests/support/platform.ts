@@ -9,7 +9,7 @@ import {
 } from "../../scripts/db/local-cluster.mjs";
 import { migrate } from "../../scripts/db/migrations.mjs";
 import { createRuntimePool } from "../../packages/database/src/client.js";
-import { LocalMediaStore } from "../../packages/database/src/media.js";
+import { LocalMediaStore, type MediaStore } from "../../packages/database/src/media.js";
 import {
   createIdentityPool,
   createIdentityService,
@@ -20,6 +20,7 @@ import type { AuthConfig } from "../../apps/api/src/modules/identity/config.js";
 export async function platform(
   browserOrigin = "http://127.0.0.1:3110",
   instagramProvider?: InstagramProvider,
+  mediaOverride?: MediaStore,
 ) {
   const directory = resolve("test-results/platform", randomUUID());
   const local = await startCluster({ directory, port: await freePort() });
@@ -75,7 +76,7 @@ export async function platform(
     },
     1000,
   );
-  const media = new LocalMediaStore(resolve(directory, "media"));
+  const media = mediaOverride ?? new LocalMediaStore(resolve(directory, "media"));
   await media.ready();
   const app = buildApi({
     database: runtime,

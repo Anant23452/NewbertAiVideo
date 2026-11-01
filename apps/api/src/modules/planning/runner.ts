@@ -1,7 +1,7 @@
 import { REQUEST_LIMITS } from "../processing/request-limits.js";
 import { randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
-import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../../../packages/database/src/media.js";
 import { hash, DomainError } from "../projects/core.js";
 import { finish, heartbeat, type Lease } from "../processing/queue.js";
 import { saveArtifact } from "../processing/artifacts.js";
@@ -29,7 +29,7 @@ async function tx<T>(pool: Pool, work: (c: PoolClient) => Promise<T>) {
 export async function runPlanning(
   pool: Pool,
   lease: Lease,
-  media: LocalMediaStore,
+  media: MediaStore,
   deps = { research, generate },
   configured = !!planningConfig().key && planningConfig().enabled,
 ) {

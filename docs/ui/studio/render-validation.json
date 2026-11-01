@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-01T15:51:48.158Z",
+  "mode": "Synthetic timing and tone for visual QA only; not generated user narration",
+  "validation": {
+    "passed": true,
+    "videoCodec": "h264",
+    "audioCodec": "aac",
+    "width": 720,
+    "height": 1280,
+    "fps": 24,
+    "narrationDurationMs": 4050,
+    "videoDurationMs": 4080,
+    "decoded": true,
+    "maxCaptionLines": 2,
+    "renderer": "newbert-ass-v2"
+  },
+  "externalProviderCalls": 0
+}

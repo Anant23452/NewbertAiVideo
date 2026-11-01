@@ -47,7 +47,7 @@ export function speechManifest(
       )
     )
       throw new ProductionError("CAPTION_MEANING_CHANGED");
-    for (const word of corrected) wrapText(word, 624, 32, 2);
+    for (const word of corrected) wrapText(word, 576, 40, 2);
     captionEdits.set(scene.id, edit.displayText.trim());
   }
   const overrides = content.pronunciationOverrides;
@@ -70,7 +70,7 @@ export function speechManifest(
   let offset = 0;
   const scenes = content.scenes.map((scene: any, index: number) => {
     for (const word of scene.displayNarration.split(/\s+/u))
-      wrapText(word, 624, 32, 2);
+      wrapText(word, 576, 40, 2);
     const original = [...scene.spokenNarration],
       display = [...scene.displayNarration];
     let ranges = original.map((_: string, i: number) => [i, i + 1]);
@@ -227,10 +227,10 @@ export function align(manifest: Manifest, alignment: any, duration: number) {
     const captions: any[] = [];
     for (let i = 0; i < words.length; ) {
       const group = [words[i++]];
-      while (i < words.length && group.length < 6) {
+      while (i < words.length && group.length < 4) {
         const candidate = [...group, words[i]!];
         try {
-          wrapText(candidate.map((w) => w!.text).join(" "), 624, 32, 2);
+          wrapText(candidate.map((w) => w!.text).join(" "), 576, 40, 2);
         } catch {
           break;
         }
@@ -242,12 +242,25 @@ export function align(manifest: Manifest, alignment: any, duration: number) {
         start: Math.max(start, t.start),
         end: Math.min(end, t.end),
         displaySpan: { start: group[0]!.start, end: group.at(-1)!.end },
+        words: group.map((w) => ({
+          text: w!.text,
+          ...spanTime(w!.start, w!.end, "display"),
+        })),
       });
     }
     for (let i = 0; i < captions.length; i++) {
       const cap = captions[i];
       if (i + 1 < captions.length)
         cap.end = Math.min(cap.end, captions[i + 1].start);
+      for (let w = 0; w < cap.words.length; w++) {
+        const word = cap.words[w];
+        word.start = Math.max(cap.start, word.start);
+        word.end = Math.min(
+          cap.end,
+          word.end,
+          w + 1 < cap.words.length ? cap.words[w + 1].start : cap.end,
+        );
+      }
       if (cap.end <= cap.start)
         throw new ProductionError("CAPTION_ALIGNMENT_AMBIGUOUS");
     }

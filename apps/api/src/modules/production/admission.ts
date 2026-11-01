@@ -7,14 +7,14 @@ import { reserve, emit } from "../processing/queue.js";
 import { speechConfig } from "./provider.js";
 import { speechManifest } from "./timing.js";
 import { sceneOps } from "../../../../../packages/contracts/src/composition.js";
-import type { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../../../packages/database/src/media.js";
 export async function admitProduction(
   c: PoolClient,
   p: any,
   d: any,
   a: any,
   body: any,
-  media?: LocalMediaStore,
+  media?: MediaStore,
 ) {
   if (
     (

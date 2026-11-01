@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-01T12:36:51.592Z",
+  "provider": "supabase",
+  "privateBucket": true,
+  "uploadedBytes": 231408,
+  "objectKey": "358be270-38ff-49c9-9adc-c961bbcc8418/04051662-8762-4a62-9389-9cd5981d65ec",
+  "checks": [
+    "private bucket readiness",
+    "fenced worker artifact save",
+    "authenticated full MP4 byte equality",
+    "HTTP 206 ranged playback",
+    "other workspace rejected",
+    "anonymous playback rejected"
+  ],
+  "database": "isolated disposable test database",
+  "aiProviderCalls": 0,
+  "note": "One synthetic QA video retained in private bucket; no user project modified.",
+  "bucket": "NewbertAiVideo",
+  "offlineAdapterTestsPassed": 6,
+  "processingTestsPassed": 15,
+  "narrationRenderTestsPassed": 15,
+  "historyRevisionTestsPassed": 4,
+  "backendBuild": "passed",
+  "restartedApiReadinessHttpStatus": 200,
+  "existingLocalObjectReadVerified": true
+}

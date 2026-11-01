@@ -96,7 +96,11 @@ function path(op: Op) {
   }
   return `m 0 0 l ${op.w} 0 ${op.w} ${op.h} 0 ${op.h}`;
 }
-export function assDocument(timeline: any[], accent: string) {
+export function assDocument(
+  timeline: any[],
+  accent: string,
+  preset = "black_glow",
+) {
   let text = `[Script Info]\nScriptType: v4.00+\nPlayResX: 720\nPlayResY: 1280\nWrapStyle: 2\nScaledBorderAndShadow: yes\n\n[V4+ Styles]\nFormat: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding\nStyle: Default,${VIDEO.font},32,&H00FFFFFF,&H00FFFFFF,&H00121117,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1\n\n[Events]\nFormat: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text\n`;
   const event = (
     op: Op,
@@ -104,22 +108,64 @@ export function assDocument(timeline: any[], accent: string) {
     from = op.start,
     to = op.end,
     borderColor = accent,
+    activeWord = -1,
   ) => {
     if (to <= from) return;
-    const move = `\\move(${op.x + 22},${op.y},${op.x},${op.y},0,300)\\fad(300,0)\\c${color(col)}`;
+    const elapsed = Math.max(0, from - op.start),
+      zoom = 100 + 3 * Math.min(1, elapsed / 0.2);
+    const move = op.centered
+      ? `\\an8\\pos(${op.x + op.w / 2},${op.y})\\fscx${zoom}\\fscy${zoom}\\t(0,${Math.max(1, 200 - elapsed * 1000)},\\fscx103\\fscy103)\\c${color(col)}`
+      : `\\move(${op.x + (op.focus ? 0 : 22)},${op.y},${op.x},${op.y},0,300)\\fad(${op.focus ? 0 : 300},0)\\c${color(col)}`;
     let body: string;
     if (op.type === "text") {
+      let index = 0;
       body =
-        `{${move}\\fs${op.size}\\bord0}` +
-        wrapText(op.text!, op.w, op.size!, op.maxLines).map(safe).join("\\N");
+        `{${move}\\fs${op.size}\\b${op.bold ? 1 : 0}\\bord0}` +
+        wrapText(op.text!, op.w, op.size!, op.maxLines)
+          .map((line) =>
+            line
+              .split(/\s+/u)
+              .map((word) => {
+                const active = index++ === activeWord;
+                return active
+                  ? `{\\c${color("#7DE5E0")}}${safe(word)}{\\c${color(col)}}`
+                  : safe(word);
+              })
+              .join(" "),
+          )
+          .join("\\N");
     } else {
       body = `{${move}\\bord${op.type === "rect" ? 1 : 0}\\3c${color(borderColor)}\\p1}${path(op)}{\\p0}`;
     }
     text += `Dialogue: ${op.type === "text" ? 2 : 0},${time(from)},${time(to)},Default,,0,0,0,,${body}\n`;
   };
   timeline.forEach((s, i) =>
-    sceneOps(s, i, accent).forEach((op) => {
-      event(op, op.color);
+    sceneOps(s, i, accent, preset).forEach((op) => {
+      if (op.words) {
+        const boundaries = [
+          ...new Set([
+            op.start,
+            op.end,
+            ...op.words.flatMap((w) => [
+              Math.max(op.start, Math.min(op.end, w.start)),
+              Math.max(op.start, Math.min(op.end, w.end)),
+            ]),
+          ]),
+        ].sort((a, b) => a - b);
+        for (let i = 0; i + 1 < boundaries.length; i++) {
+          const from = boundaries[i]!,
+            to = boundaries[i + 1]!,
+            middle = (from + to) / 2;
+          event(
+            op,
+            op.color,
+            from,
+            to,
+            accent,
+            op.words.findIndex((w) => middle >= w.start && middle < w.end),
+          );
+        }
+      } else event(op, op.color);
       if (op.highlight !== undefined && op.highlight < op.end)
         event(
           op,
@@ -148,6 +194,7 @@ export async function renderVideo(
   const ass = assDocument(
     timing.timeline,
     content.style.accentColor || "#A18BFF",
+    content.style.preset,
   );
   await writeFile(join(dir, "composition.ass"), ass);
   const duration = Math.ceil(timing.duration * VIDEO.fps) / VIDEO.fps;
@@ -240,7 +287,7 @@ export async function renderVideo(
       videoDurationMs: Math.round(actual * 1000),
       decoded: true,
       maxCaptionLines: 2,
-      renderer: "newbert-ass-v1",
+      renderer: "newbert-ass-v2",
     },
   };
 }

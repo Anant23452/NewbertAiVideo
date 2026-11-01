@@ -2,7 +2,7 @@ import type { FastifyInstance } from "fastify";
 import type { Pool } from "pg";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { withWorkspace } from "../../../../../packages/database/src/client.js";
-import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
+import type { MediaStore } from "../../../../../packages/database/src/media.js";
 import {
   current,
   csrfMatches,
@@ -28,7 +28,7 @@ export function registerMediaRoutes(
   app: FastifyInstance,
   pool: Pool,
   identity: IdentityRuntime,
-  media: LocalMediaStore,
+  media: MediaStore,
 ) {
   const signature = (
     artifactId: string,

@@ -331,7 +331,7 @@ export function CreateProject() {
       audience: "college",
       mode: "guided",
     }),
-    [preset, setPreset] = useState("black_glow"),
+    [preset, setPreset] = useState("dark_light"),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   useEffect(() => {
@@ -388,7 +388,7 @@ export function CreateProject() {
           <label>
             Motion style
             <select value={preset} onChange={(e) => setPreset(e.target.value)}>
-              <option value="black_glow">Black glow · Violet & mint</option>
+              <option value="dark_light">Dark & light · Centered captions</option><option value="black_glow">Black glow · Violet & mint</option>
               <option value="standard">Standard · Clean diagrams</option>
             </select>
           </label>
@@ -789,10 +789,9 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
           />
           <section className="panel planning-panel">
             <span className="tag">THE NEXT STEP</span>
-            <h3>Planning queue</h3>
+            <h3>Generate your storyboard</h3>
             <p>
-              Submit a saved brief to create a fixed version and reserve one
-              processing slot.
+              Gemini writes what to say and plans each scene from your saved topic. This uses one processing slot.
             </p>
             <p className="message">
               Planning retrieves source excerpts and generates a scene-by-scene
@@ -822,7 +821,7 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
               }
               onClick={() => void submit()}
             >
-              Submit saved brief
+              Generate storyboard
             </button>
             {dirty && (
               <p className="fine">Save your changes before submitting.</p>

@@ -10,7 +10,7 @@ export type Content = {
   schemaVersion: 1;
   brief: Brief;
   voice: null | { catalogVoiceId: string; providerConnectionId: string | null };
-  style: { preset: "standard" | "black_glow"; accentColor?: string };
+  style: { preset: "standard" | "black_glow" | "dark_light"; accentColor?: string };
   scenes: unknown[];
   pronunciationOverrides: unknown[];
   captionOverrides: unknown[];

@@ -516,7 +516,8 @@ export const contractSchema = {
           "type": "string",
           "enum": [
             "standard",
-            "black_glow"
+            "black_glow",
+            "dark_light"
           ]
         },
         "accentColor": {

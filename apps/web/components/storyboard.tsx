@@ -448,7 +448,7 @@ export function Storyboard({ projectId }: { projectId: string }) {
                   }
                 >
                   <option value="black_glow">Black glow</option>
-                  <option value="standard">Standard</option>
+                  <option value="standard">Standard</option><option value="dark_light">Dark & light scenes</option>
                 </select>
               </label>
               <label>

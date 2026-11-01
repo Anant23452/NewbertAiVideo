@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-01T11:40:06.986Z",
+  "scope": "Simplified home video dashboard, centered highlighted captions and dark/light scene theme",
+  "integrationChecks": {
+    "narrationAndRender": 15,
+    "failed": 0
+  },
+  "browserChecks": {
+    "passed": 21,
+    "failed": 0,
+    "includes": "Private home playback, saved captions, >4 projects, reload persistence and 1440/768/390/360 responsive layouts; automatic removal of externally archived projects",
+    "report": "docs/ui/studio/validation-results.json"
+  },
+  "renderSmoke": {
+    "passed": true,
+    "report": "docs/ui/studio/render-validation.json",
+    "mode": "Synthetic tone/timing only"
+  },
+  "builds": {
+    "api": "passed",
+    "web": "passed",
+    "webTypecheck": "passed"
+  },
+  "cloudDeployment": false,
+  "storageAdapter": "LocalMediaStore",
+  "externalProviderCalls": 0,
+  "review": {
+    "date": "2026-11-01",
+    "storageAdapterTests": 6,
+    "processingTests": 15,
+    "narrationRenderTests": 15,
+    "historyRevisionTests": 4,
+    "totalTests": 40,
+    "browserChecks": 21,
+    "failed": 0,
+    "fix": "First-page polling replaces the project list so externally archived projects disappear from Active view.",
+    "builds": "API and web builds plus backend and web type checks passed",
+    "liveProviderCalls": 0
+  }
+}
