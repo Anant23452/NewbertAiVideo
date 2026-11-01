@@ -1,6 +1,6 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 31 October 2026. Current milestone: **F11 — output history, downloads and revisions complete for local review**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 1 November 2026. Current focus: **core topic-to-video workflow; Instagram deferred until generation is working for the user**. Product stage: feature-by-feature development. Production release: not deployed.
 
 This is the main project tracker. Keep it current after each feature. Completed design/prototype work is not evidence that the production feature is implemented.
 
@@ -22,7 +22,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Product requirements | Working baseline | [PRD V1](PRD-V1.md); refine only through recorded scope decisions |
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
-| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F11 subset in milestone/API handoffs |
+| API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F12 subset in milestone/API handoffs |
 | Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 34 current domain tables on local PostgreSQL, no hosted DB |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
@@ -56,12 +56,12 @@ Definition of done: behavior meets the agreed contract/UI; ownership and failure
 | F9 | Generated narration, pronunciation mapping and validated alignment | F6,F8 | Complete for local review | Eligible voice/allowance; saved audio and provider identity; Hindi/Hinglish evaluation; actual timing; no blind repeat after uncertain chargeable request |
 | F10 | Motion graphics, captions, rendering and validation | F9 | Complete for local review | Application-owned components, same preview/export scene definitions; cap enforcement; two-line captions; no clipping or arbitrary model code; validated private MP4 |
 | F11 | Ready-video preview/download, version history and revision reuse | F10 | Complete for local review | Exact output/version; signed access; caption export; safe audio reuse fingerprints; last good output survives failed replacement |
-| F12 | Personal speech-provider connections and usage/settings UI | F3,F6,F9 | Not started | Encrypted secret references, masked reads, permission checks, revoke/replace, no silent fallback; real used/reserved/remaining allowance |
-| F13 | Official Instagram authorization and account lifecycle | F3,F6 | Not started | Developer-app requirements verified; single account; session-bound one-use OAuth state; encrypted tokens; reconnect/disconnect pauses deliveries |
+| F12 | Platform-generated voice status and usage/settings UI | F3,F6,F9 | Complete for local review — scope revised by user | Configured voice needs no recording/key setup; real used/reserved/remaining allowance, UTC reset, recent usage and honest capacity/error states |
+| F13 | Official Instagram authorization and account lifecycle | F3,F6 | Local implementation; live acceptance pending | Developer-app requirements verified; single account; session-bound one-use OAuth state; encrypted tokens; reconnect/disconnect pauses deliveries |
 | F14 | Exact-version publishing, scheduling, cancellation and reconciliation | F11,F13 | Not started | Explicit authorization; timezone validation; durable due scan; bounded late policy; no blind duplicate post on unknown outcome |
 | F15 | Pilot readiness, deployment and monitored release | All release features | Not started | Security/failure/restore checks; budget-approved hosting; eval set; observability; external approvals and documented release boundaries |
 
-F9 can initially use operator-configured narration; optional personal keys arrive in F12. F13 preparation may proceed earlier once developer-account choices are available, but publishing must not ship before its dependencies. F4/F5/F6 milestones may be subdivided into smaller reviewed changes without changing their acceptance gates.
+Operator-configured narration remains the V1 approach. On 31 October the user narrowed F12 to usage/settings; optional personal keys are deferred. F13 preparation may proceed earlier once developer-account choices are available, but publishing must not ship before its dependencies. F4/F5/F6 milestones may be subdivided into smaller reviewed changes without changing their acceptance gates.
 
 ## 5. Remaining decisions, resolved just before their feature
 
@@ -151,3 +151,11 @@ F3: 15 identity integration tests and one SMTP configuration test, 7 current F2 
 
 - 31 October 2026: F11 delivered for local review. [Output history and revisions](milestones/F11-OUTPUT-HISTORY-REVISIONS.md): exact-version playback, private MP4/VTT downloads, paginated saved outputs, conflict-aware snapshot restoration and bounded caption presentation corrections. Last good output survives failed replacement; verified narration reuse avoids new speech. No migration or live API-credit spending. Next after review: F12 personal provider connections and settings.
 - F11 verification: 18 integration/regression cases and 16 connected browser checks passed; API/web builds, OpenAPI validation, live readiness, dummy login and history endpoints passed. [Results](db/f11-validation-results.json). Local app is running on port 3001.
+
+- 31 October 2026: user accepted a narrower F12: platform-configured generated voice plus usage/allowance settings. Personal keys and encrypted provider-connection management are deferred, not implemented. [Delivery record](milestones/F12-USAGE-SETTINGS.md). Seven allowance cards, current-policy limit reporting, speech-request counts, paginated usage and refreshed configuration/pause states. No recording, live provider requests, new migration or cloud deployment. Next: F13 Instagram authorization.
+- F12 verification: 19 integration/accounting cases and eight browser checks passed; backend/web builds, type checks, OpenAPI validation and live local readiness/login/settings endpoints passed. [Results](db/f12-validation-results.json). Local app remains running at port 3001. No live provider calls or credit spending.
+
+- 1 November 2026: [F13 connection lifecycle](milestones/F13-INSTAGRAM-CONNECTION.md) implemented locally: scoped sign-in, one-use session/generation-bound state, encrypted token references, single destination, renewal, disconnect and paused deliveries. No live Meta credentials or account authorization. Saved website policy still blocks Meta browser access; no workaround attempted. F13 is not a completed live account connection.
+- F13 verification: 11 mocked-provider integration cases, seven database regression cases and seven browser checks passed. Fifteenth migration applied locally, 35 domain tables. API build, web type check and OpenAPI validation passed. Local readiness/login pass; live status correctly reports connected=false and configured=false. [Verification](db/f13-validation-results.json). No real Meta requests or posts.
+
+- 1 November 2026: user deferred Instagram and prioritized topic → Gemini narration/storyboard → ElevenLabs voice → captions → local FFmpeg rendering. Diagnosed the real paused project as EVIDENCE_UNAVAILABLE for “Dopamin Detox how to do”. Added one bounded filler-word-cleaned keyword-prefix search retry, preserving retrieved source validation; tightened Gemini instructions to write complete narration within the pilot budget. All 10 planning tests and API build passed. Resumed the paused job: live Gemini produced three Hinglish scenes successfully. Result is saved for review; automated draft replacement was rejected by approval review, so no draft overwrite, speech purchase or new video render occurred in this repair.

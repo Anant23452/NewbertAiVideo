@@ -420,3 +420,14 @@ test("global provider-call cap pauses without submitting an extra request", asyn
 
 test('Gemini HTTP adapter uses the fixed endpoint, structured JSON, bounded output and no grounding tools',async()=>{let request:any;const mock=async(url:any,init:any)=>{request={url,init};return new Response(JSON.stringify({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify({reply:'A test reply'})}]}}]}));};const result=await generate({topic:'example'},true,mock as typeof fetch);assert.equal(result.reply,'A test reply');assert(String(request.url).startsWith('https://generativelanguage.googleapis.com/v1beta/models/'));const body=JSON.parse(request.init.body);assert.equal(body.generationConfig.responseMimeType,'application/json');assert.equal(body.generationConfig.maxOutputTokens,7000);assert.equal(body.tools,undefined);await assert.rejects(generate({},false,(async()=>new Response('{}',{status:429})) as typeof fetch),(e:any)=>e.code==='PROVIDER_QUOTA'&&!e.uncertain);await assert.rejects(generate({},false,(async()=>{throw new Error('network');}) as typeof fetch),(e:any)=>e.code==='PROVIDER_OUTCOME_UNKNOWN'&&e.uncertain);});
 test('research accepts only retrieved Wikipedia article URLs and bounded excerpts',async()=>{const result=await research('a topic',(async()=>new Response(JSON.stringify({query:{pages:[{title:'Safe',fullurl:'https://en.wikipedia.org/wiki/Example',extract:'A'.repeat(4000)},{title:'Bad',fullurl:'http://127.0.0.1/private',extract:'B'.repeat(1000)}]}}))) as typeof fetch);assert.equal(result.length,1);assert.equal(result[0]!.excerpt.length,2500);});
+
+test('Hindi research fallback preserves vowel marks and removes complete filler words', async () => {
+  const queries: string[] = [];
+  await research('सूर्य ऊर्जा कैसे है', (async (input: any) => {
+    queries.push(new URL(String(input)).searchParams.get('gsrsearch')!);
+    return new Response('{}');
+  }) as typeof fetch);
+  assert.deepEqual(queries, ['सूर्य ऊर्जा कैसे है', 'सूर्य* ऊर्जा*']);
+});
+
+test('empty full-topic search uses at most one keyword-prefix retry without inventing evidence',async()=>{const queries:string[]=[];const result=await research('Dopamin Detox how to do',(async(input:any)=>{const q=new URL(String(input)).searchParams.get('gsrsearch')!;queries.push(q);return new Response(JSON.stringify(queries.length===1?{}:{query:{pages:[{title:'Dopamine fasting',fullurl:'https://en.wikipedia.org/wiki/Dopamine_fasting',extract:'Retrieved factual source excerpt. '.repeat(10)}]}}));}) as typeof fetch);assert.equal(queries.length,2);assert.equal(queries[1],'dopamin* detox*');assert.equal(result[0]!.title,'Dopamine fasting');let count=0;assert.deepEqual(await research('No matching topic',(async()=>{count++;return new Response('{}');}) as typeof fetch),[]);assert.equal(count,2);});

@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-01T07:05:27.951Z",
+  "checks": [
+    "Unconfigured Meta setup is honest and cannot launch sign-in",
+    "Explicit account-access acknowledgement is required",
+    "Mocked OAuth callback shows the connected account with no token in the page",
+    "Publishing page reports the same account and keeps posting unavailable",
+    "Too-early renewal has a recoverable explanation",
+    "Connection controls fit desktop, tablet and mobile",
+    "Explicit disconnect removes the account and stored token"
+  ],
+  "externalMetaRequests": 0,
+  "mode": "Isolated API/database and mocked Meta adapter. No real account access or publication."
+}

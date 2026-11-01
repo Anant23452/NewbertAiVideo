@@ -14,7 +14,7 @@ Turn a topic into a Hindi or Hinglish educational video—with reviewed scripts,
 
 ![Newbert project library with its dark interface, violet accents, and private project cards](docs/ui/f5-f6/library-desktop.png)
 
-> **Current stage: F11 — saved videos, downloads, and safe revisions.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
+> **Current stage: F13 local Instagram connection lifecycle — live Meta setup pending.** The local application supports the workflow below. Public hosting, Instagram publishing, and a production release are still ahead.
 
 ## How it works
 
@@ -200,3 +200,7 @@ Choose **Explore a sample workspace** for an estimated-timing preview without pr
 </details>
 
 Open **Saved videos & history** from a project or storyboard. Run `npm run test:f11` and `npm run test:f11:browser` for isolated verification. [Delivery and caption limits](docs/milestones/F11-OUTPUT-HISTORY-REVISIONS.md).
+
+F12: Settings shows platform voice configuration, current used/reserved/remaining allowances and recent usage. No recording or personal provider key is required. Personal-key connections are deferred. Checks: `npm run test:f12` and `npm run test:f12:browser`. [Delivery record](docs/milestones/F12-USAGE-SETTINGS.md).
+
+F13: Settings/Publishing show Instagram connection status and setup requirements. The local encrypted connection flow is tested with simulated Meta responses; no real account is connected. Run `npm run instagram:setup` and `npm run instagram:check` for safe local preparation. [Operator setup and live acceptance gates](docs/milestones/F13-INSTAGRAM-CONNECTION.md).

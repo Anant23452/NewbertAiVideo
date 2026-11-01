@@ -1,3 +1,4 @@
+import { REQUEST_LIMITS } from "../processing/request-limits.js";
 import { randomUUID } from "node:crypto";
 import type { Pool, PoolClient } from "pg";
 import { LocalMediaStore } from "../../../../../packages/database/src/media.js";
@@ -92,7 +93,10 @@ export async function runPlanning(
             [lease.workspace_id],
           )
         ).rows[0]!;
-        if (counts.total >= 4 || counts.own >= 2)
+        if (
+          counts.total >= REQUEST_LIMITS.global ||
+          counts.own >= REQUEST_LIMITS.workspace
+        )
           throw new PlanningError("PLANNING_DAILY_LIMIT");
         await c.query(
           `INSERT INTO newbert.job_attempts(id,workspace_id,job_id,stage,attempt_number,state,request_fingerprint,lease_token,provider) SELECT $1,$2,$3,$4,coalesce(max(attempt_number),0)+1,'submitted',$5,$6,'gemini' FROM newbert.job_attempts WHERE job_id=$3 AND stage=$4`,
@@ -241,7 +245,15 @@ export async function runPlanning(
               "UPDATE newbert.generation_jobs SET output_artifact_id=$2,stage='planning_scenes' WHERE id=$1",
               [lease.id, artifactId],
             );
-            await c.query('SELECT newbert.auto_apply_plan($1,$2,$3,$4::jsonb)',[lease.id,lease.lease_owner,lease.lease_token,JSON.stringify(plan.content)]);
+            await c.query(
+              "SELECT newbert.auto_apply_plan($1,$2,$3,$4::jsonb)",
+              [
+                lease.id,
+                lease.lease_owner,
+                lease.lease_token,
+                JSON.stringify(plan.content),
+              ],
+            );
           },
         );
     }

@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-01T07:06:04.528Z",
+  "milestone": "F13",
+  "status": "Local implementation tested; live account connection blocked/pending",
+  "integration": {
+    "instagram": 11,
+    "databaseRegression": 7,
+    "total": 18,
+    "failed": 0
+  },
+  "browser": {
+    "checks": 7,
+    "failed": 0,
+    "evidence": "docs/ui/f13/validation-results.json"
+  },
+  "migration": {
+    "applied": 15,
+    "domainTables": 35,
+    "latest": "1793318400014_instagram-connections"
+  },
+  "checks": {
+    "backendBuild": "passed",
+    "webTypecheck": "passed",
+    "openApi": "valid",
+    "localReadiness": "200",
+    "dummyLogin": "200",
+    "localInstagramStatus": "200: connected=false, configured=false",
+    "webBuild": "passed"
+  },
+  "externalMetaRequests": 0,
+  "realAccountConnected": false,
+  "operatorSetupMissing": [
+    "app_id",
+    "app_secret",
+    "api_version"
+  ],
+  "blocker": "Saved website access policy denies developers.facebook.com; automatic approval review rejected further browser access. No bypass attempted."
+}

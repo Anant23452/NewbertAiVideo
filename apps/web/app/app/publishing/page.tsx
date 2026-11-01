@@ -1,4 +1,4 @@
-import { FuturePage } from "../../../components/workspace";
+import { Publishing } from "../../../components/instagram";
 export default function Page() {
-  return <FuturePage kind="publishing" />;
+  return <Publishing />;
 }

@@ -3,7 +3,7 @@
   "info": {
     "title": "Newbert AI Video — V1 proposed API",
     "version": "1.0.0-draft",
-    "description": "V1 design contract with implemented F3–F11 local endpoints. See milestone handoffs for working boundaries. Publishing remains a later milestone."
+    "description": "V1 design contract with implemented F3–F12 and locally tested F13 connection lifecycle. Live Meta app/account acceptance remains pending. F12 personal provider keys are deferred. Publishing remains F14."
   },
   "servers": [
     {
@@ -2878,7 +2878,8 @@
           "503": {
             "$ref": "#/components/responses/Error503"
           }
-        }
+        },
+        "description": "Deferred by user decision on 31 October 2026. Proposed future personal-key capability; not implemented in the narrowed F12 delivery. "
       },
       "post": {
         "operationId": "createProviderConnection",
@@ -2972,7 +2973,7 @@
             "$ref": "#/components/responses/Error503"
           }
         },
-        "description": "Never echo apiKey. Starts pending_validation. Reject a second current connection; revoke old one explicitly. Idempotency stores keyed request digest only, never body/key. Secret material is handled by secret-store adapter.",
+        "description": "Deferred by user decision on 31 October 2026. Proposed future personal-key capability; not implemented in the narrowed F12 delivery. Never echo apiKey. Starts pending_validation. Reject a second current connection; revoke old one explicitly. Idempotency stores keyed request digest only, never body/key. Secret material is handled by secret-store adapter.",
         "requestBody": {
           "required": true,
           "content": {
@@ -3080,7 +3081,7 @@
             "$ref": "#/components/responses/Error503"
           }
         },
-        "description": "Revocation is idempotent for the same owned connection. Pause dependent pending work; do not silently substitute an operator key or different voice."
+        "description": "Deferred by user decision on 31 October 2026. Proposed future personal-key capability; not implemented in the narrowed F12 delivery. Revocation is idempotent for the same owned connection. Pause dependent pending work; do not silently substitute an operator key or different voice."
       }
     },
     "/instagram/connection": {
@@ -3168,7 +3169,8 @@
           "503": {
             "$ref": "#/components/responses/Error503"
           }
-        }
+        },
+        "description": "Read safe connection metadata and operator setup readiness. No credentials or token references. Expired grants require reauthorization and pause pending delivery."
       },
       "delete": {
         "operationId": "disconnectInstagram",
@@ -3254,7 +3256,8 @@
           "503": {
             "$ref": "#/components/responses/Error503"
           }
-        }
+        },
+        "description": "Locally disconnect, erase the saved encrypted token and invalidate pending OAuth callbacks. Current connection If-Match and session CSRF are required. Repeated disconnect when already disconnected returns 204. Remote app permission revocation remains in Instagram settings."
       }
     },
     "/instagram/authorization": {
@@ -3267,9 +3270,6 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/CsrfToken"
-          },
-          {
-            "$ref": "#/components/parameters/IdempotencyKey"
           }
         ],
         "responses": {
@@ -3350,13 +3350,13 @@
             "$ref": "#/components/responses/Error503"
           }
         },
-        "description": "Return path is allowlisted. State is random, single use and stored hashed. Existing active destination must be explicitly disconnected before replacement.",
+        "description": "Explicit account-access acknowledgement. A random single-use state is stored hashed, bound to the authenticated session and connection generation, with a ten-minute expiry. Existing connections require their current If-Match and are paused for reconnection; old deliveries never resume automatically.",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthorizationRequest"
+                "$ref": "#/components/schemas/InstagramAuthorize"
               }
             }
           }
@@ -4324,6 +4324,68 @@
           },
           "412": {
             "description": "Current draft changed"
+          }
+        }
+      }
+    },
+    "/generation-settings": {
+      "get": {
+        "tags": [
+          "Catalog"
+        ],
+        "operationId": "getGenerationSettings",
+        "summary": "Read platform-managed voice configuration flags and pilot limits without provider calls",
+        "responses": {
+          "200": {
+            "description": "Configuration only; provider access and balance are verified at generation time",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerationSettings"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required"
+          }
+        }
+      }
+    },
+    "/instagram/connection/refresh": {
+      "post": {
+        "tags": [
+          "Publishing"
+        ],
+        "operationId": "renewInstagramAccess",
+        "summary": "Renew an existing unexpired connection after its first 24 hours",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "If-Match",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-CSRF-Token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Renewed metadata with unchanged connection ID and a new revision"
+          },
+          "409": {
+            "description": "Too early, expired or requires fresh authorization"
+          },
+          "503": {
+            "description": "Missing operator setup or temporary provider failure"
           }
         }
       }
@@ -6011,7 +6073,8 @@
               "render_ms",
               "storage_bytes",
               "provider_credits",
-              "planning_requests"
+              "planning_requests",
+              "speech_requests"
             ]
           },
           "limit": {
@@ -6055,7 +6118,7 @@
           "periodStart",
           "resetsAt"
         ],
-        "description": "Resource units: generation_count and planning_requests are requests; provider_credits are submitted speech characters; narration_ms and render_ms are milliseconds; storage_bytes are bytes. Used and reserved amounts are reported separately."
+        "description": "Resource units: generation_count and planning_requests are requests; provider_credits are submitted speech characters; narration_ms and render_ms are milliseconds; storage_bytes are bytes. Used and reserved amounts are reported separately. speech_requests counts submitted speech attempts, including uncertain outcomes, separately from submitted speech characters. Reported limits use the lower of the saved bucket and current operator policy."
       },
       "Usage": {
         "type": "object",
@@ -6269,6 +6332,10 @@
                 "type": "null"
               }
             ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
@@ -6293,10 +6360,51 @@
                 "type": "null"
               }
             ]
+          },
+          "setup": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "configured": {
+                "type": "boolean"
+              },
+              "missing": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "app_id",
+                    "app_secret",
+                    "api_version",
+                    "redirect_uri",
+                    "token_encryption_key"
+                  ]
+                }
+              },
+              "requiredScopes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "professionalAccountRequired": {
+                "const": true
+              },
+              "publishingAvailable": {
+                "const": false
+              }
+            },
+            "required": [
+              "configured",
+              "missing",
+              "requiredScopes",
+              "professionalAccountRequired",
+              "publishingAvailable"
+            ]
           }
         },
         "required": [
-          "connection"
+          "connection",
+          "setup"
         ]
       },
       "AuthorizationRequest": {
@@ -7014,6 +7122,111 @@
           "items",
           "nextCursor",
           "latestOutputArtifactId"
+        ]
+      },
+      "GenerationSettings": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "voiceMode": {
+            "const": "platform_generated"
+          },
+          "voiceRecordingRequired": {
+            "const": false
+          },
+          "personalKeysEnabled": {
+            "const": false
+          },
+          "speech": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "configured": {
+                "type": "boolean"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "eligibility": {
+                "const": "checked_before_generation"
+              },
+              "nonCommercial": {
+                "const": true
+              },
+              "attributionRequired": {
+                "const": true
+              }
+            },
+            "required": [
+              "configured",
+              "enabled",
+              "eligibility",
+              "nonCommercial",
+              "attributionRequired"
+            ]
+          },
+          "planning": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "configured": {
+                "type": "boolean"
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "configured",
+              "enabled"
+            ]
+          },
+          "admissionEnabled": {
+            "type": "boolean"
+          },
+          "processingEnabled": {
+            "type": "boolean"
+          },
+          "maxDurationMs": {
+            "type": "integer"
+          },
+          "maxSpokenCharacters": {
+            "type": "integer"
+          },
+          "allowanceTimezone": {
+            "const": "UTC"
+          }
+        },
+        "required": [
+          "voiceMode",
+          "voiceRecordingRequired",
+          "personalKeysEnabled",
+          "speech",
+          "planning",
+          "admissionEnabled",
+          "processingEnabled",
+          "maxDurationMs",
+          "maxSpokenCharacters",
+          "allowanceTimezone"
+        ]
+      },
+      "InstagramAuthorize": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "acknowledgedAccountAccess": {
+            "const": true
+          },
+          "returnPath": {
+            "enum": [
+              "/app/settings",
+              "/app/publishing"
+            ]
+          }
+        },
+        "required": [
+          "acknowledgedAccountAccess",
+          "returnPath"
         ]
       }
     }

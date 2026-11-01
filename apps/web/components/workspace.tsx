@@ -8,6 +8,8 @@ import {
 } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { InstagramPanel } from "./instagram";
+import { UsageSettings } from "./usage-settings";
 import { Brand } from "./brand";
 import { api, ApiError } from "../lib/api";
 type Workspace = {
@@ -298,13 +300,8 @@ export function Settings() {
           {busy ? "Saving…" : "Save timezone"}
         </button>
       </form>
-      <section className="panel settings-panel">
-        <h3>Voice and Instagram connections</h3>
-        <p className="muted">
-          Voice provider and Instagram connections are coming soon.
-        </p>
-        <span className="pill">Not connected</span>
-      </section>
+      <UsageSettings />
+      <InstagramPanel />
     </>
   );
 }

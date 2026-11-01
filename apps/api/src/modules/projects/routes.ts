@@ -1,3 +1,6 @@
+import { REQUEST_LIMITS } from "../processing/request-limits.js";
+import { speechConfig } from "../production/provider.js";
+import { planningConfig } from "../planning/providers.js";
 import { registerProductionRoutes } from "../production/routes.js";
 import { admitProduction, reserveRetryMedia } from "../production/admission.js";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
@@ -563,6 +566,36 @@ export function registerProjectRoutes(
       ),
     "RetryJob",
   );
+  route("GET", "/generation-settings", async (c) => {
+    const p = await policy(c),
+      speech = speechConfig(),
+      planning = planningConfig();
+    const limits = (
+      await c.query(
+        "SELECT max_duration_ms,max_characters FROM newbert.production_limits WHERE singleton",
+      )
+    ).rows[0];
+    return {
+      body: {
+        voiceMode: "platform_generated",
+        voiceRecordingRequired: false,
+        personalKeysEnabled: false,
+        speech: {
+          configured: !!speech.key && !!speech.voiceId,
+          enabled: speech.enabled && p.production_enabled,
+          eligibility: "checked_before_generation",
+          nonCommercial: true,
+          attributionRequired: true,
+        },
+        planning: { configured: !!planning.key, enabled: planning.enabled },
+        admissionEnabled: p.admission_enabled,
+        processingEnabled: p.processing_enabled,
+        maxDurationMs: Number(limits.max_duration_ms),
+        maxSpokenCharacters: Number(limits.max_characters),
+        allowanceTimezone: "UTC",
+      },
+    };
+  });
   route("GET", "/usage", async (c) => {
     const p = await policy(c);
     const rows = (
@@ -588,13 +621,25 @@ export function registerProjectRoutes(
         "SELECT * FROM newbert.usage_buckets WHERE resource IN ('provider_credits','narration_ms','render_ms') AND period_start=date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC'",
       )
     ).rows;
-    const start = new Date();
-    start.setUTCHours(0, 0, 0, 0);
+    const start = new Date(
+      (
+        await c.query(
+          "SELECT date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC' AS start",
+        )
+      ).rows[0].start,
+    );
     const end = new Date(start.getTime() + 86400000);
     const planningUsed = Number(
       (
         await c.query(
           "SELECT count(*)::int AS n FROM newbert.planning_calls WHERE created_at>=(date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC')",
+        )
+      ).rows[0].n,
+    );
+    const speechUsed = Number(
+      (
+        await c.query(
+          "SELECT count(*)::int AS n FROM newbert.speech_calls WHERE created_at>=(date_trunc('day',now() AT TIME ZONE 'UTC') AT TIME ZONE 'UTC')",
         )
       ).rows[0].n,
     );
@@ -639,23 +684,35 @@ export function registerProjectRoutes(
           },
           {
             resource: "planning_requests",
-            limit: 2,
+            limit: REQUEST_LIMITS.workspace,
             used: planningUsed,
             reserved: 0,
-            remaining: Math.max(0, 2 - planningUsed),
+            remaining: Math.max(0, REQUEST_LIMITS.workspace - planningUsed),
+            periodStart: start,
+            resetsAt: end,
+          },
+          {
+            resource: "speech_requests",
+            limit: REQUEST_LIMITS.workspace,
+            used: speechUsed,
+            reserved: 0,
+            remaining: Math.max(0, REQUEST_LIMITS.workspace - speechUsed),
             periodStart: start,
             resetsAt: end,
           },
           ...["provider_credits", "narration_ms", "render_ms"].map(
             (resource) => {
               const b = mediaBuckets.find((b) => b.resource === resource);
-              const limit = Number(
-                b?.limit_units ??
-                  (resource === "provider_credits"
-                    ? mediaLimits.workspace_characters
-                    : resource === "narration_ms"
-                      ? mediaLimits.workspace_narration_ms
-                      : mediaLimits.workspace_render_ms),
+              const ceiling = Number(
+                resource === "provider_credits"
+                  ? mediaLimits.workspace_characters
+                  : resource === "narration_ms"
+                    ? mediaLimits.workspace_narration_ms
+                    : mediaLimits.workspace_render_ms,
+              );
+              const limit = Math.min(
+                Number(b?.limit_units ?? ceiling),
+                ceiling,
               );
               const used = Number(b?.used_units ?? 0),
                 reserved = Number(b?.reserved_units ?? 0);

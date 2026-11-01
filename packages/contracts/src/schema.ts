@@ -1361,7 +1361,8 @@ export const contractSchema = {
             "render_ms",
             "storage_bytes",
             "provider_credits",
-            "planning_requests"
+            "planning_requests",
+            "speech_requests"
           ]
         },
         "limit": {
@@ -1405,7 +1406,7 @@ export const contractSchema = {
         "periodStart",
         "resetsAt"
       ],
-      "description": "Resource units: generation_count and planning_requests are requests; provider_credits are submitted speech characters; narration_ms and render_ms are milliseconds; storage_bytes are bytes. Used and reserved amounts are reported separately."
+      "description": "Resource units: generation_count and planning_requests are requests; provider_credits are submitted speech characters; narration_ms and render_ms are milliseconds; storage_bytes are bytes. Used and reserved amounts are reported separately. speech_requests counts submitted speech attempts, including uncertain outcomes, separately from submitted speech characters. Reported limits use the lower of the saved bucket and current operator policy."
     },
     "Usage": {
       "type": "object",
@@ -1619,6 +1620,10 @@ export const contractSchema = {
               "type": "null"
             }
           ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
         }
       },
       "required": [
@@ -1643,10 +1648,51 @@ export const contractSchema = {
               "type": "null"
             }
           ]
+        },
+        "setup": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "configured": {
+              "type": "boolean"
+            },
+            "missing": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "app_id",
+                  "app_secret",
+                  "api_version",
+                  "redirect_uri",
+                  "token_encryption_key"
+                ]
+              }
+            },
+            "requiredScopes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "professionalAccountRequired": {
+              "const": true
+            },
+            "publishingAvailable": {
+              "const": false
+            }
+          },
+          "required": [
+            "configured",
+            "missing",
+            "requiredScopes",
+            "professionalAccountRequired",
+            "publishingAvailable"
+          ]
         }
       },
       "required": [
-        "connection"
+        "connection",
+        "setup"
       ]
     },
     "AuthorizationRequest": {
@@ -2364,6 +2410,111 @@ export const contractSchema = {
         "items",
         "nextCursor",
         "latestOutputArtifactId"
+      ]
+    },
+    "GenerationSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "voiceMode": {
+          "const": "platform_generated"
+        },
+        "voiceRecordingRequired": {
+          "const": false
+        },
+        "personalKeysEnabled": {
+          "const": false
+        },
+        "speech": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "configured": {
+              "type": "boolean"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "eligibility": {
+              "const": "checked_before_generation"
+            },
+            "nonCommercial": {
+              "const": true
+            },
+            "attributionRequired": {
+              "const": true
+            }
+          },
+          "required": [
+            "configured",
+            "enabled",
+            "eligibility",
+            "nonCommercial",
+            "attributionRequired"
+          ]
+        },
+        "planning": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "configured": {
+              "type": "boolean"
+            },
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "configured",
+            "enabled"
+          ]
+        },
+        "admissionEnabled": {
+          "type": "boolean"
+        },
+        "processingEnabled": {
+          "type": "boolean"
+        },
+        "maxDurationMs": {
+          "type": "integer"
+        },
+        "maxSpokenCharacters": {
+          "type": "integer"
+        },
+        "allowanceTimezone": {
+          "const": "UTC"
+        }
+      },
+      "required": [
+        "voiceMode",
+        "voiceRecordingRequired",
+        "personalKeysEnabled",
+        "speech",
+        "planning",
+        "admissionEnabled",
+        "processingEnabled",
+        "maxDurationMs",
+        "maxSpokenCharacters",
+        "allowanceTimezone"
+      ]
+    },
+    "InstagramAuthorize": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "acknowledgedAccountAccess": {
+          "const": true
+        },
+        "returnPath": {
+          "enum": [
+            "/app/settings",
+            "/app/publishing"
+          ]
+        }
+      },
+      "required": [
+        "acknowledgedAccountAccess",
+        "returnPath"
       ]
     }
   }

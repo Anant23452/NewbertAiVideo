@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-31T04:57:03.862Z",
+  "milestone": "F12",
+  "scope": "Platform-generated voice status and allowance settings; personal provider keys deferred by user decision",
+  "integration": {
+    "f12": 4,
+    "f6Regression": 15,
+    "total": 19,
+    "failed": 0
+  },
+  "browser": {
+    "checks": 8,
+    "failed": 0,
+    "evidence": "docs/ui/f12/validation-results.json"
+  },
+  "checks": {
+    "backendBuild": "passed",
+    "webBuild": "passed",
+    "webTypecheck": "passed",
+    "openApi": "valid",
+    "localReadiness": "200",
+    "dummyLogin": "200",
+    "generationSettings": "200",
+    "usage": "200",
+    "usageEntries": "200",
+    "settingsPage": "200"
+  },
+  "externalProviderCalls": 0,
+  "newMigrations": 0
+}

@@ -64,7 +64,7 @@ try {
     });
   await app.listen({ host: config.host, port: config.port });
   console.log(
-    `Newbert ${identity ? "F11" : "F2"} API listening on ${config.host}:${app.server.address() && typeof app.server.address() === "object" ? (app.server.address() as { port: number }).port : config.port}.`,
+    `Newbert ${identity ? "F13" : "F2"} API listening on ${config.host}:${app.server.address() && typeof app.server.address() === "object" ? (app.server.address() as { port: number }).port : config.port}.`,
   );
   if (authConfig?.mailMode === "local")
     console.log(

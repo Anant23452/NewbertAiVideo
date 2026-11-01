@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-01T11:22:15.922Z",
+  "checks": [
+    "Settings shows automated platform voice without recording or personal-key forms",
+    "All seven real allowance resources are presented with units",
+    "New accounts show an honest empty usage history",
+    "Refreshing displays actual used, reserved and remaining character counts",
+    "Lowered live limits show exhausted allowance without hiding incurred usage",
+    "Platform pause is explained without discarding saved work",
+    "Failed refresh preserves the last snapshot and recovers on retry",
+    "Usage settings fit desktop, tablet and mobile"
+  ],
+  "externalProviderCalls": 0,
+  "mode": "Isolated database, API and browser; no provider requests"
+}

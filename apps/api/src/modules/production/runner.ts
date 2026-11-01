@@ -1,3 +1,4 @@
+import { REQUEST_LIMITS } from "../processing/request-limits.js";
 import { createHash, randomUUID } from "node:crypto";
 import { mkdir, writeFile, readFile, rm } from "node:fs/promises";
 import { resolve, join, relative } from "node:path";
@@ -195,7 +196,10 @@ export async function runProduction(
               [lease.workspace_id],
             )
           ).rows[0]!;
-          if (calls.total >= 4 || calls.own >= 2)
+          if (
+            calls.total >= REQUEST_LIMITS.global ||
+            calls.own >= REQUEST_LIMITS.workspace
+          )
             throw new ProductionError("SPEECH_DAILY_REQUEST_LIMIT");
           await c.query(
             `INSERT INTO newbert.job_attempts(id,workspace_id,job_id,stage,attempt_number,state,request_fingerprint,lease_token,provider) SELECT $1,$2,$3,'generating_voice',coalesce(max(attempt_number),0)+1,'submitted',$4,$5,'elevenlabs' FROM newbert.job_attempts WHERE job_id=$3 AND stage='generating_voice'`,

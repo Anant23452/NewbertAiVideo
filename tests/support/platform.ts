@@ -1,3 +1,4 @@
+import type { InstagramProvider } from "../../apps/api/src/modules/instagram/provider.js";
 import { randomBytes, randomUUID } from "node:crypto";
 import { resolve } from "node:path";
 import pg from "pg";
@@ -16,7 +17,10 @@ import {
 import { buildApi } from "../../apps/api/src/app.js";
 import type { AuthMessage } from "../../apps/api/src/modules/identity/mail.js";
 import type { AuthConfig } from "../../apps/api/src/modules/identity/config.js";
-export async function platform(browserOrigin = "http://127.0.0.1:3110") {
+export async function platform(
+  browserOrigin = "http://127.0.0.1:3110",
+  instagramProvider?: InstagramProvider,
+) {
   const directory = resolve("test-results/platform", randomUUID());
   const local = await startCluster({ directory, port: await freePort() });
   const owner = new pg.Client({
@@ -77,6 +81,7 @@ export async function platform(browserOrigin = "http://127.0.0.1:3110") {
     database: runtime,
     identity: { pool: authPool, service, config },
     media,
+    ...(instagramProvider ? { instagramProvider } : {}),
   });
   await app.ready();
   async function call(

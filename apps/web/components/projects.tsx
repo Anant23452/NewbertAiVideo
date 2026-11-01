@@ -75,7 +75,7 @@ export function UsageCard({ usage }: { usage: Usage | null }) {
           {r.remaining} of {r.limit} processing slots available
         </h3>
         <p>
-          {r.used} completed · {r.reserved} reserved
+          {r.used} used · {r.reserved} reserved
           {r.resetsAt
             ? " · Daily reset at " +
               new Date(r.resetsAt).toLocaleTimeString("en-IN", {
@@ -93,6 +93,7 @@ export function UsageCard({ usage }: { usage: Usage | null }) {
         </p>
       )}
       <span className="pill">
+        <Link href="/app/settings">Usage details →</Link>
         {usage?.platformCapacity === "paused"
           ? "Processing paused"
           : "Limited pilot"}
@@ -797,7 +798,8 @@ export function ProjectEditor({ projectId }: { projectId: string }) {
               Planning retrieves source excerpts and generates a scene-by-scene
               script using your configured Gemini account. Account quotas and
               billing apply; no paid search grounding or model fallback is used.
-              Voice and video generation come next.
+              Open the storyboard to review your scenes and generate narration
+              and video.
             </p>
             <label className="checkbox-label">
               <input

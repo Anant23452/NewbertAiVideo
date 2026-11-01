@@ -54,7 +54,13 @@
     "test:f10:browser": "npm run test:f9:browser",
     "speech:preflight": "tsx scripts/speech-preflight.ts",
     "test:f11": "tsx --test --test-concurrency=1 tests/f11/*.test.ts",
-    "test:f11:browser": "tsx tests/f11/browser.ts"
+    "test:f11:browser": "tsx tests/f11/browser.ts",
+    "test:f12": "tsx --test --test-concurrency=1 tests/f12/*.test.ts",
+    "test:f12:browser": "tsx tests/f12/browser.ts",
+    "test:f13": "tsx --test --test-concurrency=1 tests/f13/*.test.ts",
+    "test:f13:browser": "tsx tests/f13/browser.ts",
+    "instagram:setup": "node scripts/instagram/setup.mjs",
+    "instagram:check": "tsx --env-file-if-exists=apps/api/.env scripts/instagram/check.ts"
   },
   "dependencies": {
     "better-auth": "1.7.14",
