@@ -18,6 +18,7 @@ export function csrfMatches(expected: string, supplied: unknown) {
 export async function current(request: FastifyRequest, reply: FastifyReply, identity: IdentityRuntime, allowDisabled = false) {
   const session = await identity.service.api.getSession({ headers: fromNodeHeaders(request.headers), query: { disableCookieCache: true } });
   if (!session) { problem(reply,request,401,'AUTHENTICATION_REQUIRED','Sign in to your workspace.');return; }
+  if (identity.config.production && session.user.email.toLowerCase().endsWith('.test')) { problem(reply,request,403,'LOCAL_ACCOUNT_ONLY','Use a verified real-email account for the hosted app. Local test accounts remain available on your laptop.');return; }
   if (!session.user.emailVerified) { problem(reply,request,403,'EMAIL_NOT_VERIFIED','Verify your email before using your workspace.');return; }
   const result = await identity.pool.query<DomainIdentity>('SELECT * FROM newbert.resolve_identity($1)',[session.user.id]);
   const domain = result.rows[0];
@@ -30,6 +31,8 @@ const protectedAuthPaths = new Set(['/sign-out','/change-password','/revoke-sess
 export function registerIdentityRoutes(app: FastifyInstance, database: pg.Pool, identity: IdentityRuntime) {
   app.route({ method: ['GET','POST'], url: '/api/auth/*', handler: async (request,reply) => {
     const path = new URL(request.url,identity.config.baseUrl).pathname.slice('/api/auth'.length);
+    const email = request.body && typeof request.body==='object' ? (request.body as {email?:unknown}).email : undefined;
+    if (identity.config.production && typeof email==='string' && email.trim().toLowerCase().endsWith('.test')) return problem(reply,request,403,'LOCAL_ACCOUNT_ONLY','Use a verified real-email account for the hosted app. Local test accounts remain available on your laptop.');
     if (!authPaths.has(path) && !(request.method==='GET' && /^\/reset-password\/[^/]+$/.test(path))) return problem(reply,request,404,'NOT_FOUND','This identity action is not available.');
     if (request.method==='POST') {
       if (request.headers.origin!==identity.config.origin) return problem(reply,request,403,'CSRF_REJECTED','Use the trusted application origin.');

@@ -52,6 +52,22 @@ async function register(email:string,verify=true){
 async function login(email:string,value=password){return call('/api/auth/sign-in/email','POST',{email,password:value});}
 async function verifiedSession(email:string){await register(email);const response=await login(email);assert.equal(response.statusCode,200,response.body);return cookieOf(response);}
 
+test('hosted identity rejects preserved local test accounts and sessions without deleting local access',async()=>{
+  const email='local-only@example.test', cookie=await verifiedSession(email);
+  const realCookie=await verifiedSession('hosted-check@example.com');
+  config.production=true;
+  try {
+    assert.equal((await login(email)).json().code,'LOCAL_ACCOUNT_ONLY');
+    assert.equal((await call('/api/auth/sign-up/email','POST',{email:'new@example.test',password})).statusCode,403);
+    assert.equal((await call('/api/auth/request-password-reset','POST',{email})).statusCode,403);
+    assert.equal((await call('/api/v1/me','GET',undefined,cookie)).statusCode,403);
+    assert.equal((await call('/api/auth/get-session','GET',undefined,cookie)).statusCode,403);
+    assert.equal((await call('/api/v1/me','GET',undefined,realCookie)).statusCode,200);
+  } finally { config.production=false; }
+  assert.equal((await call('/api/v1/me','GET',undefined,cookie)).statusCode,200);
+  assert.equal((await login(email)).statusCode,200);
+});
+
 test('registration requires verification and atomically creates one private workspace',async()=>{
   const email='first@example.test';const signup=await register(email,false);assert.equal(signup.json().token,undefined);
   const blocked=await login(email);assert.equal(blocked.statusCode,403);

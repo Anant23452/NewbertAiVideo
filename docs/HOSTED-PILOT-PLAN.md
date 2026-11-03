@@ -1,6 +1,6 @@
 # Free hosted pilot and preservation plan
 
-Updated: 3 November 2026. **Approved database/media migration completed and verified. Email setup and free Render deployment remain in progress.**
+Updated: 3 November 2026. **Approved database/media migration completed and verified. Brevo test delivery and the free Render backend are verified. Vercel frontend connection and full hosted acceptance remain pending.**
 
 ## Confirmed choices
 
@@ -11,17 +11,17 @@ Updated: 3 November 2026. **Approved database/media migration completed and veri
 
 ## Proposed free compute arrangement
 
-`Dockerfile` packages the API and worker, FFmpeg, Noto Devanagari fonts and font configuration. `scripts/hosting/pilot.mjs` starts both processes, forwards shutdown and stops the other process if either fails. The proposed `render.yaml` creates **one free web service**, not a paid background worker. The blueprint is JSON syntax, which is valid YAML, and passed Render's current public JSON Schema validation. Render CLI/platform validation and an actual Linux container build are still required; Docker is not installed in this local environment.
+`Dockerfile` packages the API and worker, FFmpeg, Noto Devanagari fonts and font configuration. `scripts/hosting/pilot.mjs` starts both processes, forwards shutdown and stops the other process if either fails. The proposed `render.yaml` creates **one free web service**, not a paid background worker. The blueprint is JSON syntax, which is valid YAML, and passed Render's current public JSON Schema validation. The Linux container was built and verified in GitHub Actions, including a real Hindi FFmpeg render. The approved Free Render service is live and all readiness checks pass. Docker is not installed locally.
 
 The public port comes from Render's `PORT`, and production binds to `0.0.0.0`. Render checks `/health/live`; `/health/ready` separately checks database, identity, private media and worker heartbeat. A long-running render must not cause instance replacement just because its queue heartbeat check is temporarily stale. Before allowing pilot generation, set database processing limits for one concurrent job and measure memory/CPU with real Hindi/Hinglish renders on the selected free instance.
 
 Render sleeps inactive free web services; suspended jobs resume through the existing durable queue recovery policy. No scheduled publishing or always-on rendering guarantee. Free hours are shared with the workspace's existing free service; monitor the combined allowance. No paid resources or upgrades are authorized by this plan.
 
-## Database compatibility change — code ready, real migration not applied
+## Database compatibility change — applied and preserved
 
 Migration `1793664000015_private-identity-schema.sql` moves Newbert's own `auth` schema to `newbert_auth`, preserving tables and refreshing qualified function bodies. It refuses to rename a schema containing Supabase's `auth.users`. After backup restore verification, this migration was applied to the actual local source. Updated API code now matches that source. Applied historical migrations remain unchanged.
 
-Tests verify existing password hashes, session tokens and workspace identities survive; new identity creation still works; a managed-auth sentinel is protected. The actual source now has a verified backup and an export containing 41 tables and 345 rows. Hosted copying has not occurred.
+Tests verify existing password hashes, session tokens and workspace identities survive; new identity creation still works; a managed-auth sentinel is protected. The actual source now has a verified backup and an export containing 41 tables and 345 rows. Hosted copying completed with zero count/content-hash mismatches and all 15 private media objects verified.
 
 ## Cutover sequence
 

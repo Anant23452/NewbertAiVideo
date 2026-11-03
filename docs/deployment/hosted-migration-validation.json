@@ -29,7 +29,24 @@
     "testReceivedInOwnInbox": true,
     "testEmailsSent": 1
   },
-  "renderDeployment": "Creation rejected by automatic approval pending specific server-credential transfer approval; no service created",
+  "renderDeployment": {
+    "serviceId": "srv-dbkrqfdbedkc73edc36g",
+    "deployId": "dep-dbkrqftbedkc73edc4mg",
+    "status": "live",
+    "plan": "free",
+    "region": "singapore",
+    "url": "https://newbert-video-pilot.onrender.com",
+    "livenessStatus": 200,
+    "readinessStatus": 200,
+    "readinessChecks": [
+      "database",
+      "mediaStorage",
+      "worker",
+      "identity"
+    ],
+    "anonymousMeStatus": 401,
+    "frontendConnected": false
+  },
   "linuxContainerVerification": {
     "status": "passed",
     "run": "https://github.com/Anant23452/NewbertAiVideo/actions/runs/41620446179",
@@ -37,5 +54,6 @@
     "externalAiCalls": 0
   },
   "paidResourcesCreated": 0,
-  "identityAndMailRegressionTestsPassed": 19
+  "identityAndMailRegressionTestsPassed": 20,
+  "hostedLocalTestAccountsBlocked": true
 }

@@ -1,10 +1,14 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 3 November 2026. Current focus: **core topic-to-video workflow and hosted backend preparation; Instagram deferred**. Product stage: feature-by-feature development. Vercel frontend build deployed successfully; full production service is not yet verified.
+Updated: 3 November 2026. Current focus: **hosted backend live; Vercel connection and video acceptance next; Instagram deferred**. Product stage: feature-by-feature development. Vercel frontend build deployed successfully; full production service is not yet verified.
 
 ## Start here — current work and completion order
 
-**Approved hosted migration completed (3 November):** 41 Supabase application tables and 345 rows match the verified export, including 6 projects and 13 workspaces. All 15 private media objects copied and verified; local backups/files retained. Three restricted app logins passed seven TLS/privilege/isolation checks. Security advisors report no findings after function-path hardening. Added/tested Brevo HTTPS mail delivery; account setup and Linux-container/Render/Vercel runtime checks remain in progress. Earlier blocked/preparation notes are historical. [Evidence](deployment/hosted-migration-validation.json).
+**Approved hosted migration completed (3 November):** 41 Supabase application tables and 345 rows match the verified export, including 6 projects and 13 workspaces. All 15 private media objects copied and verified; local backups/files retained. Three restricted app logins passed seven TLS/privilege/isolation checks. Security advisors report no findings after function-path hardening. Brevo Free email delivery reached the approved inbox. Linux container/Hindi rendering checks passed. The free Render API/worker is live; Vercel wiring and end-to-end hosted acceptance remain pending. Earlier blocked/preparation notes are historical. [Evidence](deployment/hosted-migration-validation.json).
+
+**Live backend (3 November):** `https://newbert-video-pilot.onrender.com` is running on the approved Free service in Anant's workspace. `/health/live` and `/health/ready` returned 200; readiness confirms database, private storage, worker and identity connections. Anonymous `/api/v1/me` returned 401. Credentials were transferred only to server settings after explicit approval. Vercel integration access is pending before setting `API_INTERNAL_ORIGIN` and redeploying the frontend. Hosted test identities are restricted; their six projects remain preserved and require an explicit real-account ownership decision before hosted use. All 20 identity/mail regression tests and the backend build passed, including production rejection of local test accounts with local access preserved. These checks do not yet establish a complete browser generation workflow.
+
+The following preparation/progress entries are historical; the live backend and completed migration notes above supersede their pending statements.
 
 **Hosted pilot preparation (3 November):** user chose free sleeping compute, migration of existing data and Anant's connected Render workspace. Prepared a guarded private-identity namespace migration, hosted TLS/project preflight, registered-media copy/verification, and a single-service API/worker container with Devanagari fonts. 42 relevant checks and backend build passed; Render public-schema validation passed. Real database migration, source backup/restore, Linux container verification, email setup and service creation are still pending. Supabase integration connection or a saved DB admin URL is needed next; Firefox capture remains unreliable. No local data migrated and no paid services created. [Concrete plan, commands and remaining gates](HOSTED-PILOT-PLAN.md).
 
@@ -39,7 +43,7 @@ Follow this order; do not start Instagram publishing ahead of the video workflow
 - [ ] Complete the security, accessibility, cleanup, backup/restore and operational gates in section 6 before a public pilot.
 - [ ] Resume live Instagram setup and F14 only after the generation workflow is accepted.
 
-**Current hosting boundary:** web/API/PostgreSQL/rendering remain local; new private media uses Supabase, with local fallback for older objects. No hosted API or worker is connected. Deploying only the frontend to Vercel does not deploy these dependencies. See [workflow and hosting](SIMPLE-WORKFLOW-AND-HOSTING.md) and [current generation steps](CORE-VIDEO-WORKFLOW.md).
+**Current hosting boundary:** API, worker, PostgreSQL and private media are hosted on Render/Supabase. The Vercel frontend still needs its backend origin configured and a redeploy. Local services/backups remain available. Public end-to-end login and generation are not yet verified. See [workflow and hosting](SIMPLE-WORKFLOW-AND-HOSTING.md) and [current generation steps](CORE-VIDEO-WORKFLOW.md).
 
 **Supabase preparation (1 November):** user requested connection to their existing project. Dashboard control is blocked by a window-capture/helper failure; no remote connection or migration completed. The local Better Auth `auth` schema must be separated from Supabase's managed schema, the loopback-only migration tooling needs a reviewed hosted path, and private media needs a storage adapter. Track these gates in the [Supabase connection plan](SUPABASE-CONNECTION-PLAN.md).
 
@@ -68,7 +72,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Processing pipeline | Reviewed baseline | [Video pipeline](VIDEO-PIPELINE-V1.md) |
 | System architecture | Reviewed baseline | [System design](SYSTEM-DESIGN-V1.md); modular backend, PostgreSQL proposal, private media and separate workers |
 | API contract | Design prepared | [OpenAPI](api/openapi-v1.json), design operations plus production status; implemented F3–F12 subset in milestone/API handoffs |
-| Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 15 applied migrations and 35 domain tables on local PostgreSQL, no hosted DB |
+| Database design | Reference promoted to local versioned migrations | [SQL reference](db/schema-v1.sql), [migration workflow](../packages/database/README.md); 16 applied migrations; 35 domain and 6 identity tables migrated and verified on Supabase |
 | Design validation | 15 isolated checks passed | [Results](db/validation-results.json); embedded PostgreSQL, not hosted/concurrency validation |
 | Provider feasibility | Live requests succeeded | Gemini script generation and ElevenLabs timestamped narration; secrets stay local |
 | Video feasibility | Two local examples | Binary ~21s and psychology spotlight effect ~39s; listening/educational evaluation still required |
@@ -76,7 +80,7 @@ This is the main project tracker. Keep it current after each feature. Completed 
 | Other UI pages | All 11 approved by user on 30 October | [Review gallery](ui/PRODUCT-DESIGN-REVIEW.html), [Stitch project](https://stitch.withgoogle.com/projects/2520368196713015322) |
 | Responsive geometry | Export checks passed | [Results](ui/product/responsive-review.json); 1440/768/390/360px, no reported material overflow; not full accessibility/device testing |
 | Existing local application | Feasibility prototype only | Root `server.mjs`, `public/`, `lib/`; not the production architecture |
-| Application implementation | F1–F12 and studio refinements complete for local review; F13 local only | TypeScript/Fastify, PostgreSQL, identity/private workspaces, projects/history, durable jobs, usage/settings, Gemini planning and reviewed approval, generated narration and validated motion rendering; Home playback and saved subtitles. External email delivery, live Instagram acceptance and public hosting remain pending |
+| Application implementation | F1–F12 and studio refinements complete for local review; F13 local only | TypeScript/Fastify, PostgreSQL, identity/private workspaces, projects/history, durable jobs, usage/settings, Gemini planning and reviewed approval, generated narration and validated motion rendering; Home playback and saved subtitles. External email delivery and the hosted backend are verified; frontend wiring, full hosted acceptance and live Instagram acceptance remain pending |
 
 The homepage uses black, electric violet, mint and white. Product screens cover dashboard, projects, idea/brief, storyboard, progress, preview/history, publishing, settings, sign-in, registration and recovery. Stitch exports are references, not production-ready components or functional flows.
 
