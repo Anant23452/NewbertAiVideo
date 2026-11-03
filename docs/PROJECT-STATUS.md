@@ -1,8 +1,10 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 1 November 2026. Current focus: **core topic-to-video workflow; Instagram deferred until generation is working for the user**. Product stage: feature-by-feature development. Production release: not deployed.
+Updated: 3 November 2026. Current focus: **Vercel frontend deployment repair and core topic-to-video workflow; Instagram deferred**. Product stage: feature-by-feature development. Full production service: not deployed; frontend deployment verification pending.
 
 ## Start here — current work and completion order
+
+**Vercel repair (3 November):** the current GitHub commit's Vercel check failed because the build ran outside the Next.js app directory. Added a root `vercel-build` script targeting `apps/web` and `vercel.json` with the matching output directory. Added deployment checks and a controlled 503 API response for Vercel builds without a hosted backend; local development retains its API proxy. Three deployment checks and the production build passed. GitHub push and hosted deployment result will be recorded after verification. [Deployment setup and limits](VERCEL-DEPLOYMENT.md).
 
 This document is the delivery tracker. Update the milestone status, open checklist and verification evidence after each feature or scope change. A locally tested feature is not the same as a deployed, user-accepted feature.
 

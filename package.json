@@ -28,6 +28,7 @@
     "check": "node --check server.mjs && node --check public/app.js && node --check lib/jobs.mjs",
     "dev:web": "next dev apps/web --hostname 127.0.0.1 --port 3001",
     "build:web": "next build apps/web",
+    "vercel-build": "npm run build:web",
     "start:web": "next start apps/web --hostname 127.0.0.1 --port 3001",
     "check:web": "tsc -p apps/web/tsconfig.json --noEmit",
     "dev:api": "tsx watch --env-file-if-exists=apps/api/.env apps/api/src/main.ts",
