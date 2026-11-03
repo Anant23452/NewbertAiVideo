@@ -404,11 +404,11 @@ test("runtime cannot read platform budgets or auth tables; worker has no identit
     /permission/,
   );
   await assert.rejects(
-    h.runtime.query("SELECT * FROM auth.account"),
+    h.runtime.query("SELECT * FROM newbert_auth.account"),
     /permission/,
   );
   await assert.rejects(
-    h.worker.query("SELECT * FROM auth.account"),
+    h.worker.query("SELECT * FROM newbert_auth.account"),
     /permission/,
   );
   await assert.rejects(

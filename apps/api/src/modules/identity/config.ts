@@ -4,9 +4,10 @@ export interface AuthConfig {
   baseUrl: string;
   origin: string;
   production: boolean;
-  mailMode: 'local' | 'smtp';
+  mailMode: 'local' | 'smtp' | 'brevo';
   smtpUrl?: string;
   mailFrom?: string;
+  brevoApiKey?: string;
 }
 
 export function readAuthConfig(env = process.env): AuthConfig | undefined {
@@ -24,7 +25,8 @@ export function readAuthConfig(env = process.env): AuthConfig | undefined {
   if ((base.protocol==='http:'&&!local(base)) || (origin.protocol==='http:'&&!local(origin))) throw new Error('Plain HTTP auth is limited to loopback development.');
   if (production && (base.protocol !== 'https:' || origin.protocol !== 'https:')) throw new Error('Production authentication requires HTTPS.');
   const mailMode = env.AUTH_MAIL_MODE || (production ? 'smtp' : 'local');
-  if (mailMode !== 'smtp' && mailMode !== 'local') throw new Error('Choose local or SMTP auth mail delivery.');
+  if (mailMode !== 'smtp' && mailMode !== 'local' && mailMode !== 'brevo') throw new Error('Choose local, SMTP or Brevo auth mail delivery.');
+  if (mailMode === 'brevo' && (!env.BREVO_API_KEY?.trim() || !env.AUTH_MAIL_FROM || !/^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(env.AUTH_MAIL_FROM))) throw new Error('Brevo requires a server API key and verified sender email.');
   if (mailMode === 'local' && (production || !local(base) || !local(origin))) throw new Error('Local auth mail is limited to loopback development.');
   if (mailMode === 'smtp' && (!env.SMTP_URL || !env.AUTH_MAIL_FROM || /[\r\n]/.test(env.AUTH_MAIL_FROM))) throw new Error('SMTP delivery needs a transport URL and sender.');
   if (mailMode === 'smtp') {
@@ -36,5 +38,6 @@ export function readAuthConfig(env = process.env): AuthConfig | undefined {
     }
   }
   return { databaseUrl: env.AUTH_DATABASE_URL, secret: env.BETTER_AUTH_SECRET, baseUrl: base.origin, origin: origin.origin, production, mailMode,
-    ...(env.SMTP_URL ? { smtpUrl: env.SMTP_URL } : {}), ...(env.AUTH_MAIL_FROM ? { mailFrom: env.AUTH_MAIL_FROM } : {}) };
+    ...(env.SMTP_URL ? { smtpUrl: env.SMTP_URL } : {}), ...(env.AUTH_MAIL_FROM ? { mailFrom: env.AUTH_MAIL_FROM } : {}),
+    ...(mailMode === 'brevo' ? { brevoApiKey: env.BREVO_API_KEY!.trim() } : {}) };
 }

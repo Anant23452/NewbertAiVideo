@@ -61,7 +61,7 @@ test('registration requires verification and atomically creates one private work
   const raw=signed.headers['set-cookie'];const cookies=Array.isArray(raw)?raw.join(';'):raw||'';assert.match(cookies,/HttpOnly/i);assert.match(cookies,/SameSite=Lax/i);
   const me=await call('/api/v1/me','GET',undefined,cookieOf(signed));assert.equal(me.statusCode,200,me.body);assert.match(me.json().csrfToken,/^[a-f0-9]{64}$/);
   const id=me.json().user.id;const workspace=me.json().workspace.id;
-  const binding=await owner.query('SELECT * FROM auth.workspace_binding WHERE app_user_id=$1',[id]);assert.equal(binding.rowCount,1);assert.equal(binding.rows[0].workspace_id,workspace);
+  const binding=await owner.query('SELECT * FROM newbert_auth.workspace_binding WHERE app_user_id=$1',[id]);assert.equal(binding.rowCount,1);assert.equal(binding.rows[0].workspace_id,workspace);
   assert.equal((await owner.query('SELECT * FROM newbert.workspaces WHERE user_id=$1',[id])).rowCount,1);
   const session=await call('/api/auth/get-session','GET',undefined,cookieOf(signed));assert.equal(session.statusCode,200);assert.equal(session.json().session.token,undefined);
   results.push('Verified sign-in, HttpOnly/Lax cookie, sanitized responses and atomic one-user/one-workspace binding');
@@ -73,21 +73,21 @@ test('duplicate and concurrent signup cannot allocate duplicate workspaces',asyn
   assert.equal((await owner.query('SELECT count(*)::int AS n FROM newbert.workspaces')).rows[0].n,original);
   const responses=await Promise.all([call('/api/auth/sign-up/email','POST',{email:'race@example.test',password}),call('/api/auth/sign-up/email','POST',{email:'race@example.test',password})]);
   assert.ok(responses.some(r=>r.statusCode===200));
-  const users=await owner.query('SELECT id FROM auth."user" WHERE email=$1',['race@example.test']);assert.equal(users.rowCount,1);
-  assert.equal((await owner.query('SELECT * FROM auth.workspace_binding WHERE auth_user_id=$1',[users.rows[0].id])).rowCount,1);
+  const users=await owner.query('SELECT id FROM newbert_auth."user" WHERE email=$1',['race@example.test']);assert.equal(users.rowCount,1);
+  assert.equal((await owner.query('SELECT * FROM newbert_auth.workspace_binding WHERE auth_user_id=$1',[users.rows[0].id])).rowCount,1);
   results.push('Duplicate and concurrent registration retain exactly one identity/workspace');
 });
 
 test('a failed credential insert rolls back user, binding and workspace together',async()=>{
   const beforeCount=(await owner.query('SELECT count(*)::int AS n FROM newbert.workspaces')).rows[0].n;
-  await owner.query('ALTER TABLE auth.account ADD CONSTRAINT f3_test_reject_credential CHECK ("providerId" <> \'credential\') NOT VALID');
+  await owner.query('ALTER TABLE newbert_auth.account ADD CONSTRAINT f3_test_reject_credential CHECK ("providerId" <> \'credential\') NOT VALID');
   const originalError=console.error;const logged:unknown[][]=[];console.error=(...args:unknown[])=>{logged.push(args);};
   try{
     const response=await call('/api/auth/sign-up/email','POST',{email:'rollback@example.test',password});assert.ok(response.statusCode>=400);
-    assert.equal((await owner.query('SELECT id FROM auth."user" WHERE email=$1',['rollback@example.test'])).rowCount,0);
+    assert.equal((await owner.query('SELECT id FROM newbert_auth."user" WHERE email=$1',['rollback@example.test'])).rowCount,0);
     assert.equal((await owner.query('SELECT count(*)::int AS n FROM newbert.workspaces')).rows[0].n,beforeCount);
     assert.equal(logged.length,0,'Raw database/auth faults must not be logged');
-  }finally{console.error=originalError;await owner.query('ALTER TABLE auth.account DROP CONSTRAINT f3_test_reject_credential');}
+  }finally{console.error=originalError;await owner.query('ALTER TABLE newbert_auth.account DROP CONSTRAINT f3_test_reject_credential');}
   results.push('Injected credential failure leaves no orphan auth user or workspace');
 });
 
@@ -105,7 +105,7 @@ test('workspace reads resolve from the session; updates require CSRF and optimis
   const saved=await call('/api/v1/workspace','PATCH',{timezone:'UTC'},one,{'if-match':etag,'x-csrf-token':token});assert.equal(saved.statusCode,200,saved.body);assert.equal(saved.json().timezone,'UTC');
   assert.equal((await call('/api/v1/workspace','PATCH',{timezone:'Asia/Kolkata'},one,{'if-match':etag,'x-csrf-token':token})).statusCode,412);
   assert.equal((await call('/api/v1/workspace','GET',undefined,two)).json().timezone,'Asia/Kolkata');
-  await assert.rejects(runtime.query('SELECT * FROM auth."user"'),/permission denied/);
+  await assert.rejects(runtime.query('SELECT * FROM newbert_auth."user"'),/permission denied/);
   await assert.rejects(runtime.query('SELECT * FROM newbert.resolve_identity($1)',['anything']),/permission denied/);
   await assert.rejects(authPool.query('SELECT * FROM newbert.projects'),/permission denied/);
   const r=await withWorkspace(runtime,first.json().workspace.id,async client=>client.query('SELECT id FROM newbert.workspaces WHERE id=$1',[second.json().workspace.id]));assert.equal(r.rowCount,0);
@@ -141,14 +141,14 @@ test('password recovery is non-enumerating, rejects weak/reused tokens and revok
 
 test('session refresh is read-only on GET and requires CSRF on POST',async()=>{
   const email='refresh@example.test',cookie=await verifiedSession(email);
-  await owner.query('UPDATE auth.session SET "expiresAt"=now()+interval \'1 hour\',"updatedAt"=now()-interval \'2 days\' WHERE "userId"=(SELECT id FROM auth."user" WHERE email=$1)',[email]);
-  const before=(await owner.query('SELECT "expiresAt" FROM auth.session WHERE "userId"=(SELECT id FROM auth."user" WHERE email=$1)',[email])).rows[0].expiresAt;
+  await owner.query('UPDATE newbert_auth.session SET "expiresAt"=now()+interval \'1 hour\',"updatedAt"=now()-interval \'2 days\' WHERE "userId"=(SELECT id FROM newbert_auth."user" WHERE email=$1)',[email]);
+  const before=(await owner.query('SELECT "expiresAt" FROM newbert_auth.session WHERE "userId"=(SELECT id FROM newbert_auth."user" WHERE email=$1)',[email])).rows[0].expiresAt;
   const get=await call('/api/auth/get-session','GET',undefined,cookie);assert.equal(get.statusCode,200,get.body);assert.equal(get.json().needsRefresh,true);
-  assert.equal((await owner.query('SELECT "expiresAt" FROM auth.session WHERE "userId"=(SELECT id FROM auth."user" WHERE email=$1)',[email])).rows[0].expiresAt.toISOString(),before.toISOString());
+  assert.equal((await owner.query('SELECT "expiresAt" FROM newbert_auth.session WHERE "userId"=(SELECT id FROM newbert_auth."user" WHERE email=$1)',[email])).rows[0].expiresAt.toISOString(),before.toISOString());
   assert.equal((await call('/api/auth/get-session','POST',{},cookie)).statusCode,403);
   const me=await call('/api/v1/me','GET',undefined,cookie);
   const refreshed=await call('/api/auth/get-session','POST',{},cookie,{'x-csrf-token':me.json().csrfToken});assert.equal(refreshed.statusCode,200,refreshed.body);
-  assert.ok((await owner.query('SELECT "expiresAt" FROM auth.session WHERE "userId"=(SELECT id FROM auth."user" WHERE email=$1)',[email])).rows[0].expiresAt.getTime()>before.getTime());
+  assert.ok((await owner.query('SELECT "expiresAt" FROM newbert_auth.session WHERE "userId"=(SELECT id FROM newbert_auth."user" WHERE email=$1)',[email])).rows[0].expiresAt.getTime()>before.getTime());
   results.push('Read-only GET sessions and explicit CSRF-protected POST refresh verified');
 });
 
@@ -159,7 +159,7 @@ test('expired sessions, disabled accounts and tampered verification links cannot
   assert.notEqual((await login('disabled@example.test')).statusCode,200);
   const allowedLogout=await call('/api/auth/sign-out','POST',{},cookie,{'x-csrf-token':me.json().csrfToken});assert.equal(allowedLogout.statusCode,200,allowedLogout.body);
   const expired=await verifiedSession('expired@example.test');
-  await owner.query('UPDATE auth.session SET "expiresAt"=now()-interval \'1 minute\' WHERE "userId"=(SELECT id FROM auth."user" WHERE email=$1)',['expired@example.test']);
+  await owner.query('UPDATE newbert_auth.session SET "expiresAt"=now()-interval \'1 minute\' WHERE "userId"=(SELECT id FROM newbert_auth."user" WHERE email=$1)',['expired@example.test']);
   assert.equal((await call('/api/v1/me','GET',undefined,expired)).statusCode,401);
   const invalid=await call('/api/auth/verify-email?token=invalid');assert.ok(invalid.statusCode>=400||invalid.statusCode===302);
   results.push('Disabled identities, expired sessions and invalid verification tokens are blocked');
@@ -179,13 +179,13 @@ test('expired reset links and tampered verification tokens remain unusable',asyn
   const email='expired-reset@example.test';await verifiedSession(email);
   await call('/api/auth/request-password-reset','POST',{email,redirectTo:origin+'/reset-password'});
   const message=mail.findLast(m=>m.to===email&&m.kind==='password_reset');assert.ok(message);const url=new URL(message.url);const token=url.searchParams.get('token')||url.pathname.split('/').pop();
-  await owner.query('UPDATE auth.verification SET "expiresAt"=now()-interval \'1 minute\'');
+  await owner.query('UPDATE newbert_auth.verification SET "expiresAt"=now()-interval \'1 minute\'');
   assert.ok((await call('/api/auth/reset-password','POST',{token,newPassword:password+'-new'})).statusCode>=400);
   assert.equal((await login(email)).statusCode,200);
   await register('tampered@example.test',false);
   const verify=mail.findLast(m=>m.to==='tampered@example.test'&&m.kind==='verification');assert.ok(verify);const tampered=new URL(verify.url);tampered.searchParams.set('token',tampered.searchParams.get('token')+'broken');
   await call(tampered.pathname+tampered.search);
-  assert.equal((await owner.query('SELECT "emailVerified" FROM auth."user" WHERE email=$1',['tampered@example.test'])).rows[0].emailVerified,false);
+  assert.equal((await owner.query('SELECT "emailVerified" FROM newbert_auth."user" WHERE email=$1',['tampered@example.test'])).rows[0].emailVerified,false);
   assert.equal((await login('tampered@example.test')).statusCode,403);
   results.push('Expired reset tokens and tampered verification links cannot change credentials or verification');
 });
@@ -205,7 +205,7 @@ test('default auth rate limiting is persisted and returns a bounded retry respon
     let last;
     for(let i=0;i<6;i++)last=await limited.inject({method:'POST',url:'/api/auth/sign-in/email',remoteAddress:'198.51.100.22',headers:{origin,'content-type':'application/json'},payload:{email:'missing@example.test',password}});
     assert.equal(last!.statusCode,429,last!.body);assert.ok(last!.headers['retry-after']);
-    assert.ok((await owner.query('SELECT id FROM auth."rateLimit"')).rowCount!>0);
+    assert.ok((await owner.query('SELECT id FROM newbert_auth."rateLimit"')).rowCount!>0);
   }finally{await limited.close();}
   results.push('Database-backed auth throttling returns 429 and Retry-After');
 });

@@ -63,7 +63,13 @@
     "instagram:setup": "node scripts/instagram/setup.mjs",
     "instagram:check": "tsx --env-file-if-exists=apps/api/.env scripts/instagram/check.ts",
     "test:studio:browser": "tsx tests/studio/browser.ts",
-    "test:storage": "tsx --test tests/storage/supabase.test.ts"
+    "test:storage": "tsx --test tests/storage/supabase.test.ts",
+    "hosting:check": "node scripts/hosting/check.mjs",
+    "hosting:backup": "node scripts/hosting/backup.mjs",
+    "hosting:verify-backup": "node scripts/hosting/verify-backup.mjs",
+    "hosting:export": "node scripts/hosting/prepare-export.mjs",
+    "hosting:media": "tsx scripts/hosting/migrate-media.ts",
+    "start:pilot": "node scripts/hosting/pilot.mjs"
   },
   "dependencies": {
     "better-auth": "1.7.14",

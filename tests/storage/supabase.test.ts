@@ -44,6 +44,10 @@ test("public buckets fail readiness and refuse new uploads",async()=>{
   await assert.rejects(store.put(workspace,artifact,Buffer.from("x")),/not private/);
   assert.equal(objects.size,0);
 });
+test("cloud-only lookup distinguishes missing objects from provider failures",async()=>{
+  assert.equal(await fixture().store.getIfPresent(key),null);
+  for(const failure of [401,403,500]) await assert.rejects(fixture({failure}).store.getIfPresent(key),/unavailable/);
+});
 test("invalid object keys and oversized transfers fail without accepting bytes",async()=>{
   const {store,objects}=fixture({max:4});
   await assert.rejects(store.put("../escape",artifact,Buffer.from("x")),/Invalid/);

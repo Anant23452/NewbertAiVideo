@@ -9,7 +9,7 @@ try {
   const config=await localConfig();
   if(!config.authPassword){config.authPassword=randomBytes(32).toString('hex');await writeFile(join(localDirectory,'config.json'),JSON.stringify(config),{mode:0o600});}
   client=new pg.Client({connectionString:connectionUrl(config)});await client.connect();
-  if(!(await client.query("SELECT to_regclass('auth.workspace_binding') AS name")).rows[0].name)throw new Error('Run db:migrate first.');
+  if(!(await client.query("SELECT to_regclass('newbert_auth.workspace_binding') AS name")).rows[0].name)throw new Error('Run db:migrate first.');
   const role=await client.query("SELECT rolsuper OR rolbypassrls OR rolcreaterole OR rolcreatedb OR rolreplication AS unsafe FROM pg_roles WHERE rolname='newbert_auth'");
   if(role.rows[0]?.unsafe)throw new Error('Existing identity role is unsafe.');
   if(!role.rowCount)await client.query(`CREATE ROLE newbert_auth LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS PASSWORD ${pg.escapeLiteral(config.authPassword)}`);

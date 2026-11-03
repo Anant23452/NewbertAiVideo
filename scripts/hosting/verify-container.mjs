@@ -1,0 +1,15 @@
+import {mkdir,readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {randomUUID} from 'node:crypto';
+import {renderPreflight,run,measureAudio,renderVideo} from '../../dist/apps/api/src/modules/production/render.js';
+import {speechManifest,align} from '../../dist/apps/api/src/modules/production/timing.js';
+await renderPreflight();
+const dir=resolve('.local/container-check');await mkdir(dir,{recursive:true});
+const scene=()=>({id:randomUUID(),purpose:'Container rendering fixture',component:'comparison',title:'A clear explanation',spokenNarration:'एक आसान विचार समझें।',displayNarration:'एक आसान विचार समझें।',textMappings:[],objects:['Idea','Meaning'].map(label=>({id:randomUUID(),type:'node',label,parameters:{shape:'rectangle'}})),cues:[],claimIds:[]});
+const content={schemaVersion:1,brief:{topic:'Container fixture',language:'Hindi',audience:'college',mode:'guided'},voice:{catalogVoiceId:'fixture',providerConnectionId:null},style:{preset:'dark_light',accentColor:'#A18BFF'},scenes:[scene(),scene()],pronunciationOverrides:[],captionOverrides:[]};
+await run(['-y','-f','lavfi','-i','sine=frequency=440:duration=4','-c:a','libmp3lame','audio.mp3'],dir);
+const manifest=speechManifest(content,{voiceId:'fixture',model:'fixture',credentialVersion:'fixture'}),chars=[...manifest.text];
+const timing=align(manifest,{characters:chars,character_start_times_seconds:chars.map((_,i)=>i/chars.length*3.9),character_end_times_seconds:chars.map((_,i)=>(i+1)/chars.length*3.9)},await measureAudio(dir));
+const result=await renderVideo(dir,timing,content);
+if((await readFile(resolve(dir,'video.mp4'))).length<1000)throw Error('No video output');
+console.log(JSON.stringify({containerRendering:'passed',validation:result.validation,externalProviderCalls:0}));

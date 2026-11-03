@@ -24,6 +24,8 @@ Browser automation could not reliably capture Firefox. The user supplied credent
 
 ## Compatibility work before connection
 
+3 November update: Supabase integration is connected. Migration 16 was tested, then applied locally after a verified backup/restore. The source export contains 41 tables/345 rows. Automatic approval blocked the hosted schema change and copying 15 private media objects; follow the [concrete approval review](HOSTED-MIGRATION-REVIEW.md) and [hosted preservation/cutover plan](HOSTED-PILOT-PLAN.md) rather than applying initial migrations directly to Supabase.
+
 - **Identity schema:** Newbert currently owns Better Auth tables in `auth`. Supabase uses `auth` for its managed authentication service. Inventory all qualified SQL, identity adapter settings, triggers, functions and grants before selecting a separate application identity schema. Preserve already-applied local migration history and test a reviewed hosted bootstrap path. Do not apply existing migrations unchanged into Supabase's managed schema.
 - **Hosted migrations:** `scripts/db/cli.mjs` deliberately accepts only loopback databases. Add a separate explicit hosted migration path with verified TLS, target identification, migration status/preflight and least-privilege provisioning. Do not simply remove the local safety check.
 - **Database roles:** Provision distinct restricted runtime, identity and worker logins; validate membership, grants, workspace isolation and connection limits on Supabase. Never run the API using migration-owner credentials.

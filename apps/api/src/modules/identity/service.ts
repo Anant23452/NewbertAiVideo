@@ -14,7 +14,7 @@ export function identityOptions(pool: pg.Pool, config: AuthConfig, mail: AuthMai
   return {
     appName: 'Newbert AI Video', baseURL: config.baseUrl, basePath: '/api/auth', secret: config.secret,
     trustedOrigins: [config.origin],
-    database: { dialect: new PostgresDialect({ pool }), type: 'postgres', schemaName: 'auth', transaction: true },
+    database: { dialect: new PostgresDialect({ pool }), type: 'postgres', schemaName: 'newbert_auth', transaction: true },
     logger: { disabled: true }, telemetry: { enabled: false },
     // Propagate unexpected faults to Fastify's sanitized error boundary instead
     // of better-call's fallback console logger (which can print DB row details).
@@ -42,8 +42,8 @@ export type IdentityService = ReturnType<typeof createIdentityService>;
 export async function identityDatabaseState(pool: pg.Pool): Promise<'connected' | 'unsafe_role' | 'unavailable'> {
   try {
     const { rows } = await pool.query<{ unsafe: boolean; ready: boolean }>(`SELECT r.rolsuper OR r.rolbypassrls OR r.rolcreaterole
-      OR EXISTS (SELECT 1 FROM pg_namespace n WHERE n.nspname IN ('auth','newbert') AND n.nspowner=r.oid) AS unsafe,
-      pg_has_role(current_user,'newbert_identity','member') AND to_regclass('auth.workspace_binding') IS NOT NULL AS ready
+      OR EXISTS (SELECT 1 FROM pg_namespace n WHERE n.nspname IN ('newbert_auth','newbert') AND n.nspowner=r.oid) AS unsafe,
+      pg_has_role(current_user,'newbert_identity','member') AND to_regclass('newbert_auth.workspace_binding') IS NOT NULL AS ready
       FROM pg_roles r WHERE rolname=current_user`);
     if (rows[0]?.unsafe) return 'unsafe_role';
     return rows[0]?.ready ? 'connected' : 'unavailable';

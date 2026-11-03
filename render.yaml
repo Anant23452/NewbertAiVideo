@@ -1,0 +1,35 @@
+{
+  "services": [
+    {
+      "type": "web",
+      "name": "newbert-video-pilot",
+      "runtime": "docker",
+      "repo": "https://github.com/Anant23452/NewbertAiVideo",
+      "branch": "main",
+      "region": "singapore",
+      "plan": "free",
+      "numInstances": 1,
+      "dockerfilePath": "./Dockerfile",
+      "dockerContext": ".",
+      "healthCheckPath": "/health/live",
+      "envVars": [
+        { "key": "APP_ORIGIN", "sync": false },
+        { "key": "AUTH_BASE_URL", "sync": false },
+        { "key": "BETTER_AUTH_SECRET", "sync": false },
+        { "key": "RUNTIME_DATABASE_URL", "sync": false },
+        { "key": "AUTH_DATABASE_URL", "sync": false },
+        { "key": "WORKER_DATABASE_URL", "sync": false },
+        { "key": "SUPABASE_URL", "sync": false },
+        { "key": "SUPABASE_SECRET_KEY", "sync": false },
+        { "key": "SUPABASE_STORAGE_BUCKET", "sync": false },
+        { "key": "GEMINI_API_KEY", "sync": false },
+        { "key": "GEMINI_MODEL", "sync": false },
+        { "key": "ELEVENLABS_API_KEY", "sync": false },
+        { "key": "ELEVENLABS_VOICE_ID", "sync": false },
+        { "key": "AUTH_MAIL_MODE", "value": "brevo" },
+        { "key": "BREVO_API_KEY", "sync": false },
+        { "key": "AUTH_MAIL_FROM", "sync": false }
+      ]
+    }
+  ]
+}

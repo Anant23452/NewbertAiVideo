@@ -1,5 +1,7 @@
 # PostgreSQL and migrations
 
+Hosting preparation (3 November): migration 16 moves the application-owned identity namespace from `auth` to `newbert_auth` and updates its function bodies. Updated API code expects the new namespace. It was applied to the local source after backup restore verification. Do not apply the historical bootstrap migrations to Supabase's managed `auth` schema. Hosted copying awaits the [specific migration approval](../../docs/HOSTED-MIGRATION-REVIEW.md); see the [preservation and hosted cutover plan](../../docs/HOSTED-PILOT-PLAN.md).
+
 F3 adds migrations `1793318400002_auth-schema` and `1793318400003_identity-bootstrap`: five Better Auth tables plus one private binding table in `auth`, atomic private-workspace/session-status triggers, a narrow identity resolver and separate `newbert_identity` service role. Run `npm run auth:setup` after migrations to provision the local identity login without granting it tenant-project access. [Identity design](../../docs/decisions/ADR-002-IDENTITY-WORKSPACE.md).
 
 F2 uses PostgreSQL 17-compatible SQL, the `pg` client and `node-pg-migrate`. Domain schema lives in `newbert`; migration history is `public.pgmigrations`. Better Auth owns the separate `auth` schema introduced in F3. Migrations create no application users, sample projects, API keys or remote services.

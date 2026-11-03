@@ -1,0 +1,28 @@
+name: Hosted pilot container
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - .dockerignore
+      - deploy/**
+      - apps/api/**
+      - apps/worker/**
+      - packages/**
+      - scripts/hosting/**
+      - package.json
+      - package-lock.json
+      - .github/workflows/hosted-container.yml
+permissions:
+  contents: read
+jobs:
+  linux-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the deployment container
+        run: docker build -t newbert-video-pilot .
+      - name: Verify Hindi motion rendering without AI calls
+        run: docker run --rm --entrypoint node newbert-video-pilot scripts/hosting/verify-container.mjs

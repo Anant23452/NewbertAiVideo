@@ -71,7 +71,7 @@ export class SupabaseMediaStore implements MediaStore {
     if (!response.ok) throw new Error("Private object upload rejected.");
     return {key, byteSize: bytes.length, contentHash: createHash("sha256").update(bytes).digest("hex")};
   }
-  async get(key: string) {
+  async getIfPresent(key: string): Promise<Buffer | null> {
     if (!objectKey.test(key)) throw new Error("Invalid private object key.");
     const response = await this.request("object/authenticated/" + this.bucket + "/" + key);
     if (response.ok) return this.bounded(response, this.maxBytes);
@@ -81,7 +81,13 @@ export class SupabaseMediaStore implements MediaStore {
       try { missing = String(JSON.parse((await this.bounded(response, 16384)).toString()).statusCode) === "404"; }
       catch { missing = false; }
     } else await response.body?.cancel();
-    if (missing && this.legacy) return this.legacy.get(key);
+    if (missing) return null;
+    throw new Error("Private object unavailable.");
+  }
+  async get(key: string) {
+    const bytes = await this.getIfPresent(key);
+    if (bytes !== null) return bytes;
+    if (this.legacy) return this.legacy.get(key);
     throw new Error("Private object unavailable.");
   }
 }

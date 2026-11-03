@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+**/.env
+**/.env.*
+.local
+**/node_modules
+**/.next
+dist
+test-results
+artifacts
+.data
+.vercel
+docs
+tests
