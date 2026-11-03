@@ -1,10 +1,10 @@
 # Newbert AI Video — project status and delivery backlog
 
-Updated: 3 November 2026. Current focus: **Vercel frontend deployment repair and core topic-to-video workflow; Instagram deferred**. Product stage: feature-by-feature development. Full production service: not deployed; frontend deployment verification pending.
+Updated: 3 November 2026. Current focus: **core topic-to-video workflow and hosted backend preparation; Instagram deferred**. Product stage: feature-by-feature development. Vercel frontend build deployed successfully; full production service is not yet verified.
 
 ## Start here — current work and completion order
 
-**Vercel repair (3 November):** the current GitHub commit's Vercel check failed because the build ran outside the Next.js app directory. Added a root `vercel-build` script targeting `apps/web` and `vercel.json` with the matching output directory. Added deployment checks and a controlled 503 API response for Vercel builds without a hosted backend; local development retains its API proxy. Three deployment checks and the production build passed. GitHub push and hosted deployment result will be recorded after verification. [Deployment setup and limits](VERCEL-DEPLOYMENT.md).
+**Vercel repair (3 November):** fixed building outside the Next.js app directory with a root `vercel-build` script targeting `apps/web` and `vercel.json` with the matching output directory. Commit `ac24bc46e92296abc8cc8874ac7fbc6dea56cb09` was pushed to GitHub main; its Vercel status is **success**, description “Deployment has completed”. [Deployment record](https://vercel.com/newbert07-5307/newbert-ai-video/GAz4JFCParRGSRXuyWEh4Gord2zB). Three deployment checks and the production build passed; local production HTTP checks verified homepage 200, security headers and non-cacheable 503 responses for unconfigured backend calls. Public-URL smoke checks await the user's Visit URL; live account/video workflows remain unverified. [Deployment setup and limits](VERCEL-DEPLOYMENT.md).
 
 This document is the delivery tracker. Update the milestone status, open checklist and verification evidence after each feature or scope change. A locally tested feature is not the same as a deployed, user-accepted feature.
 

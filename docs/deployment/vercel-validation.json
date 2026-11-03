@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-03",
+  "repository": "Anant23452/NewbertAiVideo",
+  "verifiedCommit": "ac24bc46e92296abc8cc8874ac7fbc6dea56cb09",
+  "githubVercelStatus": "success",
+  "githubVercelDescription": "Deployment has completed",
+  "deploymentRecord": "https://vercel.com/newbert07-5307/newbert-ai-video/GAz4JFCParRGSRXuyWEh4Gord2zB",
+  "configurationTestsPassed": 3,
+  "productionBuild": "passed with VERCEL=1",
+  "localProductionHttpChecks": {
+    "homepage": 200,
+    "unconfiguredApiGet": 503,
+    "unconfiguredSignInPost": 503,
+    "apiCacheControl": "no-store",
+    "xFrameOptions": "DENY",
+    "xContentTypeOptions": "nosniff",
+    "referrerPolicy": "no-referrer"
+  },
+  "publicUrlSmokeCheck": "pending public Visit URL",
+  "fullHostedVideoWorkflow": "not verified; hosted backend/database/worker remain separate work",
+  "secretsCommitted": false
+}
