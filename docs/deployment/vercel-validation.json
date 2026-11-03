@@ -16,7 +16,13 @@
     "xContentTypeOptions": "nosniff",
     "referrerPolicy": "no-referrer"
   },
-  "publicUrlSmokeCheck": "pending public Visit URL",
+  "publicUrlSmokeCheck": {
+    "homepage": 302,
+    "signIn": 302,
+    "apiMe": 302,
+    "result": "Vercel deployment protection redirects all three requests to Vercel SSO; app content and headers cannot be assessed anonymously. Protection was not changed or bypassed."
+  },
   "fullHostedVideoWorkflow": "not verified; hosted backend/database/worker remain separate work",
-  "secretsCommitted": false
+  "secretsCommitted": false,
+  "publicUrl": "https://newbert-ai-video-git-main-newbert07-5307.vercel.app/"
 }
