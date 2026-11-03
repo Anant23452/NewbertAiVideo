@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Brand } from "./brand";
-import { api, ApiError, safeNext } from "../lib/api";
+import { api, ApiError, safeNext, waitForAuthService } from "../lib/api";
 type Mode =
   | "sign-in"
   | "create-account"
@@ -54,6 +54,9 @@ export default function Auth({ mode }: { mode: Mode }) {
     const callbackURL =
       location.origin + "/verify-email?next=" + encodeURIComponent(next);
     try {
+      setNotice('Connecting to the service. The free pilot may take a minute to wake up.');
+      await waitForAuthService();
+      setNotice('');
       if (mode === "sign-in") {
         await api("/api/auth/sign-in/email", { email, password });
         location.assign(next);
@@ -91,6 +94,7 @@ export default function Auth({ mode }: { mode: Mode }) {
         setToken("");
       }
     } catch (e) {
+      setNotice('');
       setError(
         e instanceof ApiError && e.status === 403 && mode === "sign-in"
           ? "Please verify your email before signing in. You can request another verification link below."

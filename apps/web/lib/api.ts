@@ -6,6 +6,22 @@ export class ApiError extends Error {
     super(message);
   }
 }
+// Only retry a read while sleeping pilot compute starts. Never replay an auth POST.
+export async function waitForAuthService() {
+  const deadline = Date.now() + 90000;
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch('/api/v1/me', {
+        credentials: 'same-origin', cache: 'no-store',
+        signal: AbortSignal.timeout(10000),
+      });
+      if ([200, 401, 403].includes(response.status)) return;
+      if (![502, 503, 504].includes(response.status)) break;
+    } catch { /* A sleeping instance may close or time out the proxy request. */ }
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  }
+  throw new Error('The service is taking longer to start. Please wait a minute and try again. Your request was not submitted.');
+}
 export async function api<T = Record<string, unknown>>(
   path: string,
   body?: unknown,
