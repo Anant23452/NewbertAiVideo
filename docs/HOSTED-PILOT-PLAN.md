@@ -57,3 +57,9 @@ References: [Render free limits](https://render.com/docs/free), [Render Blueprin
 ## Latest verified execution
 
 The user approved the migration. All 41 tables/345 rows match the export; all 15 media objects were copied and verified. Seven restricted-role TLS/isolation checks passed, and security advisors are clear after pinning two private function search paths. Brevo HTTPS mail delivery has three passing adapter tests; sender/key setup is pending. No paid resources or new Render service created yet. See [evidence](deployment/hosted-migration-validation.json). Older preparation/approval blockers above are superseded.
+
+## Email/container complete; Render transfer pending
+
+Brevo Free onboarding and the verified sender are complete. The user approved a key restricted to Transactional email and one test email; delivery was accepted and confirmed in the owner inbox. Private configuration contains the key, not this repository. All 19 auth/mail regressions passed. Linux Docker build plus a real Hindi FFmpeg render passed in [CI](https://github.com/Anant23452/NewbertAiVideo/actions/runs/41620446179).
+
+Render creation was rejected by automatic approval before service creation: sending the server-only role passwords, Better Auth signing secret and Gemini/ElevenLabs/Supabase/Brevo credentials to Render requires specific user approval. Do not retry with a different tool or environment-update endpoint to evade this gate. A free service has not yet been created; Vercel remains frontend-only until the backend is approved, deployed and connected.

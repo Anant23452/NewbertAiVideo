@@ -20,8 +20,22 @@
   "supabaseManagedAuthPreserved": true,
   "securityAdvisorFindingsAfterFix": 0,
   "emailAdapterTestsPassed": 3,
-  "emailLiveDelivery": "pending Brevo sender/API configuration",
-  "renderDeployment": "not created",
-  "linuxContainerVerification": "pending CI",
-  "paidResourcesCreated": 0
+  "emailLiveDelivery": {
+    "provider": "Brevo",
+    "plan": "Free",
+    "keyScope": "Transactional email only",
+    "senderVerified": true,
+    "testAcceptedHttpStatus": 201,
+    "testReceivedInOwnInbox": true,
+    "testEmailsSent": 1
+  },
+  "renderDeployment": "Creation rejected by automatic approval pending specific server-credential transfer approval; no service created",
+  "linuxContainerVerification": {
+    "status": "passed",
+    "run": "https://github.com/Anant23452/NewbertAiVideo/actions/runs/41620446179",
+    "realHindiFfmpegRender": true,
+    "externalAiCalls": 0
+  },
+  "paidResourcesCreated": 0,
+  "identityAndMailRegressionTestsPassed": 19
 }
